@@ -1,0 +1,1675 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model m_asset {
+  id                      String                    @id @db.Uuid
+  id_category             String                    @db.Uuid
+  id_location             String?                   @db.Uuid
+  name                    String                    @db.VarChar
+  brand                   String?                   @db.VarChar
+  type                    String?                   @db.VarChar
+  serial_number           String?                   @db.VarChar
+  manufacture_year        String?                   @db.VarChar
+  description             String?
+  latitude                String?                   @db.VarChar
+  longitude               String?                   @db.VarChar
+  acquired_date           DateTime?                 @db.Timestamptz(6)
+  attachment              String?                   @db.VarChar
+  asset_status            String?                   @db.VarChar
+  dimesion_height         Int?
+  dimesion_weight         Int?
+  dimesion_width          Int?
+  dimesion_uom            String?                   @db.Uuid
+  id_uom                  String?                   @db.Uuid
+  id_client               String                    @db.Uuid
+  create_at               DateTime?                 @db.Timestamptz(6)
+  created_by              String?                   @db.Uuid
+  updated_at              DateTime?                 @db.Timestamptz(6)
+  updated_by              String?                   @db.Uuid
+  deleted_at              DateTime?                 @db.Timestamptz(6)
+  m_category              m_category                @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_category")
+  asset_created_user      m_user?                   @relation("asset_created_user", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_created_by")
+  asset_dimension_uom     m_uom?                    @relation("asset_dimension_uom", fields: [dimesion_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_dimension_uom")
+  m_client                m_client                  @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_id_client")
+  m_location              m_location?               @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_location")
+  asset_uom               m_uom?                    @relation("asset_uom", fields: [id_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_uom")
+  asset_updated_user      m_user?                   @relation("asset_updated_user", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_updated_by")
+  m_depreciation          m_depreciation[]
+  m_opname_schedule_asset m_opname_schedule_asset[]
+  t_asset_disposal        t_asset_disposal[]
+  t_asset_history         t_asset_history[]
+  t_asset_merge           t_asset_merge[]
+  t_asset_merge_from      t_asset_merge_from[]
+  t_asset_split           t_asset_split[]
+  t_asset_split_to        t_asset_split_to[]
+  t_inspection            t_inspection[]
+  t_inspection_schedule   t_inspection_schedule[]
+  t_maintenance_schedule  t_maintenance_schedule[]
+  t_opname_result         t_opname_result[]
+  t_opname_schedule_asset t_opname_schedule_asset[]
+  t_ticket                t_ticket[]
+  t_wo                    t_wo[]
+  t_wo_plan               t_wo_plan[]
+  t_wo_realization        t_wo_realization[]
+  m_user                  m_user?                   @relation(fields: [m_userId], references: [id])
+  m_userId                String?                   @db.Uuid
+
+  @@index([id_category], map: "fki_m_asset_foreign_key_category")
+  @@index([created_by], map: "fki_m_asset_foreign_key_created_by")
+  @@index([dimesion_uom], map: "fki_m_asset_foreign_key_dimension_uom")
+  @@index([id_client], map: "fki_m_asset_foreign_key_id_client")
+  @@index([id_location], map: "fki_m_asset_foreign_key_location")
+  @@index([id_uom], map: "fki_m_asset_foreign_key_uom")
+  @@index([updated_by], map: "fki_m_asset_foreign_key_updated_by")
+}
+
+model m_asset_rule {
+  id                   String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                 String?   @db.VarChar
+  type                 String?   @db.VarChar
+  rule                 Json?
+  create_at            DateTime? @db.Timestamptz(6)
+  created_by           String?   @db.Uuid
+  updated_at           DateTime? @db.Timestamptz(6)
+  updated_by           String?   @db.Uuid
+  id_client            String    @db.Uuid
+  m_asset_rule_created m_user?   @relation("m_asset_rule_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_rule_fkey_created_by")
+  m_client             m_client  @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_rule_fkey_id_client")
+  m_asset_rule_updated m_user?   @relation("m_asset_rule_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_rule_fkey_updated_by")
+}
+
+model m_category {
+  id                      String                   @id(map: "m_category_primary_key_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_parent               String?                  @db.Uuid
+  name                    String                   @db.VarChar
+  description             String?
+  icon                    String?                  @db.VarChar
+  created_at              DateTime?                @db.Timestamptz(6)
+  created_by              String?                  @db.Uuid
+  updated_at              DateTime?                @db.Timestamptz(6)
+  updated_by              String?                  @db.Uuid
+  id_client               String                   @db.Uuid
+  deleted_at              DateTime?                @db.Timestamptz(6)
+  m_asset                 m_asset[]
+  m_category_created_user m_user?                  @relation("m_category_created_user", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_category_foreign_key_created_by")
+  m_client                m_client                 @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_category_foreign_key_id_client")
+  m_category_updated_user m_user?                  @relation("m_category_updated_user", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_category_foreign_key_updated_by")
+  m_inspection_activity   m_inspection_activity[]
+  m_inspection_schedule   m_inspection_schedule[]
+  m_maintenance_schedule  m_maintenance_schedule[]
+  m_maintenance_task      m_maintenance_task[]
+  m_parameter             m_parameter[]
+  m_wo_activity           m_wo_activity[]
+  m_user                  m_user?                  @relation(fields: [m_userId], references: [id])
+  m_userId                String?                  @db.Uuid
+
+  @@index([created_by], map: "fki_m_category_foreign_key_created_by")
+  @@index([id_client], map: "fki_m_category_foreign_key_id_client")
+  @@index([updated_by], map: "fki_m_category_foreign_key_updated_by")
+}
+
+model m_client {
+  id                              String                            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                            String                            @db.VarChar
+  create_at                       DateTime?                         @db.Timestamptz(6)
+  m_asset                         m_asset[]
+  m_asset_rule                    m_asset_rule[]
+  m_category                      m_category[]
+  m_config                        m_config[]
+  m_depreciation                  m_depreciation[]
+  m_inspection_activity           m_inspection_activity[]
+  m_inspection_activity_param     m_inspection_activity_param[]
+  m_inspection_group              m_inspection_group[]
+  m_inspection_schedule           m_inspection_schedule[]
+  m_inspection_schedule_param     m_inspection_schedule_param[]
+  m_inspection_staff              m_inspection_staff[]
+  m_location                      m_location[]
+  m_maintenance_group             m_maintenance_group[]
+  m_maintenance_schedule          m_maintenance_schedule[]
+  m_maintenance_schedule_material m_maintenance_schedule_material[]
+  m_maintenance_schedule_task     m_maintenance_schedule_task[]
+  m_maintenance_staff             m_maintenance_staff[]
+  m_maintenance_task              m_maintenance_task[]
+  m_material                      m_material[]
+  m_opname_schedule               m_opname_schedule[]
+  m_opname_schedule_asset         m_opname_schedule_asset[]
+  m_param_category                m_param_category[]
+  m_parameter                     m_parameter[]
+  m_role                          m_role[]
+  m_uom                           m_uom[]
+  m_user                          m_user[]
+  m_user_role                     m_user_role[]
+  m_user_tag                      m_user_tag[]
+  m_vendor                        m_vendor[]
+  m_wo_activity                   m_wo_activity[]
+  m_wo_activity_material          m_wo_activity_material[]
+  m_wo_activity_task              m_wo_activity_task[]
+  m_wo_rule                       m_wo_rule[]
+  m_wo_rule_line                  m_wo_rule_line[]
+  t_asset_disposal                t_asset_disposal[]
+  t_asset_history                 t_asset_history[]
+  t_asset_merge                   t_asset_merge[]
+  t_asset_merge_from              t_asset_merge_from[]
+  t_asset_split                   t_asset_split[]
+  t_asset_split_to                t_asset_split_to[]
+  t_depreciation                  t_depreciation[]
+  t_inspection                    t_inspection[]
+  t_inspection_result             t_inspection_result[]
+  t_inspection_schedule           t_inspection_schedule[]
+  t_inspection_schedule_param     t_inspection_schedule_param[]
+  t_maintenance_schedule          t_maintenance_schedule[]
+  t_maintenance_schedule_material t_maintenance_schedule_material[]
+  t_maintenance_schedule_task     t_maintenance_schedule_task[]
+  t_opname                        t_opname[]
+  t_opname_result                 t_opname_result[]
+  t_opname_schedule               t_opname_schedule[]
+  t_opname_schedule_asset         t_opname_schedule_asset[]
+  t_ticket                        t_ticket[]
+  t_ticket_message                t_ticket_message[]
+  t_wo                            t_wo[]
+  t_wo_approval                   t_wo_approval[]
+  t_wo_plan                       t_wo_plan[]
+  t_wo_realization                t_wo_realization[]
+  t_wop_material                  t_wop_material[]
+  t_wop_task                      t_wop_task[]
+  t_wor_material                  t_wor_material[]
+  t_wor_task                      t_wor_task[]
+}
+
+model m_config {
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  key              String?   @db.VarChar
+  value            Json?
+  create_at        DateTime? @db.Timetz(6)
+  created_by       String?   @db.Uuid
+  updated_at       DateTime? @db.Timestamptz(6)
+  updated_by       String?   @db.Uuid
+  id_client        String    @db.Uuid
+  m_config_created m_user?   @relation("m_config_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_config_fkey_created_by")
+  m_client         m_client  @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_config_fkey_id_client")
+  m_config_updated m_user?   @relation("m_config_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_config_fkey_updated_by")
+}
+
+model m_depreciation {
+  id                        String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_asset                  String             @db.Uuid
+  asset_value               Decimal?           @db.Decimal
+  usable_life               Decimal?           @db.Decimal
+  method_type               String?            @db.VarChar
+  start_date_depreciation   DateTime?          @db.Timestamptz(6)
+  accumulated_depreciation  Decimal?           @db.Decimal
+  remaining_depreciation    Decimal?           @db.Decimal
+  create_at                 DateTime           @db.Timestamp(6)
+  created_by                String?            @db.Uuid
+  updated_at                DateTime?          @db.Timestamp(6)
+  updated_by                String?            @db.Uuid
+  id_client                 String             @db.Uuid
+  deleted_at                DateTime?          @db.Timestamptz(6)
+  m_asset                   m_asset            @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_depreciation_foreign_key_asset")
+  depreciation_created_user m_user?            @relation("depreciation_created_user", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_depreciation_foreign_key_created_by")
+  m_client                  m_client           @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_depreciation_foreign_key_id_client")
+  depreciation_updated_user m_user?            @relation("depreciation_updated_user", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_depreciation_foreign_key_updated_by")
+  t_asset_disposal          t_asset_disposal[]
+  t_depreciation            t_depreciation[]
+  m_user                    m_user?            @relation(fields: [m_userId], references: [id])
+  m_userId                  String?            @db.Uuid
+
+  @@index([id_asset], map: "fki_m_depreciation_foreign_key_asset")
+  @@index([created_by], map: "fki_m_depreciation_foreign_key_created_by")
+  @@index([id_client], map: "fki_m_depreciation_foreign_key_id_client")
+  @@index([updated_by], map: "fki_m_depreciation_foreign_key_updated_by")
+}
+
+model m_inspection_activity {
+  id                            String                        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_category                   String?                       @db.Uuid
+  name                          String?                       @db.VarChar
+  notes                         String?
+  create_at                     DateTime?                     @db.Timestamptz(6)
+  created_by                    String?                       @db.Uuid
+  updated_at                    DateTime?                     @db.Timestamptz(6)
+  updated_by                    String?                       @db.Uuid
+  id_client                     String                        @db.Uuid
+  m_category                    m_category?                   @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_activity_fkey_category")
+  m_inspection_activity_created m_user?                       @relation("m_inspection_activity_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_activity_fkey_created_by")
+  m_client                      m_client                      @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_activity_fkey_id_client")
+  m_inspection_activity_updated m_user?                       @relation("m_inspection_activity_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_activity_fkey_updated_by")
+  m_inspection_activity_param   m_inspection_activity_param[]
+}
+
+model m_inspection_activity_param {
+  id                                  String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_inspection_activity              String?                @db.Uuid
+  id_param                            String?                @db.Uuid
+  create_at                           DateTime?              @db.Timestamptz(6)
+  created_by                          String?                @db.Uuid
+  updated_at                          DateTime?              @db.Timestamptz(6)
+  updated_by                          String?                @db.Uuid
+  id_client                           String                 @db.Uuid
+  m_inspection_activity_param_created m_user?                @relation("m_inspection_activity_param_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_activity_param_fkey_created_by")
+  m_client                            m_client               @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_activity_param_fkey_id_client")
+  m_inspection_activity               m_inspection_activity? @relation(fields: [id_inspection_activity], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_activity_param_fkey_inspection_activity")
+  m_parameter                         m_parameter?           @relation(fields: [id_param], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_activity_param_fkey_param")
+  m_inspection_activity_param_updated m_user?                @relation("m_inspection_activity_param_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_activity_param_fkey_updated_by")
+}
+
+model m_inspection_group {
+  id                         String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                       String?                 @db.VarChar
+  id_head_pic                String?                 @db.Uuid
+  description                String?
+  create_at                  DateTime?               @db.Timestamptz(6)
+  created_by                 String?                 @db.Uuid
+  updated_at                 DateTime?               @db.Timestamptz(6)
+  updated_by                 String?                 @db.Uuid
+  id_client                  String                  @db.Uuid
+  deleted_at                 DateTime?               @db.Timestamptz(6)
+  m_inspection_group_created m_user?                 @relation("m_inspection_group_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_group_foreign_key_created_by")
+  m_inspection_group_headpic m_user?                 @relation("m_inspection_group_headpic", fields: [id_head_pic], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_group_foreign_key_head_pic")
+  m_client                   m_client                @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_group_foreign_key_id_client")
+  m_inspection_group_updated m_user?                 @relation("m_inspection_group_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_group_foreign_key_updated_by")
+  m_inspection_schedule      m_inspection_schedule[]
+  m_inspection_staff         m_inspection_staff[]
+  t_inspection               t_inspection[]
+  t_inspection_schedule      t_inspection_schedule[]
+}
+
+model m_inspection_schedule {
+  id                            String                        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_category                   String                        @db.Uuid
+  id_location                   String?                       @db.Uuid
+  name                          String?                       @db.VarChar
+  id_m_inspection_group         String?                       @db.Uuid
+  description                   String?                       @db.VarChar
+  scheduled_at                  DateTime?                     @db.Timestamptz(6)
+  interval_number               Int?
+  id_interval_uom               String?                       @db.Uuid
+  status                        Boolean?
+  interval_type                 String?                       @db.VarChar
+  created_at                    DateTime?                     @db.Timestamptz(6)
+  created_by                    String?                       @db.Uuid
+  updated_at                    DateTime?                     @db.Timestamptz(6)
+  updated_by                    String?                       @db.Uuid
+  id_client                     String                        @db.Uuid
+  m_inspection_schedule_created m_user?                       @relation("m_inspection_schedule_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by ")
+  m_category                    m_category                    @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_category")
+  m_client                      m_client                      @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_client")
+  m_uom                         m_uom?                        @relation(fields: [id_interval_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_interval_uom")
+  m_location                    m_location?                   @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_location")
+  m_inspection_group            m_inspection_group?           @relation(fields: [id_m_inspection_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_m_inspection_group")
+  m_inspection_schedule_updated m_user?                       @relation("m_inspection_schedule_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+  m_inspection_schedule_param   m_inspection_schedule_param[]
+  t_inspection_schedule         t_inspection_schedule[]
+}
+
+model m_inspection_schedule_param {
+  id                                  String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_m_inspection_schedule            String?                @db.Uuid
+  id_m_parameter                      String?                @db.Uuid
+  created_at                          DateTime?              @db.Timestamptz(6)
+  created_by                          String?                @db.Uuid
+  updated_at                          DateTime?              @db.Timestamptz(6)
+  updated_by                          String?                @db.Uuid
+  id_client                           String                 @db.Uuid
+  m_inspection_schedule_param_created m_user?                @relation("m_inspection_schedule_param_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by")
+  m_client                            m_client               @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_client")
+  m_inspection_schedule               m_inspection_schedule? @relation(fields: [id_m_inspection_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_m_inspection_schedule")
+  m_parameter                         m_parameter?           @relation(fields: [id_m_parameter], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_m_parameter")
+  m_inspection_schedule_param_updated m_user?                @relation("m_inspection_schedule_param_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+}
+
+model m_inspection_staff {
+  id                         String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_inspection_group        String?              @db.Uuid
+  id_staff_pic               String?              @db.Uuid
+  create_at                  DateTime?            @db.Timestamptz(6)
+  created_by                 String?              @db.Uuid
+  updated_at                 DateTime?            @db.Timestamptz(6)
+  updated_by                 String?              @db.Uuid
+  id_client                  String               @db.Uuid
+  deleted_at                 DateTime?            @db.Timestamptz(6)
+  m_inspection_staff_created m_user?              @relation("m_inspection_staff_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_staff_created_by")
+  m_client                   m_client             @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_staff_id_client")
+  m_inspection_group         m_inspection_group?  @relation(fields: [id_inspection_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_staff_inspection_group")
+  inspection_staff_staffpic  m_user?              @relation("m_inspection_staff_staffpic", fields: [id_staff_pic], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_staff_pic")
+  inspection_staff_updated   m_user?              @relation("m_inspection_staff_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_staff_updated_by")
+  t_inspection_result        t_inspection_result?
+}
+
+model m_location {
+  id                     String                   @id(map: "m_location_primary_key_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_parent              String?                  @db.Uuid
+  name                   String                   @db.VarChar
+  description            String?
+  icon                   String?                  @db.VarChar
+  created_at             DateTime?                @db.Timestamptz(6)
+  created_by             String?                  @db.Uuid
+  updated_at             DateTime?                @db.Timestamptz(6)
+  updated_by             String?                  @db.Uuid
+  id_client              String                   @db.Uuid
+  deleted_at             DateTime?                @db.Timestamptz(6)
+  m_asset                m_asset[]
+  m_inspection_schedule  m_inspection_schedule[]
+  location_created_user  m_user?                  @relation("location_created_user", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_location_foreign_key_created_by")
+  m_client               m_client                 @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_location_foreign_key_id_client")
+  location_updated_user  m_user?                  @relation("location_updated_user", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_location_foreign_key_updated_by")
+  m_maintenance_schedule m_maintenance_schedule[]
+  m_opname_schedule      m_opname_schedule[]
+  t_inspection           t_inspection[]
+  t_maintenance_schedule t_maintenance_schedule[]
+  t_opname               t_opname[]
+  t_opname_schedule      t_opname_schedule[]
+  m_user                 m_user?                  @relation(fields: [m_userId], references: [id])
+  m_userId               String?                  @db.Uuid
+
+  @@index([created_by], map: "fki_m_location_foreign_key_created_by")
+  @@index([id_client], map: "fki_m_location_foreign_key_id_client")
+  @@index([updated_by], map: "fki_m_location_foreign_key_updated_by")
+}
+
+model m_maintenance_group {
+  id                             String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                           String?                  @db.VarChar
+  id_head_pic                    String?                  @db.Uuid
+  description                    String?
+  create_at                      DateTime?                @db.Timestamptz(6)
+  created_by                     String?                  @db.Uuid
+  updated_at                     DateTime?                @db.Timestamptz(6)
+  updated_by                     String?                  @db.Uuid
+  id_client                      String                   @db.Uuid
+  deleted_at                     DateTime?                @db.Timestamptz(6)
+  maintenance_group_head_pic     m_user?                  @relation("maintenance_group_head_pic", fields: [id_head_pic], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_group_foreign_key_head_pic")
+  maintenance_group_created_user m_user?                  @relation("maintenance_group_created_user", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_group_foreign_key_created_by")
+  m_client                       m_client                 @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_group_foreign_key_id_client")
+  maintenance_group_updated_user m_user?                  @relation("maintenance_group_updated_user", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_group_foreign_key_updated_by")
+  m_maintenance_schedule         m_maintenance_schedule[]
+  m_maintenance_staff            m_maintenance_staff[]
+  m_wo_activity                  m_wo_activity[]
+  t_maintenance_schedule         t_maintenance_schedule[]
+  t_wo_plan                      t_wo_plan[]
+  t_wo_realization               t_wo_realization[]
+  m_userId                       String?                  @db.Uuid
+
+  @@index([id_head_pic], map: "fki_m_inspection_group_foreign_key_head_pic")
+}
+
+model m_maintenance_schedule {
+  id                             String                        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_category                    String                        @db.Uuid
+  id_location                    String?                       @db.Uuid
+  id_maintenance_group           String?                       @db.Uuid
+  name                           String?                       @db.VarChar
+  notes                          String?                       @db.VarChar
+  id_vendor                      String?                       @db.Uuid
+  attachment                     String?                       @db.VarChar
+  planned_date                   DateTime?                     @db.Timestamptz(6)
+  status                         String?                       @db.VarChar
+  interval_number                Int?
+  id_interval_uom                String?                       @db.Uuid
+  interval_type                  String?                       @db.VarChar
+  created_at                     DateTime?                     @db.Timestamptz(6)
+  created_by                     String?                       @db.Uuid
+  updated_at                     DateTime?                     @db.Timestamptz(6)
+  updated_by                     String?                       @db.Uuid
+  id_client                      String                        @db.Uuid
+  m_maintenance_schedule_created m_user?                       @relation("m_maintenance_schedule_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by")
+  m_category                     m_category                    @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_category")
+  m_client                       m_client                      @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_client")
+  m_uom                          m_uom?                        @relation(fields: [id_interval_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_interval_uom")
+  m_location                     m_location?                   @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_location")
+  m_maintenance_group            m_maintenance_group?          @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_group")
+  m_vendor                       m_vendor?                     @relation(fields: [id_vendor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_vendor")
+  m_maintenance_schedule_updated m_user?                       @relation("m_maintenance_schedule_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+  m_maintenance_schedule_task    m_maintenance_schedule_task[]
+  t_maintenance_schedule         t_maintenance_schedule[]
+}
+
+model m_maintenance_schedule_material {
+  id                                      String                       @id @db.Uuid
+  id_m_maintenance_schedule_task          String?                      @db.Uuid
+  id_maintenance_task_material            String?                      @db.Uuid
+  quantity                                Int?
+  price                                   Decimal?                     @db.Decimal
+  notes                                   String?
+  id_uom_material                         String?                      @db.Uuid
+  created_at                              DateTime?                    @db.Timestamptz(6)
+  created_by                              String?                      @db.Uuid
+  updated_at                              DateTime?                    @db.Timestamptz(6)
+  updated_by                              String?                      @db.Uuid
+  id_client                               String?                      @db.Uuid
+  m_maintenance_schedule_material_created m_user?                      @relation("m_maintenance_schedule_material_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by")
+  m_client                                m_client?                    @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_client")
+  m_maintenance_schedule_task             m_maintenance_schedule_task? @relation(fields: [id_m_maintenance_schedule_task], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_m_maintenance_schedule_task")
+  m_maintenance_task_material             m_maintenance_task_material? @relation(fields: [id_maintenance_task_material], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_task_material")
+  m_uom                                   m_uom?                       @relation(fields: [id_uom_material], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_uom_material")
+  m_maintenance_schedule_material_updated m_user?                      @relation("m_maintenance_schedule_material_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+}
+
+model m_maintenance_schedule_task {
+  id                                  String                            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_m_maintenance_schedule           String?                           @db.Uuid
+  id_maintenance_task                 String?                           @db.Uuid
+  id_maintenance_staff                String?                           @db.Uuid
+  price                               Decimal?                          @db.Decimal
+  notes                               String?
+  created_at                          DateTime?                         @db.Timestamptz(6)
+  created_by                          String?                           @db.Uuid
+  updated_at                          DateTime?                         @db.Timestamptz(6)
+  updated_by                          String?                           @db.Uuid
+  id_client                           String                            @db.Uuid
+  m_maintenance_schedule_material     m_maintenance_schedule_material[]
+  m_maintenance_schedule_task_created m_user?                           @relation("m_maintenance_schedule_task_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by")
+  m_client                            m_client                          @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_client")
+  m_maintenance_schedule              m_maintenance_schedule?           @relation(fields: [id_m_maintenance_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_m_maintenance_schedule")
+  m_maintenance_staff                 m_maintenance_staff?              @relation(fields: [id_maintenance_staff], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_staff")
+  m_maintenance_task                  m_maintenance_task?               @relation(fields: [id_maintenance_task], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_task")
+  m_maintenance_schedule_task_updated m_user?                           @relation("m_maintenance_schedule_task_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+}
+
+model m_maintenance_staff {
+  id                           String                        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_maintenance_group         String?                       @db.Uuid
+  id_staff_pic                 String?                       @db.Uuid
+  create_at                    DateTime?                     @db.Timestamptz(6)
+  created_by                   String?                       @db.Uuid
+  updated_at                   DateTime?                     @db.Timestamptz(6)
+  updated_by                   String?                       @db.Uuid
+  id_client                    String                        @db.Uuid
+  deleted_at                   DateTime?                     @db.Timestamptz(6)
+  m_maintenance_schedule_task  m_maintenance_schedule_task[]
+  m_maintenance_staff_created  m_user?                       @relation("m_maintenance_staff_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_staff_foreign_key_created_by")
+  m_client                     m_client                      @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_staff_foreign_key_id_client")
+  m_maintenance_group          m_maintenance_group?          @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_staff_foreign_key_maintenance_group")
+  m_maintenance_staff_staffpic m_user?                       @relation("m_maintenance_staff_staffpic", fields: [id_staff_pic], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_staff_foreign_key_staff_pic")
+  m_maintenance_staff_updated_ m_user?                       @relation("m_maintenance_staff_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_staff_foreign_key_updated_by")
+  m_wo_activity_task           m_wo_activity_task[]
+  t_maintenance_schedule_task  t_maintenance_schedule_task[]
+  t_wop_task                   t_wop_task[]
+  t_wor_task                   t_wor_task[]
+}
+
+model m_maintenance_task {
+  id                          String                        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_category                 String?                       @db.Uuid
+  name                        String?                       @db.VarChar
+  price                       Decimal?                      @db.Decimal
+  notes                       String?
+  is_deleted                  Boolean?
+  guidelines_name             String?                       @db.VarChar
+  guidelines_link             String?                       @db.VarChar
+  create_at                   DateTime?                     @db.Timestamptz(6)
+  created_by                  String?                       @db.Uuid
+  updated_at                  DateTime?                     @db.Timestamptz(6)
+  updated_by                  String?                       @db.Uuid
+  id_client                   String                        @db.Uuid
+  m_maintenance_schedule_task m_maintenance_schedule_task[]
+  m_category                  m_category?                   @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_task_fkey_category")
+  m_maintenance_task_created  m_user?                       @relation("m_maintenance_task_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_task_fkey_created_by")
+  m_client                    m_client                      @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_task_fkey_id_client")
+  m_maintenance_task_updated  m_user?                       @relation("m_maintenance_task_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_task_fkey_updated_by")
+  m_maintenance_task_material m_maintenance_task_material[]
+  m_wo_activity_task          m_wo_activity_task[]
+  t_maintenance_schedule_task t_maintenance_schedule_task[]
+  t_wop_task                  t_wop_task[]
+  t_wor_task                  t_wor_task[]
+}
+
+model m_maintenance_task_material {
+  id                              String                            @id @db.Uuid
+  id_maintenance_task             String?                           @db.Uuid
+  id_material                     String?                           @db.Uuid
+  quantity                        Decimal?                          @db.Decimal
+  price                           Decimal?                          @db.Decimal
+  id_uom                          String?                           @db.Uuid
+  notes                           String?
+  create_at                       DateTime?                         @db.Timestamptz(6)
+  created_by                      String?                           @db.Uuid
+  updated_at                      DateTime?                         @db.Timestamptz(6)
+  updated_by                      String?                           @db.Uuid
+  id_client                       String                            @db.Uuid
+  deleted_at                      DateTime?                         @db.Timestamptz(6)
+  m_maintenance_schedule_material m_maintenance_schedule_material[]
+  m_material                      m_material?                       @relation(fields: [id_material], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_task_fkey_material")
+  m_maintenance_task              m_maintenance_task?               @relation(fields: [id_maintenance_task], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_task_material_fkey_maintenance_task")
+  m_wo_activity_material          m_wo_activity_material[]
+  t_maintenance_schedule_material t_maintenance_schedule_material[]
+  t_wop_material                  t_wop_material[]
+  t_wor_material                  t_wor_material[]
+
+  @@index([id_material], map: "fki_m_maintenance_task_fkey_material")
+}
+
+model m_material {
+  id                          String                        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                        String?                       @db.VarChar
+  stock                       Decimal?                      @db.Decimal
+  id_stock_uom                String?                       @db.Uuid
+  price                       Decimal?                      @db.Decimal
+  attachment                  String?                       @db.VarChar
+  notes                       String?
+  create_at                   DateTime?                     @db.Timestamptz(6)
+  created_by                  String?                       @db.Uuid
+  updated_at                  DateTime?                     @db.Timestamptz(6)
+  updated_by                  String?                       @db.Uuid
+  id_client                   String                        @db.Uuid
+  m_maintenance_task_material m_maintenance_task_material[]
+  m_material_created          m_user?                       @relation("m_matertial_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_material_fkey_created_by")
+  m_client                    m_client                      @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_material_fkey_id_client")
+  m_uom                       m_uom?                        @relation(fields: [id_stock_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_material_fkey_uom")
+  m_material_updated          m_user?                       @relation("m_matertial_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_material_fkey_updated_by")
+}
+
+model m_opname_schedule {
+  id                        String                    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_location               String?                   @db.Uuid
+  name                      String?                   @db.VarChar
+  id_pic                    String?                   @db.Uuid
+  description               String?
+  scheduled_at              DateTime?                 @db.Timestamptz(6)
+  interval_number           Decimal?                  @db.Decimal
+  id_interval_uom           String?                   @db.Uuid
+  status                    String?                   @db.VarChar
+  create_at                 DateTime?                 @db.Timestamptz(6)
+  created_by                String?                   @db.Uuid
+  updated_at                DateTime?                 @db.Timestamptz(6)
+  updated_by                String?                   @db.Uuid
+  id_client                 String                    @db.Uuid
+  deleted_at                DateTime?                 @db.Timestamptz(6)
+  m_opname_schedule_created m_user?                   @relation("m_opname_schedule_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_created_by")
+  m_client                  m_client                  @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_id_client")
+  m_uom                     m_uom?                    @relation(fields: [id_interval_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_interval_uom")
+  m_location                m_location?               @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_location")
+  m_opname_schedule_pic     m_user?                   @relation("m_opname_schedule_pic", fields: [id_pic], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_pic")
+  m_opname_schedule_updated m_user?                   @relation("m_opname_schedule_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_updated_by")
+  m_opname_schedule_asset   m_opname_schedule_asset[]
+  t_opname_schedule         t_opname_schedule[]
+}
+
+model m_opname_schedule_asset {
+  id                              String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_m_opname_schedule            String?            @db.Uuid
+  id_asset                        String?            @db.Uuid
+  create_at                       DateTime?          @db.Timestamptz(6)
+  created_by                      String?            @db.Uuid
+  updated_at                      DateTime?          @db.Timestamptz(6)
+  updated_by                      String?            @db.Uuid
+  id_client                       String             @db.Uuid
+  deleted_at                      DateTime?          @db.Timestamptz(6)
+  m_asset                         m_asset?           @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_asset_asset")
+  m_opname_schedule_asset_created m_user?            @relation("m_opname_schedule_asset_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_asset_created_by")
+  m_client                        m_client           @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_asset_id_client")
+  m_opname_schedule               m_opname_schedule? @relation(fields: [id_m_opname_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_asset_opname_schedule")
+  m_opname_schedule_asset_updated m_user?            @relation("m_opname_schedule_asset_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_asset_updated_by")
+  m_opname_schedule_asset_id      m_user?            @relation("m_opname_schedule_asset_id", fields: [m_userId], references: [id])
+  m_userId                        String?            @db.Uuid
+}
+
+model m_param_category {
+  id                            String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                          String?       @db.VarChar
+  description                   String?
+  user_tag                      String?       @db.VarChar
+  create_at                     DateTime?     @db.Timestamptz(6)
+  created_by                    String?       @db.Uuid
+  updated_at                    DateTime?     @db.Timestamptz(6)
+  updated_by                    String?       @db.Uuid
+  id_client                     String        @db.Uuid
+  m_param_category_created_user m_user?       @relation("m_param_category_created_user", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_param_category_fkey_cerated_by")
+  m_client                      m_client      @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_param_category_fkey_id_client")
+  m_param_category_updated_user m_user?       @relation("m_param_category_updated_user", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_param_category_fkey_updated_by")
+  m_parameter                   m_parameter[]
+}
+
+model m_parameter {
+  id                          String                        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_asset_category           String?                       @db.Uuid
+  name                        String?                       @db.VarChar
+  type                        String?                       @db.VarChar
+  mandatory                   Boolean?
+  meta                        Json?
+  id_param_category           String                        @db.Uuid
+  create_at                   DateTime?                     @db.Timestamptz(6)
+  created_by                  String?                       @db.Uuid
+  updated_at                  DateTime?                     @db.Timestamptz(6)
+  updated_by                  String?                       @db.Uuid
+  id_client                   String                        @db.Uuid
+  m_inspection_activity_param m_inspection_activity_param[]
+  m_inspection_schedule_param m_inspection_schedule_param[]
+  m_category                  m_category?                   @relation(fields: [id_asset_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_parameter_fkey_asset_category")
+  m_parameter_created_user    m_user?                       @relation("m_parameter_created_user", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_parameter_fkey_created_by")
+  m_client                    m_client                      @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_parameter_fkey_id_client")
+  m_param_category            m_param_category              @relation(fields: [id_param_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_parameter_fkey_param_category")
+  m_parameter_updated_user    m_user?                       @relation("m_parameter_updated_user", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_parameter_fkey_updated_by")
+  t_inspection_result         t_inspection_result[]
+  t_inspection_schedule_param t_inspection_schedule_param[]
+
+  @@index([id_param_category], map: "fki_m_parameter_fkey_param_category")
+}
+
+model m_role {
+  id                String        @id(map: "m_role_primary_key_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name              String        @db.VarChar
+  description       String?
+  icon              String?       @db.VarChar
+  created_at        DateTime?     @db.Timestamptz(6)
+  created_by        String?       @db.Uuid
+  updated_at        DateTime?     @db.Timestamptz(6)
+  updated_by        String?       @db.Uuid
+  id_client         String        @db.Uuid
+  deleted_at        DateTime?     @db.Timestamptz(6)
+  role_created_user m_user?       @relation("role_created_user", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_role_foreign_key_created_by")
+  m_client          m_client      @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_role_foreign_key_id_client")
+  role_updated_user m_user?       @relation("role_updated_user", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_role_foreign_key_updated_by")
+  m_user_role       m_user_role[]
+
+  m_userId String? @db.Uuid
+
+  @@index([created_by], map: "fki_m_role_foreign_key_created_by")
+  @@index([id_client], map: "fki_m_role_foreign_key_id_client")
+  @@index([updated_by], map: "fki_m_role_foreign_key_updated_by")
+}
+
+model m_uom {
+  id                              String                            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                            String                            @db.VarChar
+  uom_code                        String?                           @db.VarChar
+  note                            String?
+  uom_type                        String?                           @db.VarChar
+  id_client                       String                            @db.Uuid
+  created_by                      String?                           @db.Uuid
+  create_at                       DateTime?                         @db.Timestamptz(6)
+  updated_by                      String?                           @db.Uuid
+  updated_at                      DateTime?                         @db.Timestamptz(6)
+  deleted_at                      DateTime?                         @db.Timestamptz(6)
+  uom_dimension_asset             m_asset[]                         @relation("asset_dimension_uom")
+  uom_asset                       m_asset[]                         @relation("asset_uom")
+  m_inspection_schedule           m_inspection_schedule[]
+  m_maintenance_schedule          m_maintenance_schedule[]
+  m_maintenance_schedule_material m_maintenance_schedule_material[]
+  m_material                      m_material[]
+  m_opname_schedule               m_opname_schedule[]
+  m_uom_created                   m_user?                           @relation("m_uom_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_uom_foreign_key_created_by")
+  m_client                        m_client                          @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_uom_foreign_key_id_client")
+  m_uom_updated                   m_user?                           @relation("m_uom_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_uom_foreign_key_updated_by")
+  m_wo_activity_material          m_wo_activity_material[]
+  t_maintenance_schedule_material t_maintenance_schedule_material[]
+  t_wop_material                  t_wop_material[]
+  t_wor_material                  t_wor_material[]
+
+  @@index([created_by], map: "fki_m_uom_foreign_key_created_by")
+  @@index([id_client], map: "fki_m_uom_foreign_key_id_client")
+  @@index([updated_by], map: "fki_m_uom_foreign_key_updated_by")
+}
+
+model m_user {
+  id                                  String                        @id(map: "m_user_primary_key_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                                String                        @db.VarChar
+  username                            String                        @db.VarChar
+  password                            String                        @db.VarChar
+  email                               String                        @db.VarChar
+  photo                               String?                       @db.VarChar
+  created_at                          DateTime?                     @db.Timestamptz(6)
+  created_by                          String?                       @db.Uuid
+  updated_at                          DateTime?                     @db.Timestamptz(6)
+  updated_by                          String?                       @db.Uuid
+  id_client                           String                        @db.Uuid
+  user_created_asset                  m_asset[]                     @relation("asset_created_user")
+  user_updated_asset                  m_asset[]                     @relation("asset_updated_user")
+  created_m_asset_rule                m_asset_rule[]                @relation("m_asset_rule_created")
+  updated_m_asset_rule                m_asset_rule[]                @relation("m_asset_rule_updated")
+  user_created_m_category             m_category[]                  @relation("m_category_created_user")
+  user_updated_m_category             m_category[]                  @relation("m_category_updated_user")
+  created_m_config                    m_config[]                    @relation("m_config_created")
+  updated_m_config                    m_config[]                    @relation("m_config_updated")
+  user_created_depreciation           m_depreciation[]              @relation("depreciation_created_user")
+  user_updated_depreciation           m_depreciation[]              @relation("depreciation_updated_user")
+  created_m_inspection_activity       m_inspection_activity[]       @relation("m_inspection_activity_created")
+  updated_m_inspection_activity       m_inspection_activity[]       @relation("m_inspection_activity_updated")
+  created_m_inspection_activity_param m_inspection_activity_param[] @relation("m_inspection_activity_param_created")
+  updated_m_inspection_activity_param m_inspection_activity_param[] @relation("m_inspection_activity_param_updated")
+  user_created_inspection_group       m_inspection_group[]          @relation("m_inspection_group_created")
+  headpic_inspection_group            m_inspection_group[]          @relation("m_inspection_group_headpic")
+  user_updated_inspection_group       m_inspection_group[]          @relation("m_inspection_group_updated")
+  created_m_inspection_schedule       m_inspection_schedule[]       @relation("m_inspection_schedule_created")
+  updated_m_inspection_schedule       m_inspection_schedule[]       @relation("m_inspection_schedule_updated")
+  created_m_inspection_schedule_param m_inspection_schedule_param[] @relation("m_inspection_schedule_param_created")
+  updated_m_inspection_schedule_param m_inspection_schedule_param[] @relation("m_inspection_schedule_param_updated")
+  created_inspection_staff            m_inspection_staff[]          @relation("m_inspection_staff_created")
+  staffpic_inspection_staff           m_inspection_staff[]          @relation("m_inspection_staff_staffpic")
+  updated_inspection_staff            m_inspection_staff[]          @relation("m_inspection_staff_updated")
+  user_created_location               m_location[]                  @relation("location_created_user")
+  user_updated_location               m_location[]                  @relation("location_updated_user")
+  user_head_pic_maintenance_group     m_maintenance_group[]         @relation("maintenance_group_head_pic")
+  user_created_maintenance_group      m_maintenance_group[]         @relation("maintenance_group_created_user")
+  user_updated_maintenance_group      m_maintenance_group[]         @relation("maintenance_group_updated_user")
+
+  created_m_maintenance_schedule                                     m_maintenance_schedule[]          @relation("m_maintenance_schedule_created")
+  updated_m_maintenance_schedule                                     m_maintenance_schedule[]          @relation("m_maintenance_schedule_updated")
+  created_m_maintenance_schedule_material                            m_maintenance_schedule_material[] @relation("m_maintenance_schedule_material_created")
+  updated_m_maintenance_schedule_material                            m_maintenance_schedule_material[] @relation("m_maintenance_schedule_material_updated")
+  created_m_maintenance_schedule_task                                m_maintenance_schedule_task[]     @relation("m_maintenance_schedule_task_created")
+  updated_m_maintenance_schedule_task                                m_maintenance_schedule_task[]     @relation("m_maintenance_schedule_task_updated")
+  created_m_maintenance_staff                                        m_maintenance_staff[]             @relation("m_maintenance_staff_created")
+  staffpic_m_maintenance_staff                                       m_maintenance_staff[]             @relation("m_maintenance_staff_staffpic")
+  updated_m_maintenance_staff                                        m_maintenance_staff[]             @relation("m_maintenance_staff_updated")
+  created_m_maintenance_task                                         m_maintenance_task[]              @relation("m_maintenance_task_created")
+  updated_m_maintenance_task                                         m_maintenance_task[]              @relation("m_maintenance_task_updated")
+  created_m_matertial                                                m_material[]                      @relation("m_matertial_created")
+  updated_m_matertial                                                m_material[]                      @relation("m_matertial_updated")
+  created_m_opname_schedule                                          m_opname_schedule[]               @relation("m_opname_schedule_created")
+  pic_m_opname_schedule                                              m_opname_schedule[]               @relation("m_opname_schedule_pic")
+  m_opname_schedule_updated                                          m_opname_schedule[]               @relation("m_opname_schedule_updated")
+  created_m_opname_schedule_asset                                    m_opname_schedule_asset[]         @relation("m_opname_schedule_asset_created")
+  id_m_opname_schedule_asset                                         m_opname_schedule_asset[]         @relation("m_opname_schedule_asset_id")
+  updated_m_opname_schedule_asset                                    m_opname_schedule_asset[]         @relation("m_opname_schedule_asset_updated")
+  user_created_m_param_category                                      m_param_category[]                @relation("m_param_category_created_user")
+  user_updated_m_param_category                                      m_param_category[]                @relation("m_param_category_updated_user")
+  user_created_m_parameter                                           m_parameter[]                     @relation("m_parameter_created_user")
+  user_updated_m_parameter                                           m_parameter[]                     @relation("m_parameter_updated_user")
+  user_created_role                                                  m_role[]                          @relation("role_created_user")
+  user_updated_roles                                                 m_role[]                          @relation("role_updated_user")
+  created_m_uom                                                      m_uom[]                           @relation("m_uom_created")
+  updated_m_uom                                                      m_uom[]                           @relation("m_uom_updated")
+  user_created_m_user                                                m_user?                           @relation("m_user_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user_foreign_key_created_by")
+  other_m_user_m_user_created                                        m_user[]                          @relation("m_user_created")
+  m_client                                                           m_client                          @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user_foreign_key_id_client")
+  m_user_m_user_updated                                              m_user?                           @relation("m_user_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user_foreign_key_updated_by")
+  other_m_user_m_user_updated                                        m_user[]                          @relation("m_user_updated")
+  role_created_user                                                  m_user_role[]                     @relation("user_role_created_user")
+  user_role_id_user                                                  m_user_role[]                     @relation("user_role_user")
+  role_updated_role                                                  m_user_role[]                     @relation("user_role_updated_user")
+  user_tag_created_user                                              m_user_tag[]                      @relation("user_tag_created_user")
+  user_tag_user                                                      m_user_tag[]                      @relation("user_tag_user")
+  user_tag_updated_user                                              m_user_tag[]                      @relation("user_tag_updated_user")
+  created_m_vendor                                                   m_vendor[]                        @relation("m_vendor_created")
+  updated_m_vendor                                                   m_vendor[]                        @relation("m_vendor_updated")
+  created_m_wo_activity                                              m_wo_activity[]                   @relation("m_wo_activity_created")
+  updated_m_wo_activity                                              m_wo_activity[]                   @relation("m_wo_activity_updated")
+  created_m_wo_activity_material                                     m_wo_activity_material[]          @relation("m_wo_activity_material_created")
+  updated_m_wo_activity_material                                     m_wo_activity_material[]          @relation("m_wo_activity_material_updated")
+  created_m_wo_activity_task                                         m_wo_activity_task[]              @relation("m_wo_activity_task_create")
+  updated_m_wo_activity_task                                         m_wo_activity_task[]              @relation("m_wo_activity_task_updated")
+  created_m_wo_rule                                                  m_wo_rule[]                       @relation("m_wo_rule_created")
+  updated_m_wo_rule                                                  m_wo_rule[]                       @relation("m_wo_rule_updated")
+  created_m_wo_rule_line                                             m_wo_rule_line[]                  @relation("m_wo_rule_line_created")
+  updated_m_wo_rule_line                                             m_wo_rule_line[]                  @relation("m_wo_rule_line_updated")
+  id_m_wo_rule_line                                                  m_wo_rule_line[]                  @relation("m_wo_rule_line_id")
+  created_t_asset_disposal                                           t_asset_disposal[]                @relation("t_asset_disposal_created")
+  updated_t_asset_disposal                                           t_asset_disposal[]                @relation("t_asset_disposal_updated")
+  user_created_history                                               t_asset_history[]                 @relation("asset_history_created_user")
+  user_updated_history                                               t_asset_history[]                 @relation("asset_history_updated_user")
+  user_asset_history                                                 t_asset_history[]                 @relation("asset_history_user")
+  t_asset_merge_created                                              t_asset_merge[]                   @relation("t_asset_merge_created")
+  t_asset_merge_updated                                              t_asset_merge[]                   @relation("t_asset_merge_updated")
+  created_from_t_asset_merge                                         t_asset_merge_from[]              @relation("t_asset_merge_from_created")
+  updated_from_t_asset_merge                                         t_asset_merge_from[]              @relation("t_asset_merge_from_updated")
+  createdt_asset_split                                               t_asset_split[]                   @relation("t_asset_split_created")
+  updated_t_asset_split                                              t_asset_split[]                   @relation("t_asset_split_updated")
+  created_t_asset_split_to                                           t_asset_split_to[]                @relation("t_asset_split_to_created")
+  updated_t_asset_split_to                                           t_asset_split_to[]                @relation("t_asset_split_to_updated")
+  created_depreciation                                               t_depreciation[]                  @relation("t_depreciation_created_user")
+  updated_depreciation                                               t_depreciation[]                  @relation("t_depreciation_updated_user")
+  user_created_t_inspection                                          t_inspection[]                    @relation("t_inspection_created_user")
+  user_updated_t_inspection                                          t_inspection[]                    @relation("t_inspection_updated_user")
+  user_created_t_inspection_result                                   t_inspection_result[]             @relation("t_inspection_result_created_user")
+  user_updated_t_inspection_result                                   t_inspection_result[]             @relation("t_inspection_result_updated_user")
+  created_t_inspection_schedule                                      t_inspection_schedule[]           @relation("t_inspection_schedule_created")
+  updated_t_inspection_schedule                                      t_inspection_schedule[]           @relation("t_inspection_schedule_updated")
+  created_t_inspection_schedule_param                                t_inspection_schedule_param[]     @relation("t_inspection_schedule_param_created")
+  updated_t_inspection_schedule_param                                t_inspection_schedule_param[]     @relation("t_inspection_schedule_param_updated")
+  created_t_maintenance_schedule                                     t_maintenance_schedule[]          @relation("t_maintenance_schedule_created")
+  updated_t_maintenance_schedule                                     t_maintenance_schedule[]          @relation("t_maintenance_schedule_updated")
+  created_t_maintenance_schedule_material                            t_maintenance_schedule_material[] @relation("t_maintenance_schedule_material_created")
+  updated_t_maintenance_schedule_material                            t_maintenance_schedule_material[] @relation("t_maintenance_schedule_material_updated")
+  created_t_maintenance_schedule_task                                t_maintenance_schedule_task[]     @relation("t_maintenance_schedule_task_created")
+  updated_t_maintenance_schedule_task                                t_maintenance_schedule_task[]     @relation("t_maintenance_schedule_task_updated")
+  created_t_opname                                                   t_opname[]                        @relation("t_opname_created")
+  pic_t_opname                                                       t_opname[]                        @relation("t_opname_pic")
+  updated_t_opname                                                   t_opname[]                        @relation("t_opname_updated")
+  created_t_opname_result                 t_opname_result[]                 @relation("t_opname_result_created")
+  updated_t_opname_result                 t_opname_result[]                 @relation("t_opname_result_updated")
+  created_t_opname_schedule            t_opname_schedule[]               @relation("t_opname_schedule_created")
+  pic_t_opname_schedule                 t_opname_schedule[]               @relation("t_opname_schedule_pic")
+  updated_t_opname_schedule             t_opname_schedule[]               @relation("t_opname_schedule_updated")
+  created_t_opname_schedule_asset t_opname_schedule_asset[]         @relation("t_opname_schedule_asset_created")
+  updated_t_opname_schedule_asset t_opname_schedule_asset[]         @relation("t_opname_schedule_asset_updated")
+  created_t_ticket                                                   t_ticket[]                        @relation("t_ticket_created")
+  updated_t_ticket                                                   t_ticket[]                        @relation("t_ticket_updated")
+  created_t_ticket_message                                           t_ticket_message[]                @relation("t_ticket_message_created")
+  id_t_ticket_message                                                t_ticket_message[]                @relation("t_ticket_message_id")
+  updated_t_ticket_message                                           t_ticket_message[]                @relation("t_ticket_message_updated")
+  created_t_wo                                                       t_wo[]                            @relation("t_wo_created")
+  updated_t_wo                                                       t_wo[]                            @relation("t_wo_updated")
+  created_t_wo_approval                                              t_wo_approval[]                   @relation("t_wo_approval_created")
+  updated_t_wo_approval                                              t_wo_approval[]                   @relation("t_wo_approval_updated")
+  id_t_wo_approval                                                   t_wo_approval[]                   @relation("t_wo_approval_id")
+  created_t_wo_plan                                                  t_wo_plan[]                       @relation("t_wo_plan_created")
+  updated_t_wo_plan                                                  t_wo_plan[]                       @relation("t_wo_plan_updated")
+  created_t_wo_realization                                           t_wo_realization[]                @relation("t_wo_realization_created")
+  updated_t_wo_realization                                           t_wo_realization[]                @relation("t_wo_realization_updated")
+  created_t_wop_material                                             t_wop_material[]                  @relation("t_wop_material_created")
+  updated_t_wop_material                                             t_wop_material[]                  @relation("t_wop_material_updated")
+  created_t_wop_task                                                 t_wop_task[]                      @relation("t_wop_task_created")
+  updated_t_wop_task                                                 t_wop_task[]                      @relation("t_wop_task_updated")
+  created_t_wor_material                                             t_wor_material[]                  @relation("t_wor_material_created")
+  updated_t_wor_material                                             t_wor_material[]                  @relation("t_wor_material_updated")
+  created_t_wor_task                                                 t_wor_task[]                      @relation("t_wor_task_created")
+  updated_t_wor_task                                                 t_wor_task[]                      @relation("t_wor_task_updated")
+  m_asset                                                            m_asset[]
+  m_category m_category[]
+
+  m_depreciation m_depreciation[]
+
+  m_location m_location[]
+
+  @@index([id_client], map: "fki_m_user_foreign_key_created_by")
+  @@index([id_client], map: "fki_m_user_foreign_key_id_client")
+  @@index([updated_by], map: "fki_m_user_foreign_key_updated_by")
+}
+
+model m_user_role {
+  id                     String    @id(map: "m_user_role_primary_key_id") @db.Uuid
+  id_user                String    @db.Uuid
+  id_role                String    @db.Uuid
+  created_at             DateTime? @db.Timestamptz(6)
+  created_by             String?   @db.Uuid
+  updated_at             DateTime? @db.Timestamptz(6)
+  updated_by             String?   @db.Uuid
+  id_client              String    @db.Uuid
+  deleted_at             DateTime? @db.Timestamptz(6)
+  user_role_created_user m_user?   @relation("user_role_created_user", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user_role_foreign_key_created_by")
+  m_client               m_client  @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user_role_foreign_key_id_client")
+  m_role                 m_role    @relation(fields: [id_role], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user_role_foreign_key_id_role")
+  user_role_user         m_user    @relation("user_role_user", fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user_role_foreign_key_id_user")
+  user_role_updated_user m_user?   @relation("user_role_updated_user", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user_role_foreign_key_updated_by")
+
+  m_userId String? @db.Uuid
+
+  @@index([created_by], map: "fki_m_user_role_foreign_key_created_by")
+  @@index([id_client], map: "fki_m_user_role_foreign_key_id_client")
+  @@index([id_role], map: "fki_m_user_role_foreign_key_id_role")
+  @@index([id_user], map: "fki_m_user_role_foreign_key_id_user")
+}
+
+model m_user_tag {
+  id                    String    @id(map: "m_user_tag_primary_key_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_user               String    @db.Uuid
+  tag                   String?   @db.VarChar
+  created_at            DateTime? @db.Timestamptz(6)
+  created_by            String?   @db.Uuid
+  updated_at            DateTime? @db.Timestamptz(6)
+  updated_by            String?   @db.Uuid
+  id_client             String    @db.Uuid
+  deleted_at            DateTime? @db.Timestamptz(6)
+  user_tag_created_user m_user?   @relation("user_tag_created_user", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user_tag_foreign_key_created_by")
+  m_client              m_client  @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user_tag_foreign_key_id_client")
+  user_tag_user         m_user    @relation("user_tag_user", fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user_tag_foreign_key_id_user")
+  user_tag_updated_user m_user?   @relation("user_tag_updated_user", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user_tag_foreign_key_updated_by")
+
+  m_userId String? @db.Uuid
+
+  @@index([created_by], map: "fki_m_user_tag_foreign_key_created_by")
+  @@index([id_client], map: "fki_m_user_tag_foreign_key_id_client")
+  @@index([id_user], map: "fki_m_user_tag_foreign_key_id_user")
+  @@index([updated_by], map: "fki_m_user_tag_foreign_key_updated_by")
+}
+
+model m_vendor {
+  id                     String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                   String?                  @db.VarChar
+  pic                    String?                  @db.VarChar
+  no_telp                String?                  @db.VarChar
+  address                String?
+  description            String?
+  attchment              String?                  @db.VarChar
+  create_at              DateTime?                @db.Timestamptz(6)
+  created_by             String?                  @db.Uuid
+  updated_at             DateTime?                @db.Timestamptz(6)
+  updated_by             String?                  @db.Uuid
+  id_client              String                   @db.Uuid
+  m_maintenance_schedule m_maintenance_schedule[]
+  m_vendor_created       m_user?                  @relation("m_vendor_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_vendor_fkey_created_by")
+  m_client               m_client                 @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_vendor_fkey_id_client")
+  m_vendor_updated       m_user?                  @relation("m_vendor_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_vendor_fkey_updated_by")
+  m_wo_activity          m_wo_activity[]
+  t_maintenance_schedule t_maintenance_schedule[]
+  t_wo                   t_wo[]
+  t_wo_plan              t_wo_plan[]
+  t_wo_realization       t_wo_realization[]
+}
+
+model m_wo_activity {
+  id                    String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_category           String?              @db.Uuid
+  id_maintenance_group  String?              @db.Uuid
+  name                  String?              @db.VarChar
+  notes                 String?
+  id_vendor             String?              @db.Uuid
+  attachment            String?              @db.VarChar
+  create_at             DateTime?            @db.Timestamptz(6)
+  created_by            String?              @db.Uuid
+  updated_at            DateTime?            @db.Timestamptz(6)
+  updated_by            String?              @db.Uuid
+  id_client             String               @db.Uuid
+  m_category            m_category?          @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_fkey_category")
+  m_wo_activity_created m_user?              @relation("m_wo_activity_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_fkey_created_by")
+  m_client              m_client             @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_fkey_id_client")
+  m_maintenance_group   m_maintenance_group? @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_fkey_maintenance_group")
+  m_wo_activity_updated m_user?              @relation("m_wo_activity_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_fkey_updated_by")
+  m_vendor              m_vendor?            @relation(fields: [id_vendor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_fkey_vendor")
+  m_wo_activity_task    m_wo_activity_task[]
+}
+
+model m_wo_activity_material {
+  id                             String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_wo_activity_task            String?                      @db.Uuid
+  id_maintenance_task_material   String?                      @db.Uuid
+  quantity                       Decimal?                     @db.Decimal
+  price                          Decimal?                     @db.Decimal
+  id_uom_material                String?                      @db.Uuid
+  notes                          String?
+  create_at                      DateTime?                    @db.Timestamptz(6)
+  created_by                     String?                      @db.Uuid
+  updated_at                     DateTime?                    @db.Timestamptz(6)
+  updated_by                     String?                      @db.Uuid
+  id_client                      String                       @db.Uuid
+  m_wo_activity_material_created m_user?                      @relation("m_wo_activity_material_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_material_fkey_created_by")
+  m_client                       m_client                     @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_material_fkey_id_client")
+  m_maintenance_task_material    m_maintenance_task_material? @relation(fields: [id_maintenance_task_material], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_material_fkey_maintenance_task_material")
+  m_uom                          m_uom?                       @relation(fields: [id_uom_material], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_material_fkey_uom_material")
+  m_wo_activity_material_updated m_user?                      @relation("m_wo_activity_material_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_material_fkey_updated_by")
+  m_wo_activity_task             m_wo_activity_task?          @relation(fields: [id_wo_activity_task], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_material_fkey_wo_activity_task")
+}
+
+model m_wo_activity_task {
+  id                         String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_wo_activity             String?                  @db.Uuid
+  id_maintenance_task        String?                  @db.Uuid
+  id_maintenance_staff       String?                  @db.Uuid
+  price                      Decimal?                 @db.Decimal
+  notes                      String?
+  create_at                  DateTime?                @db.Timestamptz(6)
+  created_by                 String?                  @db.Uuid
+  updated_at                 DateTime?                @db.Timestamptz(6)
+  updated_by                 String?                  @db.Uuid
+  id_client                  String                   @db.Uuid
+  m_wo_activity_material     m_wo_activity_material[]
+  m_wo_activity_task_created m_user?                  @relation("m_wo_activity_task_create", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_task_fkey_created_by")
+  m_client                   m_client                 @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_task_fkey_id_client")
+  m_maintenance_staff        m_maintenance_staff?     @relation(fields: [id_maintenance_staff], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_task_fkey_maintenance_staff")
+  m_maintenance_task         m_maintenance_task?      @relation(fields: [id_maintenance_task], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_task_fkey_maintenance_task")
+  m_wo_activity_task_updated m_user?                  @relation("m_wo_activity_task_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_task_fkey_updated_by")
+  m_wo_activity              m_wo_activity?           @relation(fields: [id_wo_activity], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_task_fkey_wo_activity")
+}
+
+model m_wo_rule {
+  id                String           @id @db.Uuid
+  name              String?          @db.VarChar
+  type              String?          @db.VarChar
+  rule              Json?
+  symbol            String?          @db.VarChar
+  nominal           Decimal?         @db.Decimal
+  create_at         DateTime?        @db.Timestamptz(6)
+  created_by        String?          @db.Uuid
+  updated_at        DateTime?        @db.Timestamptz(6)
+  updated_by        String?          @db.Uuid
+  id_client         String           @db.Uuid
+  m_wo_rule_created m_user?          @relation("m_wo_rule_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_rule_fkey_created_by")
+  m_client          m_client         @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_rule_fkey_id_client")
+  m_wo_rule_updated m_user?          @relation("m_wo_rule_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_rule_fkey_updated_by")
+  m_wo_rule_line    m_wo_rule_line[]
+}
+
+model m_wo_rule_line {
+  id                     String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_wo_rule             String?    @db.Uuid
+  id_user                String?    @db.Uuid
+  priority               String?    @db.VarChar
+  create_at              DateTime?  @db.Timestamptz(6)
+  created_by             String?    @db.Uuid
+  updated_at             DateTime?  @db.Timestamptz(6)
+  updated_by             String?    @db.Uuid
+  id_client              String     @db.Uuid
+  m_wo_rule_line_created m_user?    @relation("m_wo_rule_line_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_rule_line_fkey_created_by")
+  m_client               m_client   @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_rule_line_fkey_id_client")
+  m_wo_rule_line_updated m_user?    @relation("m_wo_rule_line_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_rule_line_fkey_updated_by")
+  m_wo_rule_line_id      m_user?    @relation("m_wo_rule_line_id", fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_rule_line_fkey_user")
+  m_wo_rule              m_wo_rule? @relation(fields: [id_wo_rule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_rule_line_fkey_wo_rule")
+}
+
+model t_asset_disposal {
+  id                        String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_asset                  String?          @db.Uuid
+  id_asset_history          String?          @db.Uuid
+  id_remaining_depreciation String?          @db.Uuid
+  pice_sell                 Decimal?         @db.Decimal
+  description               String?
+  status                    String?          @db.VarChar
+  date                      DateTime?        @db.Timestamptz(6)
+  create_at                 DateTime?        @db.Timestamptz(6)
+  created_by                String?          @db.Uuid
+  updated_at                DateTime?        @db.Timestamptz(6)
+  updated_by                String?          @db.Uuid
+  id_client                 String           @db.Uuid
+  m_asset                   m_asset?         @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_disposal_asset")
+  t_asset_history           t_asset_history? @relation(fields: [id_asset_history], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_disposal_asset_history")
+  t_asset_disposal_created  m_user?          @relation("t_asset_disposal_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_disposal_created_by")
+  m_client                  m_client         @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_disposal_id_client")
+  m_depreciation            m_depreciation?  @relation(fields: [id_remaining_depreciation], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_disposal_remaining_depreciation")
+  t_asset_disposal_updated  m_user?          @relation("t_asset_disposal_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_disposal_updated_by")
+}
+
+model t_asset_history {
+  id                         String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type                       String?            @db.VarChar
+  id_asset                   String?            @db.Uuid
+  id_user                    String?            @db.Uuid
+  date                       DateTime?          @db.Timestamptz(6)
+  create_at                  DateTime?          @db.Timestamptz(6)
+  created_by                 String?            @db.Uuid
+  updated_at                 DateTime?          @db.Timestamptz(6)
+  updated_by                 String?            @db.Uuid
+  id_client                  String             @db.Uuid
+  deleted_at                 DateTime?          @db.Timestamptz(6)
+  t_asset_disposal           t_asset_disposal[]
+  m_asset                    m_asset?           @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_history_foreign_key_asset")
+  asset_history_created_user m_user?            @relation("asset_history_created_user", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_history_foreign_key_created_by")
+  m_client                   m_client           @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_history_foreign_key_id_client")
+  asset_history_updated_user m_user?            @relation("asset_history_updated_user", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_history_foreign_key_updated_by")
+  asset_history_user         m_user?            @relation("asset_history_user", fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_history_foreign_key_user")
+
+  m_userId String? @db.Uuid
+}
+
+model t_asset_merge {
+  id                    String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_asset              String?              @db.Uuid
+  date                  DateTime?            @db.Timestamptz(6)
+  create_at             DateTime?            @db.Timestamptz(6)
+  created_by            String?              @db.Uuid
+  updated_at            DateTime?            @db.Timestamptz(6)
+  updated_by            String?              @db.Uuid
+  id_client             String               @db.Uuid
+  deleted_at            DateTime?            @db.Timestamptz(6)
+  m_asset               m_asset?             @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_merge_asset")
+  t_asset_merge_created m_user?              @relation("t_asset_merge_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_merge_created_by")
+  m_client              m_client             @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_merge_id_client")
+  t_asset_merge_updated m_user?              @relation("t_asset_merge_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_merge_updated_by")
+  t_asset_merge_from    t_asset_merge_from[]
+}
+
+model t_asset_merge_from {
+  id                         String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_asset_merge             String?        @db.Uuid
+  id_asset                   String?        @db.Uuid
+  create_at                  DateTime?      @db.Timestamptz(6)
+  created_by                 String?        @db.Uuid
+  updated_at                 DateTime?      @db.Timestamptz(6)
+  updated_by                 String?        @db.Uuid
+  id_client                  String         @db.Uuid
+  deleted_at                 DateTime?      @db.Timestamptz(6)
+  m_asset                    m_asset?       @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_merge_from_asset")
+  t_asset_merge              t_asset_merge? @relation(fields: [id_asset_merge], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_merge_from_asset_merge")
+  t_asset_merge_from_created m_user?        @relation("t_asset_merge_from_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_merge_from_created_by")
+  m_client                   m_client       @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_merge_from_id_client")
+  t_asset_merge_from_updated m_user?        @relation("t_asset_merge_from_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_merge_from_updated_by")
+}
+
+model t_asset_split {
+  id                    String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_asset              String?            @db.Uuid
+  date                  DateTime?          @db.Timestamptz(6)
+  create_at             DateTime?          @db.Timestamptz(6)
+  created_by            String?            @db.Uuid
+  updated_at            DateTime?          @db.Timestamptz(6)
+  updated_by            String?            @db.Uuid
+  id_client             String             @db.Uuid
+  deleted_at            DateTime?          @db.Timestamptz(6)
+  m_asset               m_asset?           @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_split_asset")
+  t_asset_split_created m_user?            @relation("t_asset_split_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_split_created_by")
+  m_client              m_client           @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_split_id_client")
+  t_asset_split_updated m_user?            @relation("t_asset_split_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_split_updated_by")
+  t_asset_split_to      t_asset_split_to[]
+}
+
+model t_asset_split_to {
+  id                       String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_asset_split           String?        @db.Uuid
+  id_asset                 String?        @db.Uuid
+  create_at                DateTime?      @db.Timestamptz(6)
+  created_by               String?        @db.Uuid
+  updated_at               DateTime?      @db.Timestamptz(6)
+  updated_by               String?        @db.Uuid
+  id_client                String         @db.Uuid
+  deleted_at               DateTime?      @db.Timestamptz(6)
+  m_asset                  m_asset?       @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_split_to_asset")
+  t_asset_split            t_asset_split? @relation(fields: [id_asset_split], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_split_to_asset_split")
+  t_asset_split_to_created m_user?        @relation("t_asset_split_to_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_split_to_created_by")
+  m_client                 m_client       @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_split_to_id_client")
+  t_asset_split_to_updated m_user?        @relation("t_asset_split_to_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_split_to_updated_by")
+
+  @@index([id_asset], map: "fki_t_asset_split_to_asset")
+}
+
+model t_depreciation {
+  id                          String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_depreciation             String?         @db.Uuid
+  date                        DateTime?       @db.Timestamptz(6)
+  start_book_value            Decimal?        @db.Decimal
+  end_book_value              Decimal?        @db.Decimal
+  create_at                   DateTime?       @db.Timestamptz(6)
+  created_by                  String?         @db.Uuid
+  updated_at                  DateTime?       @db.Timestamptz(6)
+  updated_by                  String?         @db.Uuid
+  id_client                   String          @db.Uuid
+  deleted_at                  DateTime?       @db.Timestamptz(6)
+  t_depreciation_created_user m_user?         @relation("t_depreciation_created_user", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_depreciation_foreign_key_created_by")
+  m_depreciation              m_depreciation? @relation(fields: [id_depreciation], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_depreciation_foreign_key_depreciation")
+  m_client                    m_client        @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_depreciation_foreign_key_id_client")
+  t_depreciation_updated_user m_user?         @relation("t_depreciation_updated_user", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_depreciation_foreign_key_updated_by")
+
+  m_userId String? @db.Uuid
+
+  @@index([id_depreciation], map: "fki_t_depreciation_foreign_key_depreciation")
+  @@index([id_client], map: "fki_t_depreciation_foreign_key_id_client")
+  @@index([updated_by], map: "fki_t_depreciation_foreign_key_updated_by")
+  @@index([created_by], map: "fki_y")
+}
+
+model t_inspection {
+  id                        String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  inspection_no             Int?
+  id_ticket                 String                 @db.Uuid
+  id_asset                  String?                @db.Uuid
+  name                      String?                @db.VarChar
+  id_inspection_group       String?                @db.Uuid
+  id_location               String?                @db.Uuid
+  id_inspection_schedule    String?                @db.Uuid
+  conclusion                String?                @db.VarChar
+  status_maintenance        String?                @db.VarChar
+  created_at                DateTime?              @db.Timestamptz(6)
+  created_by                String?                @db.Uuid
+  updated_at                DateTime?              @db.Timestamptz(6)
+  updated_by                String?                @db.Uuid
+  id_client                 String                 @db.Uuid
+  t_inspection_created_user m_user?                @relation("t_inspection_created_user", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by")
+  m_asset                   m_asset?               @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_asset")
+  m_client                  m_client               @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_client")
+  m_inspection_group        m_inspection_group?    @relation(fields: [id_inspection_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_inspection_group")
+  t_inspection_schedule     t_inspection_schedule? @relation(fields: [id_inspection_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_inspection_schedule")
+  m_location                m_location?            @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_location")
+  t_ticket                  t_ticket               @relation(fields: [id_ticket], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_ticket")
+  t_inspection_updated_user m_user?                @relation("t_inspection_updated_user", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+  t_inspection_result       t_inspection_result[]
+  t_wo                      t_wo[]
+
+  @@index([id_inspection_schedule], map: "fki_inspection")
+}
+
+model t_inspection_result {
+  id                               String             @db.Uuid
+  id_inspection                    String?            @db.Uuid
+  id_parameter                     String?            @db.Uuid
+  answer                           Json?
+  result                           String?            @db.VarChar
+  id_inspection_staff              String             @id @db.Uuid
+  created_at                       DateTime?          @db.Timestamptz(6)
+  created_by                       String?            @db.Uuid
+  updated_at                       DateTime?          @db.Timestamptz(6)
+  updated_by                       String?            @db.Uuid
+  id_client                        String             @db.Uuid
+  t_inspection_result_created_user m_user?            @relation("t_inspection_result_created_user", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by")
+  m_client                         m_client           @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_client")
+  t_inspection                     t_inspection?      @relation(fields: [id_inspection], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_inspection")
+  m_inspection_staff               m_inspection_staff @relation(fields: [id_inspection_staff], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_inspection_staff")
+  m_parameter                      m_parameter?       @relation(fields: [id_parameter], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_parameter")
+  t_inspection_result_updated_user m_user?            @relation("t_inspection_result_updated_user", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+
+  m_userId String? @db.Uuid
+
+  @@index([id_inspection_staff], map: "fki_id_inspection_staff")
+}
+
+model t_inspection_schedule {
+  id                            String                        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_m_inspection_schedule      String?                       @db.Uuid
+  id_asset                      String?                       @db.Uuid
+  name                          String?                       @db.VarChar
+  id_m_inspection_group         String?                       @db.Uuid
+  description                   String?
+  scheduled_at                  DateTime?                     @db.Timestamptz(6)
+  status                        String?                       @db.VarChar
+  created_at                    DateTime?                     @db.Timestamptz(6)
+  created_by                    String?                       @db.Uuid
+  updated_at                    DateTime?                     @db.Timestamptz(6)
+  updated_by                    String?                       @db.Uuid
+  id_client                     String                        @db.Uuid
+  t_inspection                  t_inspection[]
+  t_inspection_schedule_created m_user?                       @relation("t_inspection_schedule_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by")
+  m_asset                       m_asset?                      @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_asset")
+  m_client                      m_client                      @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_client")
+  m_inspection_group            m_inspection_group?           @relation(fields: [id_m_inspection_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_m_inspection_group")
+  m_inspection_schedule         m_inspection_schedule?        @relation(fields: [id_m_inspection_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_m_inspection_schedule")
+  t_inspection_schedule_updated m_user?                       @relation("t_inspection_schedule_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+  t_inspection_schedule_param   t_inspection_schedule_param[]
+  t_wo                          t_wo[]
+}
+
+model t_inspection_schedule_param {
+  id                                  String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_t_inspection_schedule            String?                @db.Uuid
+  id_m_parameter                      String?                @db.Uuid
+  created_at                          DateTime?              @db.Timestamptz(6)
+  created_by                          String?                @db.Uuid
+  updated_at                          DateTime?              @db.Timestamptz(6)
+  updated_by                          String?                @db.Uuid
+  id_client                           String                 @db.Uuid
+  deleted_at                          DateTime?              @db.Timestamptz(6)
+  t_inspection_schedule_param_created m_user?                @relation("t_inspection_schedule_param_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by")
+  m_client                            m_client               @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_client")
+  m_parameter                         m_parameter?           @relation(fields: [id_m_parameter], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_m_parameter")
+  t_inspection_schedule               t_inspection_schedule? @relation(fields: [id_t_inspection_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_t_inspection_schedule")
+  t_inspection_schedule_param_updated m_user?                @relation("t_inspection_schedule_param_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+
+  m_userId String? @db.Uuid
+}
+
+model t_maintenance_schedule {
+  id                             String                        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_location                    String?                       @db.Uuid
+  id_asset                       String?                       @db.Uuid
+  id_maintenance_group           String?                       @db.Uuid
+  name                           String?                       @db.VarChar
+  notes                          String?
+  id_vendor                      String?                       @db.Uuid
+  attachment                     String?                       @db.VarChar
+  planned_date                   DateTime?                     @db.Timestamptz(6)
+  status                         String?                       @db.VarChar
+  created_at                     DateTime?                     @db.Timestamptz(6)
+  created_by                     String?                       @db.Uuid
+  updated_at                     DateTime?                     @db.Timestamptz(6)
+  updated_by                     String?                       @db.Uuid
+  id_client                      String                        @db.Uuid
+  id_m_maintenance_schedule      String?                       @db.Uuid
+  t_maintenance_schedule_created m_user?                       @relation("t_maintenance_schedule_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by")
+  m_asset                        m_asset?                      @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_asset")
+  m_client                       m_client                      @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_client")
+  m_location                     m_location?                   @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_location")
+  m_maintenance_group            m_maintenance_group?          @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_group")
+  m_vendor                       m_vendor?                     @relation(fields: [id_vendor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_vendor")
+  m_maintenance_schedule         m_maintenance_schedule?       @relation(fields: [id_m_maintenance_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_schedule")
+  t_maintenance_schedule_updated m_user?                       @relation("t_maintenance_schedule_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+  t_maintenance_schedule_task    t_maintenance_schedule_task[]
+}
+
+model t_maintenance_schedule_material {
+  id                                      String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_t_maintenance_schedule_task          String?                      @db.Uuid
+  id_maintenance_task_material            String?                      @db.Uuid
+  quantity                                Decimal?                     @db.Decimal
+  price                                   Decimal?                     @db.Decimal
+  notes                                   String?
+  id_uom_material                         String?                      @db.Uuid
+  created_at                              DateTime?                    @db.Timestamptz(6)
+  created_by                              String?                      @db.Uuid
+  updated_at                              DateTime?                    @db.Timestamptz(6)
+  updated_by                              String?                      @db.Uuid
+  id_client                               String                       @db.Uuid
+  t_maintenance_schedule_material_created m_user?                      @relation("t_maintenance_schedule_material_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by")
+  m_client                                m_client                     @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_client")
+  m_maintenance_task_material             m_maintenance_task_material? @relation(fields: [id_maintenance_task_material], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_task_material")
+  t_maintenance_schedule_task             t_maintenance_schedule_task? @relation(fields: [id_t_maintenance_schedule_task], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_t_maintenance_schedule_task")
+  m_uom                                   m_uom?                       @relation(fields: [id_uom_material], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_uom_material")
+  t_maintenance_schedule_material_updated m_user?                      @relation("t_maintenance_schedule_material_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+}
+
+model t_maintenance_schedule_task {
+  id                                  String                            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_t_maintenance_schedule           String?                           @db.Uuid
+  id_maintenance_task                 String?                           @db.Uuid
+  id_maintenance_staff                String?                           @db.Uuid
+  price                               Decimal?                          @db.Decimal
+  notes                               String?
+  created_at                          DateTime?                         @db.Timestamptz(6)
+  created_by                          String?                           @db.Uuid
+  updated_at                          DateTime?                         @db.Timestamptz(6)
+  updated_by                          String?                           @db.Uuid
+  id_client                           String                            @db.Uuid
+  t_maintenance_schedule_material     t_maintenance_schedule_material[]
+  t_maintenance_schedule_task_created m_user?                           @relation("t_maintenance_schedule_task_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by")
+  m_client                            m_client                          @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_client")
+  m_maintenance_staff                 m_maintenance_staff?              @relation(fields: [id_maintenance_staff], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_staff")
+  m_maintenance_task                  m_maintenance_task?               @relation(fields: [id_maintenance_task], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_task")
+  t_maintenance_schedule              t_maintenance_schedule?           @relation(fields: [id_t_maintenance_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_t_maintenance_schedule")
+  t_maintenance_schedule_task_updated m_user?                           @relation("t_maintenance_schedule_task_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+}
+
+model t_opname {
+  id                 String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_opname_schedule String?            @db.Uuid
+  id_location        String?            @db.Uuid
+  date               DateTime?          @db.Timestamptz(6)
+  id_pic             String?            @db.Uuid
+  create_at          DateTime?          @db.Timestamptz(6)
+  created_by         String?            @db.Uuid
+  updated_at         DateTime?          @db.Timestamptz(6)
+  updated_by         String?            @db.Uuid
+  id_client          String             @db.Uuid
+  deleted_at         DateTime?          @db.Timestamptz(6)
+  t_opname_created   m_user?            @relation("t_opname_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_fkey_created_by")
+  m_client           m_client           @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_fkey_id_client")
+  m_location         m_location?        @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_fkey_location")
+  t_opname_schedule  t_opname_schedule? @relation(fields: [id_opname_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_fkey_opname_schedule")
+  t_opname_pic       m_user?            @relation("t_opname_pic", fields: [id_pic], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_fkey_pic")
+  t_opname_updated   m_user?            @relation("t_opname_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_fkey_updated_by")
+  t_opname_result    t_opname_result[]
+}
+
+model t_opname_result {
+  id                                        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_asset_opname                           String?   @db.Uuid
+  id_asset                                  String?   @db.Uuid
+  availability_status                       String?   @db.VarChar
+  notes                                     String?
+  create_at                                 DateTime? @db.Timestamptz(6)
+  created_by                                String?   @db.Uuid
+  updated_at                                DateTime? @db.Timestamptz(6)
+  updated_by                                String?   @db.Uuid
+  id_client                                 String    @db.Uuid
+  deleted_at                                DateTime? @db.Timestamptz(6)
+  m_asset                                   m_asset?  @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_result_fkey_asset")
+  t_opname_result_created m_user?   @relation("t_opname_result_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_result_fkey_created_by")
+  m_client                                  m_client  @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_result_fkey_id_client")
+  t_opname                                  t_opname? @relation(fields: [id_asset_opname], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_result_fkey_t_opname")
+  t_opname_result_updated m_user?   @relation("t_opname_result_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_result_fkey_updated_by")
+}
+
+model t_opname_schedule {
+  id                                          String                    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_m_schedule                               String?                   @db.Uuid
+  id_location                                 String?                   @db.Uuid
+  name                                        String?                   @db.VarChar
+  id_pic                                      String?                   @db.Uuid
+  description                                 String?
+  create_at                                   DateTime?                 @db.Timestamptz(6)
+  created_by                                  String?                   @db.Uuid
+  updated_at                                  DateTime?                 @db.Timestamptz(6)
+  updated_by                                  String?                   @db.Uuid
+  id_client                                   String                    @db.Uuid
+  date                                        DateTime?                 @db.Timestamptz(6)
+  deleted_at                                  DateTime?                 @db.Timestamptz(6)
+  t_opname                                    t_opname[]
+  t_opname_schedule_created m_user?                   @relation("t_opname_schedule_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_schedule_created_by")
+  m_client                                    m_client                  @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_schedule_id_client")
+  m_location                                  m_location?               @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_schedule_location")
+  m_opname_schedule                           m_opname_schedule?        @relation(fields: [id_m_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_schedule_m_opname_schedule")
+  t_opname_schedule_pic     m_user?                   @relation("t_opname_schedule_pic", fields: [id_pic], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_schedule_pic")
+  t_opname_schedule_updated m_user?                   @relation("t_opname_schedule_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_schedule_updated_by")
+  t_opname_schedule_asset                     t_opname_schedule_asset[]
+}
+
+model t_opname_schedule_asset {
+  id                                                String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_t_opname_schedule                              String?            @db.Uuid
+  id_asset                                          String?            @db.Uuid
+  create_at                                         DateTime?          @db.Timestamptz(6)
+  created_by                                        String?            @db.Uuid
+  updated_at                                        DateTime?          @db.Timestamptz(6)
+  updated_by                                        String?            @db.Uuid
+  id_client                                         String             @db.Uuid
+  deleted_at                                        DateTime?          @db.Timestamptz(6)
+  m_asset                                           m_asset?           @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_schedule_asset_fkey_asset")
+  t_opname_schedule_asset_created m_user?            @relation("t_opname_schedule_asset_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_schedule_asset_fkey_created_by")
+  m_client                                          m_client           @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_schedule_asset_fkey_id_client")
+  t_opname_schedule                                 t_opname_schedule? @relation(fields: [id_t_opname_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_schedule_asset_fkey_t_opname_schedule")
+  t_opname_schedule_asset_updated m_user?            @relation("t_opname_schedule_asset_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_schedule_asset_fkey_updated_by")
+}
+
+model t_ticket {
+  id                      String             @unique(map: "t_ticket_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  ticket_no               String?            @db.VarChar
+  id_asset                String?            @db.Uuid
+  ticket_status           String?            @db.VarChar
+  ticket_merge            String?            @db.Uuid
+  date                    DateTime?          @db.Timestamptz(6)
+  create_at               DateTime?          @db.Timestamptz(6)
+  created_by              String?            @db.Uuid
+  updated_at              DateTime?          @db.Timestamptz(6)
+  updated_by              String?            @db.Uuid
+  id_client               String             @db.Uuid
+  t_inspection            t_inspection[]
+  m_asset                 m_asset?           @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_ticket_fkey_asset")
+  m_user_t_ticket_created m_user?            @relation("t_ticket_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_ticket_fkey_created_by")
+  m_client                m_client           @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_ticket_fkey_id_client")
+  m_user_t_ticket_updated m_user?            @relation("t_ticket_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_ticket_fkey_updated_by")
+  t_ticket_message        t_ticket_message[]
+  t_wo                    t_wo[]
+}
+
+model t_ticket_message {
+  id                       String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_ticket                String?   @db.Uuid
+  id_staff                 String?   @db.Uuid
+  comment                  String?
+  attachment               String?   @db.VarChar
+  date                     DateTime? @db.Timestamptz(6)
+  create_at                DateTime? @db.Timestamptz(6)
+  created_by               String?   @db.Uuid
+  updated_at               DateTime? @db.Timestamptz(6)
+  updated_by               String?   @db.Uuid
+  id_client                String    @db.Uuid
+  t_ticket                 t_ticket? @relation(fields: [id_ticket], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_ticket_message_fkey_")
+  t_ticket_message_created m_user?   @relation("t_ticket_message_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_ticket_message_fkey_created_by")
+  m_client                 m_client  @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_ticket_message_fkey_id_client")
+  t_ticket_message_id      m_user?   @relation("t_ticket_message_id", fields: [id_staff], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_ticket_message_fkey_staff")
+  t_ticket_message_updated m_user?   @relation("t_ticket_message_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_ticket_message_fkey_updated_by")
+}
+
+model t_wo {
+  id                        String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_asset                  String?                @db.Uuid
+  id_inspection             String?                @db.Uuid
+  id_t_inspection_schedule  String?                @db.Uuid
+  id_t_maintenance_schedule String?                @db.Uuid
+  id_ticket                 String?                @db.Uuid
+  wo_no                     String?                @db.VarChar
+  name                      String?                @db.VarChar
+  date                      DateTime?              @db.Timestamptz(6)
+  notes                     String?
+  status                    String?                @db.VarChar
+  id_vendor                 String?                @db.Uuid
+  attachment                String?                @db.VarChar
+  approval_status           String?                @db.VarChar
+  created_at                DateTime?              @db.Timestamptz(6)
+  created_by                String?                @db.Uuid
+  updated_at                DateTime?              @db.Timestamptz(6)
+  updated_by                String?                @db.Uuid
+  id_client                 String                 @db.Uuid
+  t_wo_created              m_user?                @relation("t_wo_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by")
+  m_asset                   m_asset?               @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_asset")
+  m_client                  m_client               @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_client")
+  t_inspection              t_inspection?          @relation(fields: [id_inspection], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_inspection")
+  t_inspection_schedule     t_inspection_schedule? @relation(fields: [id_t_inspection_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_t_inspection_schedule")
+  t_ticket                  t_ticket?              @relation(fields: [id_ticket], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_ticket")
+  m_vendor                  m_vendor?              @relation(fields: [id_vendor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_vendor")
+  t_wo_updated              m_user?                @relation("t_wo_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+  t_wo_plan                 t_wo_plan[]
+  t_wo_realization          t_wo_realization[]
+}
+
+model t_wo_approval {
+  id                    String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_wo                 String?   @db.Uuid
+  id_wo_plan            String?   @db.Uuid
+  id_user               String?   @db.Uuid
+  notes                 String?
+  status                String?   @db.VarChar
+  date                  DateTime? @db.Timestamptz(6)
+  create_at             DateTime? @db.Timestamptz(6)
+  created_by            String?   @db.Uuid
+  updated_at            DateTime? @db.Timestamptz(6)
+  updated_by            String?   @db.Uuid
+  id_client             String    @db.Uuid
+  t_wo_approval_created m_user?   @relation("t_wo_approval_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_wo_approval_fkey_created_by")
+  m_client              m_client  @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_wo_approval_fkey_id_client")
+  t_wo_approval_updated m_user?   @relation("t_wo_approval_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_wo_approval_fkey_updated_by")
+  t_wo_approval_id      m_user?   @relation("t_wo_approval_id", fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_wo_approval_fkey_user")
+}
+
+model t_wo_plan {
+  id                   String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_wo                String               @db.Uuid
+  id_asset             String?              @db.Uuid
+  id_transferTo        String?              @db.Uuid
+  id_maintenance_group String?              @db.Uuid
+  name                 String?              @db.VarChar
+  notes                String?
+  id_vendor            String?              @db.Uuid
+  attachment           String?              @db.VarChar
+  planned_date         DateTime?            @db.Timestamptz(6)
+  end_date             DateTime?            @db.Timestamptz(6)
+  approval_status      String?              @db.VarChar
+  accumulated_price    Decimal?             @db.Decimal
+  created_at           DateTime?            @db.Timestamptz(6)
+  created_by           String?              @db.Uuid
+  updated_at           DateTime?            @db.Timestamptz(6)
+  updated_by           String?              @db.Uuid
+  id_client            String               @db.Uuid
+  m_client             m_client             @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "client")
+  t_wo_plan_created    m_user?              @relation("t_wo_plan_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by")
+  m_asset              m_asset?             @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_asset")
+  m_maintenance_group  m_maintenance_group? @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_group")
+  m_vendor             m_vendor?            @relation(fields: [id_vendor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_vendor")
+  t_wo                 t_wo                 @relation(fields: [id_wo], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_wo")
+  t_wo_plan_updated    m_user?              @relation("t_wo_plan_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+  t_wo_realization     t_wo_realization[]
+  t_wop_task           t_wop_task[]
+}
+
+model t_wo_realization {
+  id                       String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_wo                    String?              @db.Uuid
+  id_wo_plan               String?              @db.Uuid
+  id_asset                 String?              @db.Uuid
+  id_transferTo            String?              @db.Uuid
+  id_maintenance_group     String?              @db.Uuid
+  name                     String?              @db.VarChar
+  notes                    String?
+  id_vendor                String?              @db.Uuid
+  attachment               String?              @db.VarChar
+  plan_date                DateTime?            @db.Timestamptz(6)
+  start_date               DateTime?            @db.Timestamptz(6)
+  end_date                 DateTime?            @db.Timestamptz(6)
+  status                   String?              @db.VarChar
+  created_at               DateTime?            @db.Timestamptz(6)
+  created_by               String?              @db.Uuid
+  updated_at               DateTime?            @db.Timestamptz(6)
+  updated_by               String?              @db.Uuid
+  id_client                String               @db.Uuid
+  t_wo_realization_created m_user?              @relation("t_wo_realization_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by")
+  m_asset                  m_asset?             @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_asset")
+  m_client                 m_client             @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_client")
+  m_maintenance_group      m_maintenance_group? @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_group")
+  m_vendor                 m_vendor?            @relation(fields: [id_vendor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_vendor")
+  t_wo                     t_wo?                @relation(fields: [id_wo], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_wo")
+  t_wo_plan                t_wo_plan?           @relation(fields: [id_wo_plan], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_wo_plan")
+  t_wo_realization_updated m_user?              @relation("t_wo_realization_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+  t_wor_task               t_wor_task[]
+}
+
+model t_wop_material {
+  id                           String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_wop_task                  String?                      @db.Uuid
+  id_maintenance_task_material String?                      @db.Uuid
+  quantity                     Decimal?                     @db.Decimal
+  price                        Decimal?                     @db.Decimal
+  notes                        String?
+  id_uom_material              String?                      @db.Uuid
+  created_at                   String?                      @db.Uuid
+  created_by                   String?                      @db.Uuid
+  updated_at                   DateTime?                    @db.Timestamptz(6)
+  updated_by                   String?                      @db.Uuid
+  id_client                    String                       @db.Uuid
+  t_wop_material_created       m_user?                      @relation("t_wop_material_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by")
+  m_client                     m_client                     @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_client")
+  m_maintenance_task_material  m_maintenance_task_material? @relation(fields: [id_maintenance_task_material], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_task_material")
+  m_uom                        m_uom?                       @relation(fields: [id_uom_material], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_uom_material")
+  t_wop_task                   t_wop_task?                  @relation(fields: [id_wop_task], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_wop_task")
+  t_wop_material_updated       m_user?                      @relation("t_wop_material_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+}
+
+model t_wop_task {
+  id                   String               @id @db.Uuid
+  id_wo_plan           String?              @db.Uuid
+  id_maintenance_task  String?              @db.Uuid
+  id_maintenance_staff String?              @db.Uuid
+  price                Decimal?             @db.Decimal
+  notes                String?
+  planned_date         DateTime?            @db.Timestamptz(6)
+  end_date             DateTime?            @db.Timestamptz(6)
+  created_at           DateTime?            @db.Timestamptz(6)
+  created_by           String?              @db.Uuid
+  updated_at           DateTime?            @db.Timestamptz(6)
+  updated_by           String?              @db.Uuid
+  id_client            String               @db.Uuid
+  t_wop_material       t_wop_material[]
+  t_wop_task_created   m_user?              @relation("t_wop_task_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by")
+  m_client             m_client             @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_client")
+  m_maintenance_staff  m_maintenance_staff? @relation(fields: [id_maintenance_staff], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_staff")
+  m_maintenance_task   m_maintenance_task?  @relation(fields: [id_maintenance_task], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_task")
+  t_wo_plan            t_wo_plan?           @relation(fields: [id_wo_plan], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_wo_plan")
+  t_wop_task_updated   m_user?              @relation("t_wop_task_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+}
+
+model t_wor_material {
+  id                          String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_wor_task                 String?                      @db.Uuid
+  id_maintenace_task_material String?                      @db.Uuid
+  quantity                    Decimal?                     @db.Decimal
+  price                       Decimal?                     @db.Decimal
+  notes                       String?
+  id_uom_material             String?                      @db.Uuid
+  created_at                  DateTime?                    @db.Timestamptz(6)
+  created_by                  String?                      @db.Uuid
+  updated_at                  DateTime?                    @db.Timestamptz(6)
+  updated_by                  String?                      @db.Uuid
+  id_client                   String?                      @db.Uuid
+  t_wor_material_created      m_user?                      @relation("t_wor_material_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by")
+  m_client                    m_client?                    @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_client")
+  m_maintenance_task_material m_maintenance_task_material? @relation(fields: [id_maintenace_task_material], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_tas_material")
+  m_uom                       m_uom?                       @relation(fields: [id_uom_material], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_uom_material")
+  t_wor_task                  t_wor_task?                  @relation(fields: [id_wor_task], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_wor_task")
+  t_wor_material_updated      m_user?                      @relation("t_wor_material_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+}
+
+model t_wor_task {
+  id                   String               @id(map: "t_work_task_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_wo_realization    String?              @db.Uuid
+  id_maintenance_task  String?              @db.Uuid
+  id_maintenance_staff String?              @db.Uuid
+  price                Decimal?             @db.Decimal
+  notes                String?
+  attachment           String?              @db.VarChar
+  plan_date            DateTime?            @db.Timestamptz(6)
+  start_date           DateTime?            @db.Timestamptz(6)
+  end_date             DateTime?            @db.Timestamptz(6)
+  status               String?              @db.VarChar
+  created_at           DateTime?            @db.Timestamptz(6)
+  created_by           String?              @db.Uuid
+  updated_at           DateTime?            @db.Timestamptz(6)
+  updated_by           String?              @db.Uuid
+  id_client            String               @db.Uuid
+  t_wor_material       t_wor_material[]
+  t_wor_task_created   m_user?              @relation("t_wor_task_created", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "created_by")
+  m_client             m_client             @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_client")
+  m_maintenance_staff  m_maintenance_staff? @relation(fields: [id_maintenance_staff], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_staff")
+  m_maintenance_task   m_maintenance_task?  @relation(fields: [id_maintenance_task], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_task")
+  t_wo_realization     t_wo_realization?    @relation(fields: [id_wo_realization], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_wo_realization")
+  t_wor_task_updated   m_user?              @relation("t_wor_task_updated", fields: [updated_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "updated_by")
+}
