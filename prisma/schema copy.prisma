@@ -97,7 +97,7 @@ model m_category {
   m_maintenance_task           m_maintenance_task[]
   m_parameter                  m_parameter[]
   m_wo_activity                m_wo_activity[]
-  m_inspection_group           m_inspection_group[]
+  m_inspection_group      m_inspection_group[]
 
   @@index([created_by], map: "fki_m_category_foreign_key_created_by")
   @@index([id_client], map: "fki_m_category_foreign_key_id_client")
@@ -183,16 +183,16 @@ model m_inspection_group {
   description           String?
   id_head_pic           String?                 @db.Uuid
   id_category           String?                 @db.Uuid
-  id_site               String?                 @db.Uuid
+  id_site           String?                 @db.Uuid
   created_by            String?                 @db.Uuid
   updated_at            DateTime?               @db.Timestamptz(6)
   updated_by            String?                 @db.Uuid
   id_client             String                  @db.Uuid
   deleted_at            DateTime?               @db.Timestamptz(6)
   created_at            DateTime?               @default(now()) @db.Timestamptz(6)
-  head_pic              m_user?                 @relation(fields: [id_head_pic], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_head_pic")
-  m_category            m_category?             @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_location")
-  m_site                m_site?                 @relation(fields: [id_site], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_site")
+  head_pic                m_user?                 @relation(fields: [id_head_pic], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_head_pic")
+  m_category               m_category?                 @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_location")
+  m_site              m_site?                 @relation(fields: [id_site], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_site")
   m_inspection_schedule m_inspection_schedule[]
   m_inspection_staff    m_inspection_staff[]
   t_inspection          t_inspection[]
@@ -390,7 +390,7 @@ model m_maintenance_staff {
   created_at                  DateTime?                     @default(now()) @db.Timestamptz(6)
   m_maintenance_schedule_task m_maintenance_schedule_task[]
   m_maintenance_group         m_maintenance_group?          @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_staff_foreign_key_maintenance_group")
-  staff_pic                   m_user?                       @relation(fields: [id_staff_pic], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_staff_pic")
+  staff_pic         m_user?          @relation(fields: [id_staff_pic], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_staff_pic")
   m_wo_activity_task          m_wo_activity_task[]
   t_maintenance_schedule_task t_maintenance_schedule_task[]
   t_wop_task                  t_wop_task[]
@@ -482,9 +482,10 @@ model m_opname_schedule {
   created_at              DateTime?                 @default(now()) @db.Timestamptz(6)
   m_uom                   m_uom?                    @relation(fields: [id_interval_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_interval_uom")
   m_location              m_location?               @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_location")
-  staff_pic               m_user?                   @relation(fields: [id_pic], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_id_pic")
+  staff_pic              m_user?               @relation(fields: [id_pic], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_id_pic")
   m_opname_schedule_asset m_opname_schedule_asset[]
   t_opname_schedule       t_opname_schedule[]
+  
 }
 
 model m_opname_schedule_asset {
@@ -603,8 +604,7 @@ model m_user {
   m_inspection_group  m_inspection_group[]
   m_user_role         m_user_role[]
   m_maintenance_staff m_maintenance_staff[]
-  m_opname_schedule   m_opname_schedule[]
-  t_asset_history     t_asset_history[]
+  m_opname_schedule m_opname_schedule[]
 
   @@index([id_client], map: "fki_m_user_foreign_key_created_by")
   @@index([id_client], map: "fki_m_user_foreign_key_id_client")
@@ -791,7 +791,6 @@ model t_asset_history {
   created_at       DateTime?          @default(now()) @db.Timestamptz(6)
   t_asset_disposal t_asset_disposal[]
   m_asset          m_asset?           @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_history_foreign_key_asset")
-  m_user           m_user?            @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_history_foreign_key_id_user")
 }
 
 model t_asset_merge {
@@ -806,7 +805,6 @@ model t_asset_merge {
   created_at         DateTime?            @default(now()) @db.Timestamptz(6)
   m_asset            m_asset?             @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_merge_asset")
   t_asset_merge_from t_asset_merge_from[]
-  t_ticket           t_ticket[]
 }
 
 model t_asset_merge_from {
@@ -1105,7 +1103,6 @@ model t_ticket {
   deleted_at       DateTime?          @db.Timestamptz(6)
   t_inspection     t_inspection[]
   m_asset          m_asset?           @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_ticket_fkey_asset")
-  t_asset_merget   t_asset_merge?     @relation(fields: [ticket_merge], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_ticket_fkey_asset_merge")
   t_ticket_message t_ticket_message[]
   t_wo             t_wo[]
 }
@@ -1327,5 +1324,5 @@ model m_site {
   deleted_at               DateTime?             @db.Timestamptz(6)
   id_client                String                @db.Uuid
   m_maintenance_group_site m_maintenance_group[] @relation("m_maintenance_group_site")
-  m_inspection_group       m_inspection_group[]
+  m_inspection_group  m_inspection_group[]
 }

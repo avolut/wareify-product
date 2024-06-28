@@ -10,6 +10,7 @@ import {
   Bell,
   LogOut,
   Settings,
+  Menu,
 } from "lucide-react";
 
 export const icons = {
@@ -24,4 +25,5 @@ export const icons = {
   Bell,
   LogOut,
   Settings,
+  Menu,
 };
