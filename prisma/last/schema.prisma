@@ -8,86 +8,127 @@ datasource db {
 }
 
 model m_asset {
-  id                             String                    @id @default(uuid()) @db.Uuid
-  id_maintenance_group           String?                   @db.Uuid
-  id_location                    String?                   @db.Uuid
-  id_category                    String                    @db.Uuid
-  name                           String                    @db.VarChar
-  serial_number                  String?                   @db.VarChar
-  kso                            Boolean?
-  acquired_date                  DateTime?                 @db.Timestamptz(6)
-  codeification                  String?                   @db.VarChar
-  id_vendor                      String?                   @db.Uuid
-  brand                          String?                   @db.VarChar
-  type                           String?                   @db.VarChar
-  color                          String?                   @db.VarChar
-  manufacture_year               DateTime?                 @db.Timestamptz(6)
+  id                             String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_category                    String                  @db.Uuid
+  id_location                    String?                 @db.Uuid
+  name                           String                  @db.VarChar
+  brand                          String?                 @db.VarChar
+  type                           String?                 @db.VarChar
+  serial_number                  String?                 @db.VarChar
   description                    String?
-  latitude                       String?                   @db.VarChar
-  longitude                      String?                   @db.VarChar
-  attachment                     String?                   @db.VarChar
+  latitude                       String?                 @db.VarChar
+  longitude                      String?                 @db.VarChar
+  acquired_date                  DateTime?               @db.Timestamptz(6)
+  attachment                     String?                 @db.VarChar
+  asset_status                   String?                 @db.VarChar
   dimesion_height                Int?
   dimesion_weight                Int?
   dimesion_width                 Int?
-  id_dimesion_uom                String?                   @db.Uuid
-  asset_status                   String?                   @db.VarChar
-  asset_value                    Decimal?                  @db.Decimal
-  usable_life                    Decimal?                  @db.Decimal
+  id_dimesion_uom                String?                 @db.Uuid
+  id_client                      String                  @db.Uuid
+  created_by                     String?                 @db.Uuid
+  updated_at                     DateTime?               @db.Timestamptz(6)
+  updated_by                     String?                 @db.Uuid
+  deleted_at                     DateTime?               @db.Timestamptz(6)
+  created_at                     DateTime?               @default(now()) @db.Timestamptz(6)
+  manufacture_year               DateTime?               @db.Timestamptz(6)
+  accumulated_depreciation_value Decimal?                @db.Decimal
+  asset_value                    Decimal?                @db.Decimal
+  book_value                     Decimal?                @db.Decimal
+  codeification                  String?                 @db.VarChar
+  color                          String?                 @db.VarChar
+  depreciation_method            String?                 @db.VarChar
+  id_maintenance_group           String?                 @db.Uuid
+  id_vendor                      String?                 @db.Uuid
+  kso                            Boolean?
   period_start                   Int?
-  book_value                     Decimal?                  @db.Decimal
-  depreciation_method            String?                   @db.VarChar
-  accumulated_depreciation_value Decimal?                  @db.Decimal
-  remaining_depreciation_value   Decimal?                  @db.Decimal
-  id_client                      String                    @db.Uuid
-  created_by                     String?                   @db.Uuid
-  updated_at                     DateTime?                 @db.Timestamptz(6)
-  updated_by                     String?                   @db.Uuid
-  deleted_at                     DateTime?                 @db.Timestamptz(6)
-  created_at                     DateTime?                 @default(now()) @db.Timestamptz(6)
-  m_category                     m_category                @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_category")
-  dimension_uom                  m_uom?                    @relation("dimension_uom", fields: [id_dimesion_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_dimension_uom")
-  m_location                     m_location?               @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_location")
-  m_vendor                       m_vendor?                 @relation(fields: [id_vendor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_vendor")
-  m_maintenance_group            m_maintenance_group?      @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_departement")
-  m_depreciation                 m_depreciation[]
-  m_opname_schedule_asset        m_opname_schedule_asset[]
-  t_asset_disposal               t_asset_disposal[]
-  t_asset_history                t_asset_history[]
-  t_asset_merge                  t_asset_merge[]
-  t_asset_merge_from             t_asset_merge_from[]
-  t_asset_split                  t_asset_split[]
-  t_asset_split_to               t_asset_split_to[]
-  t_inspection                   t_inspection[]
-  t_inspection_schedule          t_inspection_schedule[]
-  t_maintenance_schedule         t_maintenance_schedule[]
-  t_opname_result                t_opname_result[]
-  t_opname_schedule_asset        t_opname_schedule_asset[]
-  t_wo                           t_work_order[]
-
-  @@index([created_by], map: "fkey_created")
-  @@index([created_by], map: "fki_fkey_created")
-  @@index([id_category], map: "fki_m_asset_foreign_key_category")
-  @@index([id_dimesion_uom], map: "fki_m_asset_foreign_key_dimension_uom")
-  @@index([id_client], map: "fki_m_asset_foreign_key_id_client")
-  @@index([id_location], map: "fki_m_asset_foreign_key_location")
-  @@index([updated_by], map: "fki_m_asset_foreign_key_updated_by")
+  remaining_depreciation_value   Decimal?                @db.Decimal
+  usable_life                    Decimal?                @db.Decimal
+  m_category                     m_category              @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_uom                          m_uom?                  @relation(fields: [id_dimesion_uom], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_location                     m_location?             @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_maintenance_group            m_maintenance_group?    @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_vendor                       m_vendor?               @relation(fields: [id_vendor], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  t_depreciation_detail          t_depreciation_detail[]
+  t_disposal                     t_disposal[]
+  t_disposal_details             t_disposal_details[]
+  t_opname_line                  t_opname_line[]
+  t_work_order                   t_work_order[]
 }
 
-model m_asset_rule {
-  id         String    @id @default(uuid()) @db.Uuid
-  name       String?   @db.VarChar
-  type       String?   @db.VarChar
-  rule       Json?
-  created_by String?   @db.Uuid
-  updated_at DateTime? @db.Timestamptz(6)
-  updated_by String?   @db.Uuid
-  id_client  String    @db.Uuid
-  created_at DateTime? @default(now()) @db.Timestamptz(6)
-  deleted_at DateTime? @db.Timestamptz(6)
+model m_role {
+  id                       String                     @id(map: "m_role_primary_key_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                     String                     @db.VarChar
+  description              String?
+  icon                     String?                    @db.VarChar
+  created_at               DateTime?                  @default(now()) @db.Timestamptz(6)
+  created_by               String?                    @db.Uuid
+  updated_at               DateTime?                  @db.Timestamptz(6)
+  updated_by               String?                    @db.Uuid
+  id_client                String                     @db.Uuid
+  deleted_at               DateTime?                  @db.Timestamptz(6)
+  m_maintenance_group_role m_maintenance_group_role[]
+
+  @@index([created_by], map: "fki_m_role_foreign_key_created_by")
+  @@index([id_client], map: "fki_m_role_foreign_key_id_client")
+  @@index([updated_by], map: "fki_m_role_foreign_key_updated_by")
+}
+
+model m_user {
+  id                          String                        @id(map: "m_user_primary_key_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                        String                        @db.VarChar
+  username                    String                        @unique @db.VarChar
+  password                    String                        @db.VarChar
+  gender                      String?                       @db.VarChar
+  addres                      String?                       @db.VarChar
+  no_telp                     String?                       @db.VarChar
+  email                       String?                       @db.VarChar
+  photo                       String?                       @db.VarChar
+  created_at                  DateTime?                     @default(now()) @db.Timestamptz(6)
+  created_by                  String?                       @db.Uuid
+  updated_at                  DateTime?                     @db.Timestamptz(6)
+  updated_by                  String?                       @db.Uuid
+  id_client                   String                        @db.Uuid
+  deleted_at                  DateTime?                     @db.Timestamptz(6)
+  id_position                 String?                       @db.Uuid
+  id_maintenance_group_user   String?                       @db.Uuid
+  m_maintenance_group_user    m_maintenance_group_user[]
+  spv_assigned                m_maintenance_schedule[]      @relation("spv_assign")
+  spv_created                 m_maintenance_schedule[]      @relation("spv_created")
+  m_maintenance_schedule_task m_maintenance_schedule_task[]
+  m_maintenance_staff         m_maintenance_staff[]
+  t_approval                  t_approval[]
+  t_audit_log                 t_audit_log[]
+  t_depreciation              t_depreciation[]
+  t_disposal                  t_disposal[]
+  t_movement                  t_movement[]
+  t_opname_schedule           t_opname_schedule[]
+  complaint_user              t_work_order[]                @relation("user_complaint")
+  maintenance_leader          t_work_order[]                @relation("maintenance_leader")
+}
+
+model m_maintenance_group {
+  id                       String                     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                     String?                    @db.VarChar
+  code                     String?                    @db.VarChar
+  description              String?
+  created_by               String?                    @db.Uuid
+  updated_at               DateTime?                  @db.Timestamptz(6)
+  updated_by               String?                    @db.Uuid
+  id_client                String                     @db.Uuid
+  deleted_at               DateTime?                  @db.Timestamptz(6)
+  created_at               DateTime?                  @default(now()) @db.Timestamptz(6)
+  m_asset                  m_asset[]
+  m_maintenance_group_role m_maintenance_group_role[]
+  m_maintenance_schedule   m_maintenance_schedule[]
+  t_depreciation_detail    t_depreciation_detail[]
+  t_disposal               t_disposal[]
+  t_movement               t_movement[]
+  t_work_order             t_work_order[]
 }
 
 model m_category {
-  id                     String                   @id @default(uuid()) @db.Uuid
+  id                     String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   id_parent              String?                  @db.Uuid
   name                   String                   @db.VarChar
   description            String?
@@ -99,170 +140,49 @@ model m_category {
   id_client              String                   @db.Uuid
   deleted_at             DateTime?                @db.Timestamptz(6)
   m_asset                m_asset[]
-  m_category             m_category?              @relation("m_category", fields: [id_parent], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  other_m_category       m_category[]             @relation("m_category")
-  m_inspection_activity  m_inspection_activity[]
-  m_inspection_group     m_inspection_group[]
-  m_inspection_schedule  m_inspection_schedule[]
+  m_category             m_category?              @relation("category", fields: [id_parent], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_m_category       m_category[]             @relation("category")
   m_maintenance_schedule m_maintenance_schedule[]
-  m_parameter            m_parameter[]
-  m_wo_activity          m_wo_activity[]
-  m_location             m_location[]
 }
 
-model m_client {
-  id         String    @id @default(uuid()) @db.Uuid
-  name       String    @db.VarChar
-  created_at DateTime? @default(now()) @db.Timestamptz(6)
-  deleted_at DateTime? @db.Timestamptz(6)
+model m_maintenance_staff {
+  id                 String                    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_maintenance_spv String?                   @db.Uuid
+  id_staff           String?                   @db.Uuid
+  description        String?
+  created_by         String?                   @db.Uuid
+  updated_at         DateTime?                 @db.Timestamptz(6)
+  updated_by         String?                   @db.Uuid
+  id_client          String                    @db.Uuid
+  deleted_at         DateTime?                 @db.Timestamptz(6)
+  created_at         DateTime?                 @default(now()) @db.Timestamptz(6)
+  id_category        String?                   @db.Uuid
+  id_site            String?                   @db.Uuid
+  m_maintenance_spv  m_maintenance_group_user? @relation(fields: [id_maintenance_spv], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_user             m_user?                   @relation(fields: [id_staff], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-model m_config {
-  id         String    @id @default(uuid()) @db.Uuid
-  key        String?   @db.VarChar
-  value      Json?
-  created_by String?   @db.Uuid
-  updated_at DateTime? @db.Timestamptz(6)
-  updated_by String?   @db.Uuid
-  id_client  String    @db.Uuid
-  created_at DateTime? @default(now()) @db.Timetz(6)
-  deleted_at DateTime? @db.Timestamptz(6)
-}
-
-model m_depreciation {
-  id                       String             @id @default(uuid()) @db.Uuid
-  id_asset                 String             @db.Uuid
-  asset_value              Decimal?           @db.Decimal
-  usable_life              Decimal?           @db.Decimal
-  method_type              String?            @db.VarChar
-  start_date_depreciation  DateTime?          @db.Timestamptz(6)
-  accumulated_depreciation Decimal?           @db.Decimal
-  remaining_depreciation   Decimal?           @db.Decimal
-  created_by               String?            @db.Uuid
-  updated_at               DateTime?          @db.Timestamp(6)
-  updated_by               String?            @db.Uuid
-  id_client                String             @db.Uuid
-  deleted_at               DateTime?          @db.Timestamptz(6)
-  created_at               DateTime           @default(now()) @db.Timestamp(6)
-  m_asset                  m_asset            @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_depreciation_foreign_key_asset")
-  t_asset_disposal         t_asset_disposal[]
-  t_depreciation           t_depreciation[]
-
-  @@index([id_asset], map: "fki_m_depreciation_foreign_key_asset")
-  @@index([created_by], map: "fki_m_depreciation_foreign_key_created_by")
-  @@index([id_client], map: "fki_m_depreciation_foreign_key_id_client")
-  @@index([updated_by], map: "fki_m_depreciation_foreign_key_updated_by")
-}
-
-model m_inspection_activity {
-  id                          String                        @id @default(uuid()) @db.Uuid
-  id_category                 String?                       @db.Uuid
-  name                        String?                       @db.VarChar
-  notes                       String?
-  created_by                  String?                       @db.Uuid
-  updated_at                  DateTime?                     @db.Timestamptz(6)
-  updated_by                  String?                       @db.Uuid
-  id_client                   String                        @db.Uuid
-  created_at                  DateTime?                     @default(now()) @db.Timestamptz(6)
-  deleted_at                  DateTime?                     @db.Timestamptz(6)
-  m_category                  m_category?                   @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_activity_fkey_category")
-  m_inspection_activity_param m_inspection_activity_param[]
-}
-
-model m_inspection_activity_param {
-  id                     String                 @id @default(uuid()) @db.Uuid
-  id_inspection_activity String?                @db.Uuid
-  id_param               String?                @db.Uuid
-  created_by             String?                @db.Uuid
-  updated_at             DateTime?              @db.Timestamptz(6)
-  updated_by             String?                @db.Uuid
-  id_client              String                 @db.Uuid
-  created_at             DateTime?              @default(now()) @db.Timestamptz(6)
-  deleted_at             DateTime?              @db.Timestamptz(6)
-  m_inspection_activity  m_inspection_activity? @relation(fields: [id_inspection_activity], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_activity_param_fkey_inspection_activity")
-  m_parameter            m_parameter?           @relation(fields: [id_param], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_activity_param_fkey_param")
-}
-
-model m_inspection_group {
-  id                    String                  @id @default(uuid()) @db.Uuid
-  name                  String?                 @db.VarChar
-  id_head_pic           String                  @db.Uuid
-  description           String?                 @db.VarChar
-  created_by            String?                 @db.Uuid
-  updated_at            DateTime?               @db.Timestamptz(6)
-  updated_by            String?                 @db.Uuid
-  id_client             String                  @db.Uuid
-  deleted_at            DateTime?               @db.Timestamptz(6)
-  created_at            DateTime?               @default(now()) @db.Timestamptz(6)
-  id_category           String?                 @db.Uuid
-  id_site               String?                 @db.Uuid
-  m_user                m_user                  @relation(fields: [id_head_pic], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_head_pic")
-  m_category            m_category?             @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_location")
-  m_site                m_site?                 @relation(fields: [id_site], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_site")
-  m_inspection_schedule m_inspection_schedule[]
-  m_inspection_staff    m_inspection_staff[]
-  t_inspection          t_inspection[]
-  t_inspection_schedule t_inspection_schedule[]
-}
-
-model m_inspection_schedule {
-  id                          String                        @id @default(uuid()) @db.Uuid
-  id_category                 String                        @db.Uuid
-  id_location                 String?                       @db.Uuid
-  name                        String?                       @db.VarChar
-  id_m_inspection_group       String?                       @db.Uuid
-  description                 String?                       @db.VarChar
-  scheduled_at                DateTime?                     @db.Timestamptz(6)
-  interval_number             Int?
-  id_interval_uom             String?                       @db.Uuid
-  status                      String?
-  interval_type               String?                       @db.VarChar
-  created_at                  DateTime?                     @default(now()) @db.Timestamptz(6)
-  created_by                  String?                       @db.Uuid
-  updated_at                  DateTime?                     @db.Timestamptz(6)
-  updated_by                  String?                       @db.Uuid
-  id_client                   String                        @db.Uuid
-  deleted_at                  DateTime?                     @db.Timestamptz(6)
-  m_category                  m_category                    @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_category")
-  m_uom                       m_uom?                        @relation(fields: [id_interval_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_interval_uom")
-  m_location                  m_location?                   @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_location")
-  m_inspection_group          m_inspection_group?           @relation(fields: [id_m_inspection_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_m_inspection_group")
-  m_inspection_schedule_param m_inspection_schedule_param[]
-  t_inspection_schedule       t_inspection_schedule[]
-}
-
-model m_inspection_schedule_param {
-  id                       String                 @id @default(uuid()) @db.Uuid
-  id_m_inspection_schedule String?                @db.Uuid
-  id_m_parameter           String?                @db.Uuid
-  created_at               DateTime?              @default(now()) @db.Timestamptz(6)
-  created_by               String?                @db.Uuid
-  updated_at               DateTime?              @db.Timestamptz(6)
-  updated_by               String?                @db.Uuid
-  id_client                String                 @db.Uuid
-  deleted_at               DateTime?              @db.Timestamptz(6)
-  m_inspection_schedule    m_inspection_schedule? @relation(fields: [id_m_inspection_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_m_inspection_schedule")
-  m_parameter              m_parameter?           @relation(fields: [id_m_parameter], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_m_parameter")
-}
-
-model m_inspection_staff {
-  id                   String                @id @default(uuid()) @db.Uuid
-  id_inspection_group  String?               @db.Uuid
-  id_staff_pic         String?               @db.Uuid
-  created_by           String?               @db.Uuid
-  updated_at           DateTime?             @db.Timestamptz(6)
-  updated_by           String?               @db.Uuid
-  id_client            String                @db.Uuid
-  deleted_at           DateTime?             @db.Timestamptz(6)
-  id_inspection_result String?               @db.Uuid
-  created_at           DateTime?             @default(now()) @db.Timestamptz(6)
-  m_inspection_group   m_inspection_group?   @relation(fields: [id_inspection_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_inspection_staff_inspection_group")
-  t_inspection_result  t_inspection_result[]
+model m_vendor {
+  id           String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name         String?        @db.VarChar
+  pic          String?        @db.VarChar
+  no_telp      String?        @db.VarChar
+  email        String?        @db.VarChar
+  address      String?        @db.VarChar
+  description  String?
+  logo         String?        @db.VarChar
+  created_by   String?        @db.Uuid
+  updated_at   DateTime?      @db.Timestamptz(6)
+  updated_by   String?        @db.Uuid
+  id_client    String         @db.Uuid
+  created_at   DateTime?      @default(now()) @db.Timestamptz(6)
+  deleted_at   DateTime?      @db.Timestamptz(6)
+  m_asset      m_asset[]
+  t_work_order t_work_order[]
 }
 
 model m_location {
-  id                     String                   @id(map: "m_location_primary_key_id") @default(uuid()) @db.Uuid
-  id_category            String?                  @db.Uuid
+  id                     String                   @id(map: "m_location_primary_key_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   id_parent              String?                  @db.Uuid
   name                   String                   @db.VarChar
   description            String?
@@ -273,94 +193,138 @@ model m_location {
   id_client              String                   @db.Uuid
   deleted_at             DateTime?                @db.Timestamptz(6)
   id_site                String?                  @db.Uuid
-  m_asset                m_asset[]
-  m_inspection_schedule  m_inspection_schedule[]
-  m_location             m_location?              @relation("m_location", fields: [id_parent], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_parent")
-  other_m_location       m_location[]             @relation("m_location")
-  m_category             m_category?              @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_category")
-  m_maintenance_schedule m_maintenance_schedule[]
-  m_opname_schedule      m_opname_schedule[]
-  t_inspection           t_inspection[]
-  t_maintenance_schedule t_maintenance_schedule[]
-  t_opname               t_opname[]
-  t_opname_schedule      t_opname_schedule[]
-  m_site                 m_site?                  @relation(fields: [m_siteId], references: [id])
-  m_siteId               String?                  @db.Uuid
-
-  @@index([created_by], map: "fki_m_location_foreign_key_created_by")
-  @@index([id_client], map: "fki_m_location_foreign_key_id_client")
-  @@index([updated_by], map: "fki_m_location_foreign_key_updated_by")
-}
-
-model m_maintenance_group {
-  id                     String                   @id @default(uuid()) @db.Uuid
-  name                   String?                  @db.VarChar
-  code                   String?                  @db.VarChar
-  id_maintenance_leader  String?                  @db.Uuid
-  description            String?
-  created_by             String?                  @db.Uuid
-  updated_at             DateTime?                @db.Timestamptz(6)
-  updated_by             String?                  @db.Uuid
-  id_client              String                   @db.Uuid
-  deleted_at             DateTime?                @db.Timestamptz(6)
-  created_at             DateTime?                @default(now()) @db.Timestamptz(6)
-  m_user                 m_user?                  @relation(fields: [id_maintenance_leader], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_leader")
-  m_maintenance_schedule m_maintenance_schedule[]
-  t_work_order           t_work_order[]
-  m_maintenance_spv      m_maintenance_spv[]
-  m_maintenance_staff    m_maintenance_staff[]
-  m_wo_activity          m_wo_activity[]
-  t_maintenance_schedule t_maintenance_schedule[]
-  m_departement          m_asset[]
-  t_work_order_leader    t_work_order[]           @relation("id_mainteance_leader")
-
-  @@index([id_maintenance_leader], map: "fki_id_maintenance_leader")
-  @@index([id_maintenance_leader], map: "fki_id_departement_spv")
-}
-
-model m_maintenance_spv {
-  id                     String                   @id @default(uuid()) @db.Uuid
-  id_maintenance_group   String?                  @db.Uuid
-  id_spv                 String?                  @db.Uuid
-  description            String?
-  created_by             String?                  @db.Uuid
-  updated_at             DateTime?                @db.Timestamptz(6)
-  updated_by             String?                  @db.Uuid
-  id_client              String                   @db.Uuid
-  deleted_at             DateTime?                @db.Timestamptz(6)
-  created_at             DateTime?                @default(now()) @db.Timestamptz(6)
   id_category            String?                  @db.Uuid
-  id_site                String?                  @db.Uuid
-  m_maintenance_group    m_maintenance_group?     @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fki_id_maintenance_group")
-  m_user                 m_user?                  @relation(fields: [id_spv], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_spv")
-  t_work_order           t_work_order[]
+  m_asset                m_asset[]
+  m_location             m_location?              @relation("parent_location", fields: [id_parent], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_m_location       m_location[]             @relation("parent_location")
   m_maintenance_schedule m_maintenance_schedule[]
-  assign_spv             m_maintenance_schedule[] @relation("spv_assign")
-
-  @@index([id_maintenance_group], map: "id_maintenance_group")
+  t_opname_schedule      t_opname_schedule[]
 }
 
-model m_maintenance_staff {
-  id                  String               @id @default(uuid()) @db.Uuid
-  id_maintenance_spv  String?              @db.Uuid
-  id_staff            String?              @db.Uuid
-  description         String?
-  created_by          String?              @db.Uuid
-  updated_at          DateTime?            @db.Timestamptz(6)
-  updated_by          String?              @db.Uuid
-  id_client           String               @db.Uuid
-  deleted_at          DateTime?            @db.Timestamptz(6)
-  created_at          DateTime?            @default(now()) @db.Timestamptz(6)
-  id_category         String?              @db.Uuid
-  id_site             String?              @db.Uuid
-  m_user              m_user?              @relation(fields: [id_staff], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_staff")
-  m_maintenance_group m_maintenance_group? @relation(fields: [id_maintenance_spv], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fki_id_maintenance_spv")
+model t_maintenance_task {
+  id                     String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_cascade_wo          String?                  @db.Uuid
+  id_wo                  String?                  @db.Uuid
+  task_description       String?
+  id_staff               String?                  @db.Uuid
+  notes                  String?
+  planned_date           DateTime?                @db.Timestamptz(6)
+  due_date               DateTime?                @db.Timestamptz(6)
+  status                 String?                  @db.VarChar
+  budget_cost            Decimal?                 @db.Decimal
+  actual_cost            Decimal?                 @db.Decimal
+  created_by             String?                  @db.Uuid
+  updated_at             DateTime?                @db.Timestamptz(6)
+  updated_by             String?                  @db.Uuid
+  id_client              String                   @db.Uuid
+  created_at             DateTime?                @default(now()) @db.Timestamptz(6)
+  deleted_at             DateTime?                @db.Timestamptz(6)
+  t_maintenance_activity t_maintenance_activity[]
+  cascade_wo             t_work_order?            @relation("t_maintenance_task_id_cascade_woTot_work_order", fields: [id_cascade_wo], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  wo                     t_work_order?            @relation("t_maintenance_task_id_woTot_work_order", fields: [id_wo], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
 
-  @@index([id_maintenance_spv], map: "id_maintenance_spv")
+model t_work_order {
+  id                      String                    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_asset                String?                   @db.Uuid
+  id_maintenance_group    String?                   @db.Uuid
+  id_vendor               String?                   @db.Uuid
+  id_complaint_user       String?                   @db.Uuid
+  complaint_message       String?
+  complaint_attachment    String?                   @db.VarChar
+  complaint_date_request  DateTime?                 @db.Timestamptz(6)
+  id_maintenance_schedule String?                   @db.Uuid
+  id_wo_preventive        String?                   @db.Uuid
+  id_maintenance_leader   String?                   @db.Uuid
+  id_spv                  String?                   @db.Uuid
+  wo_no                   String?                   @db.VarChar
+  name                    String?                   @db.VarChar
+  date                    DateTime?                 @db.Timestamptz(6)
+  notes                   String?
+  attachment              String?                   @db.VarChar
+  planned_date            DateTime?                 @db.Timestamptz(6)
+  due_date                DateTime?                 @db.Timestamptz(6)
+  actual_date             DateTime?                 @db.Timestamptz(6)
+  status                  String?                   @db.VarChar
+  created_at              DateTime?                 @default(now()) @db.Timestamptz(6)
+  created_by              String?                   @db.Uuid
+  updated_at              DateTime?                 @db.Timestamptz(6)
+  updated_by              String?                   @db.Uuid
+  id_client               String                    @db.Uuid
+  deleted_at              DateTime?                 @db.Timestamptz(6)
+  t_approval              t_approval[]
+  cascade_wo              t_maintenance_task[]      @relation("t_maintenance_task_id_cascade_woTot_work_order")
+  wo                      t_maintenance_task[]      @relation("t_maintenance_task_id_woTot_work_order")
+  m_asset                 m_asset?                  @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  complaint_user          m_user?                   @relation("user_complaint", fields: [id_complaint_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_maintenance_group     m_maintenance_group?      @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  maintenance_leader      m_user?                   @relation("maintenance_leader", fields: [id_maintenance_leader], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_maintenance_schedule  m_maintenance_schedule?   @relation(fields: [id_maintenance_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_maintenance_spv       m_maintenance_group_user? @relation(fields: [id_spv], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_vendor                m_vendor?                 @relation(fields: [id_vendor], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model t_audit_log {
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_table         String    @db.Uuid
+  table_name       String?   @db.VarChar
+  column_name      String?   @db.VarChar
+  old_value        String?   @db.VarChar
+  new_value        String?   @db.VarChar
+  transaction_date DateTime? @db.Timestamptz(6)
+  id_user          String?   @db.Uuid
+  created_by       String?   @db.Uuid
+  created_at       DateTime? @db.Timestamptz(6)
+  updated_at       DateTime? @db.Timestamptz(6)
+  updated_by       String?   @db.Uuid
+  deleted_at       DateTime? @db.Timestamptz(6)
+  m_user           m_user?   @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model m_material {
+  id                          String                        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                        String?                       @db.VarChar
+  description                 String?
+  stock                       Decimal?                      @db.Decimal
+  id_uom                      String?                       @db.Uuid
+  price                       Decimal?                      @db.Decimal
+  attachment                  String?                       @db.VarChar
+  created_by                  String?                       @db.Uuid
+  updated_at                  DateTime?                     @db.Timestamptz(6)
+  updated_by                  String?                       @db.Uuid
+  id_client                   String                        @db.Uuid
+  created_at                  DateTime?                     @default(now()) @db.Timestamptz(6)
+  deleted_at                  DateTime?                     @db.Timestamptz(6)
+  m_maintenance_schedule_cost m_maintenance_schedule_cost[]
+  m_uom                       m_uom?                        @relation(fields: [id_uom], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  t_maintenance_activity      t_maintenance_activity[]
+}
+
+model m_uom {
+  id                          String                        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                        String                        @db.VarChar
+  uom_code                    String?                       @db.VarChar
+  note                        String?
+  uom_type                    String?                       @db.VarChar
+  id_client                   String                        @db.Uuid
+  created_by                  String?                       @db.Uuid
+  updated_by                  String?                       @db.Uuid
+  updated_at                  DateTime?                     @db.Timestamptz(6)
+  deleted_at                  DateTime?                     @db.Timestamptz(6)
+  created_at                  DateTime?                     @default(now()) @db.Timestamptz(6)
+  m_asset                     m_asset[]
+  m_maintenance_schedule      m_maintenance_schedule[]
+  m_maintenance_schedule_cost m_maintenance_schedule_cost[]
+  m_material                  m_material[]
+  t_maintenance_activity      t_maintenance_activity[]
+
+  @@index([created_by], map: "fki_m_uom_foreign_key_created_by")
+  @@index([id_client], map: "fki_m_uom_foreign_key_id_client")
+  @@index([updated_by], map: "fki_m_uom_foreign_key_updated_by")
 }
 
 model m_maintenance_schedule {
-  id                          String                        @id @default(uuid()) @db.Uuid
+  id                          String                        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   id_category                 String                        @db.Uuid
   id_location                 String?                       @db.Uuid
   id_maintenance_group        String?                       @db.Uuid
@@ -380,62 +344,174 @@ model m_maintenance_schedule {
   updated_by                  String?                       @db.Uuid
   id_client                   String                        @db.Uuid
   deleted_at                  DateTime?                     @db.Timestamptz(6)
-  m_category                  m_category                    @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_category")
-  m_location                  m_location?                   @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_location")
-  m_maintenance_group         m_maintenance_group?          @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_group")
-  maintenance_spv             m_maintenance_spv?            @relation(fields: [id_spv_created], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_spv")
-  assign_spv                  m_maintenance_spv?            @relation("spv_assign", fields: [id_spv_assign], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_assign_spv")
-  m_uom                       m_uom?                        @relation(fields: [interval_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_uom")
+  m_category                  m_category                    @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_location                  m_location?                   @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_maintenance_group         m_maintenance_group?          @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  spv_created                 m_user?                       @relation("spv_assign", fields: [id_spv_assign], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  spv_assigned                m_user?                       @relation("spv_created", fields: [id_spv_created], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_uom                       m_uom?                        @relation(fields: [interval_uom], references: [id], onDelete: NoAction, onUpdate: NoAction)
   m_maintenance_schedule_task m_maintenance_schedule_task[]
-  t_maintenance_schedule      t_maintenance_schedule[]
   t_approval                  t_approval[]
+  t_work_order                t_work_order[]
 }
 
 model m_maintenance_schedule_task {
-  id                        String                  @id @default(uuid()) @db.Uuid
-  id_m_maintenance_schedule String?                 @db.Uuid
-  id_staff                  String?                 @db.Uuid
-  notes                     String?
-  planned_date              DateTime?               @db.Timestamptz(6)
-  due_date                  DateTime?               @db.Timestamptz(6)
-  created_at                DateTime?               @default(now()) @db.Timestamptz(6)
-  created_by                String?                 @db.Uuid
-  updated_at                DateTime?               @db.Timestamptz(6)
-  updated_by                String?                 @db.Uuid
-  id_client                 String                  @db.Uuid
-  deleted_at                DateTime?               @db.Timestamptz(6)
-  m_maintenance_schedule    m_maintenance_schedule? @relation(fields: [id_m_maintenance_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_m_maintenance_schedule")
-  m_user                    m_user?                 @relation(fields: [id_staff], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user")
-}
-
-model t_maintenance_task {
-  id                          String                        @id @default(uuid()) @db.Uuid
-  id_cascade_wo               String?                       @db.Uuid
-  id_wo                       String?                       @db.Uuid
-  task_description            String?
+  id                          String                        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_m_maintenance_schedule   String?                       @db.Uuid
   id_staff                    String?                       @db.Uuid
   notes                       String?
   planned_date                DateTime?                     @db.Timestamptz(6)
   due_date                    DateTime?                     @db.Timestamptz(6)
-  status                      String?                       @db.VarChar
-  budget_cost                 Decimal?                      @db.Decimal
-  actual_cost                 Decimal?                      @db.Decimal
+  created_at                  DateTime?                     @default(now()) @db.Timestamptz(6)
   created_by                  String?                       @db.Uuid
   updated_at                  DateTime?                     @db.Timestamptz(6)
   updated_by                  String?                       @db.Uuid
   id_client                   String                        @db.Uuid
-  created_at                  DateTime?                     @default(now()) @db.Timestamptz(6)
   deleted_at                  DateTime?                     @db.Timestamptz(6)
-  t_work_order                t_work_order?                 @relation(fields: [id_wo], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_task_fkey_wo")
-  cascade_wo                  t_work_order?                 @relation("cascade_wo", fields: [id_cascade_wo], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_task_fkey_cascade_wo")
-  m_user                      m_user?                       @relation(fields: [id_staff], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user")
-  m_wo_activity_task          m_wo_activity_task[]
-  t_maintenance_schedule_task t_maintenance_schedule_task[]
-  t_maintenance_cost          t_maintenance_cost[]
+  m_maintenance_schedule_cost m_maintenance_schedule_cost[]
+  m_maintenance_schedule      m_maintenance_schedule?       @relation(fields: [id_m_maintenance_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_user                      m_user?                       @relation(fields: [id_staff], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-model t_maintenance_cost {
-  id                  String              @id @default(uuid()) @db.Uuid
+model m_maintenance_schedule_cost {
+  id                           String                       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_maintenance_schedule_task String?                      @db.Uuid
+  type                         String?                      @db.VarChar
+  id_material                  String?                      @db.Uuid
+  description                  String?
+  quantity                     Decimal?                     @db.Decimal
+  price                        Decimal?                     @db.Decimal
+  notes                        String?
+  id_uom                       String?                      @db.Uuid
+  created_at                   DateTime?                    @default(now()) @db.Timestamptz(6)
+  created_by                   String?                      @db.Uuid
+  updated_at                   DateTime?                    @db.Timestamptz(6)
+  updated_by                   String?                      @db.Uuid
+  id_client                    String                       @db.Uuid
+  deleted_at                   DateTime?                    @db.Timestamptz(6)
+  m_maintenance_schedule_task  m_maintenance_schedule_task? @relation(fields: [id_maintenance_schedule_task], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_schedule_cost_id_maintenance_schedule_task_fkey1")
+  m_material                   m_material?                  @relation(fields: [id_material], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_uom                        m_uom?                       @relation(fields: [id_uom], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model t_approval {
+  id                      String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_wo                   String?                 @db.Uuid
+  id_maintenance_schedule String?                 @db.Uuid
+  id_user_approval        String?                 @db.Uuid
+  status                  String?                 @db.VarChar
+  approval_type           String?
+  approval_date           DateTime?               @db.Timestamptz(6)
+  created_by              String?                 @db.Uuid
+  updated_at              DateTime?               @db.Timestamptz(6)
+  updated_by              String?                 @db.Uuid
+  id_client               String                  @db.Uuid
+  created_at              DateTime?               @default(now()) @db.Timestamptz(6)
+  deleted_at              DateTime?               @db.Timestamptz(6)
+  m_maintenance_schedule  m_maintenance_schedule? @relation(fields: [id_maintenance_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_user                  m_user?                 @relation(fields: [id_user_approval], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  t_work_order            t_work_order?           @relation(fields: [id_wo], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  t_disposal              t_disposal[]
+}
+
+model m_approval {
+  id                String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_task           String?             @db.Uuid
+  name              String?             @db.VarChar
+  description       String?
+  stock             String?             @db.VarChar
+  id_uom            String?             @db.Uuid
+  price             Decimal?
+  attachment        String?             @db.VarChar
+  t_opname_schedule t_opname_schedule[]
+}
+
+model t_depreciation {
+  id                    String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_by            String?                 @db.Uuid
+  updated_at            DateTime?               @db.Timestamptz(6)
+  updated_by            String?                 @db.Uuid
+  id_client             String                  @db.Uuid
+  deleted_at            DateTime?               @db.Timestamptz(6)
+  created_at            DateTime?               @default(now()) @db.Timestamptz(6)
+  user_id               String?                 @db.Uuid
+  period                String?                 @db.VarChar
+  document_number       String?                 @db.VarChar
+  status                String?                 @db.VarChar
+  date_depreciation     DateTime                @db.Timestamptz(6)
+  m_user                m_user?                 @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  t_depreciation_detail t_depreciation_detail[]
+}
+
+model t_opname_schedule {
+  id                 String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_by         String?    @db.Uuid
+  updated_at         DateTime?  @db.Timestamptz(6)
+  updated_by         String?    @db.Uuid
+  id_client          String     @db.Uuid
+  deleted_at         DateTime?  @db.Timestamptz(6)
+  created_at         DateTime?  @default(now()) @db.Timestamptz(6)
+  date_opname        DateTime?  @db.Timestamptz(6)
+  opname_description String?
+  status             String?    @db.VarChar
+  total_item         Int?
+  user_id            String?    @db.Uuid
+  id_approval        String     @db.Uuid
+  id_location        String     @db.Uuid
+  t_opname           t_opname[]
+  m_approval         m_approval @relation(fields: [id_approval], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_location         m_location @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_user             m_user?    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model t_disposal {
+  id                       String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_user                  String?              @db.Uuid
+  id_departement           String?              @db.Uuid
+  id_asset                 String?              @db.Uuid
+  document_no              Decimal?             @db.Decimal
+  date_disposal            DateTime?            @db.Timestamptz(6)
+  description              String?
+  asset_cost               Decimal?             @db.Decimal
+  accumulated_depreciation Decimal?             @db.Decimal
+  disposal_amout           Decimal?             @db.Decimal
+  status                   String?              @db.VarChar
+  id_approval              String?              @db.Uuid
+  total_value              Decimal?             @db.Decimal
+  created_by               String?              @db.Uuid
+  updated_at               DateTime?            @db.Timestamptz(6)
+  updated_by               String?              @db.Uuid
+  id_client                String               @db.Uuid
+  created_at               DateTime?            @default(now()) @db.Timestamptz(6)
+  deleted_at               DateTime?            @db.Timestamptz(6)
+  t_approval               t_approval?          @relation(fields: [id_approval], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_asset                  m_asset?             @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_maintenance_group      m_maintenance_group? @relation(fields: [id_departement], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_user                   m_user?              @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  t_disposal_details       t_disposal_details[]
+}
+
+model t_disposal_details {
+  id                             String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_asset                       String?     @db.Uuid
+  id_disposal                    String?     @db.Uuid
+  quantity                       Decimal?    @db.Decimal
+  value_accumulated_depreciation Decimal?    @db.Decimal
+  notes                          String?
+  description                    String?
+  date_disposal                  DateTime?   @db.Timestamptz(6)
+  created_by                     String?     @db.Uuid
+  updated_at                     DateTime?   @db.Timestamptz(6)
+  updated_by                     String?     @db.Uuid
+  id_client                      String      @db.Uuid
+  created_at                     DateTime?   @default(now()) @db.Timestamptz(6)
+  deleted_at                     DateTime?   @db.Timestamptz(6)
+  m_asset                        m_asset?    @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  t_disposal                     t_disposal? @relation(fields: [id_disposal], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model t_maintenance_activity {
+  id                  String              @id(map: "t_maintenance_cost_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   id_maintenance_task String?             @db.Uuid
   type                String?             @db.VarChar
   id_material         String?             @db.Uuid
@@ -450,724 +526,127 @@ model t_maintenance_cost {
   id_client           String              @db.Uuid
   created_at          DateTime?           @default(now()) @db.Timestamptz(6)
   deleted_at          DateTime?           @db.Timestamptz(6)
-  t_maintenance_task  t_maintenance_task? @relation(fields: [id_maintenance_task], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_task")
-  m_material          m_material?         @relation(fields: [id_material], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_material")
-  m_uom               m_uom?              @relation(fields: [id_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_uom")
+  t_maintenance_task  t_maintenance_task? @relation(fields: [id_maintenance_task], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_maintenance_cost_id_maintenance_task_fkey")
+  m_material          m_material?         @relation(fields: [id_material], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_maintenance_cost_id_material_fkey")
+  m_uom               m_uom?              @relation(fields: [id_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_maintenance_cost_id_uom_fkey")
 }
 
-model m_material {
-  id                 String               @id @default(uuid()) @db.Uuid
-  name               String?              @db.VarChar
-  description        String?
-  stock              Decimal?             @db.Decimal
-  id_uom             String?              @db.Uuid
-  price              Decimal?             @db.Decimal
-  attachment         String?              @db.VarChar
-  created_by         String?              @db.Uuid
-  updated_at         DateTime?            @db.Timestamptz(6)
-  updated_by         String?              @db.Uuid
-  id_client          String               @db.Uuid
-  created_at         DateTime?            @default(now()) @db.Timestamptz(6)
-  deleted_at         DateTime?            @db.Timestamptz(6)
-  m_task             m_uom?               @relation(fields: [id_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_material_fkey_uom")
-  t_maintenance_cost t_maintenance_cost[]
+model m_maintenance_group_role {
+  id                       String                     @id(map: "m_maintenance_role_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_maintenance_group     String?                    @db.Uuid
+  created_by               String?                    @db.Uuid
+  updated_at               DateTime?                  @db.Timestamptz(6)
+  updated_by               String?                    @db.Uuid
+  id_client                String                     @db.Uuid
+  deleted_at               DateTime?                  @db.Timestamptz(6)
+  created_at               DateTime?                  @default(now()) @db.Timestamptz(6)
+  id_role                  String?                    @db.Uuid
+  m_maintenance_group      m_maintenance_group?       @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_spv_id_maintenance_group_fkey")
+  m_role                   m_role?                    @relation(fields: [id_role], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_spv_id_role_fkey")
+  m_maintenance_group_user m_maintenance_group_user[]
 }
 
-model t_audit_log {
-  id               String    @id @default(dbgenerated("gen_random_uuid")) @db.Uuid
-  id_table         String?   @db.Uuid
-  table_name       String?   @db.VarChar
-  colom_name       String?   @db.VarChar
-  old_value        String?   @db.VarChar
-  new_value        String?   @db.VarChar
-  transaction_date DateTime? @db.Timestamptz(6)
-  id_user          String?   @db.Uuid
-  m_user           m_user?   @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user")
+model m_maintenance_group_user {
+  id                        String                    @id(map: "m_maintenance_user_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_maintenance_group_role String?                   @db.Uuid
+  created_by                String?                   @db.Uuid
+  updated_at                DateTime?                 @db.Timestamptz(6)
+  updated_by                String?                   @db.Uuid
+  id_client                 String                    @db.Uuid
+  deleted_at                DateTime?                 @db.Timestamptz(6)
+  created_at                DateTime?                 @default(now()) @db.Timestamptz(6)
+  id_user                   String?                   @db.Uuid
+  m_maintenance_group_role  m_maintenance_group_role? @relation(fields: [id_maintenance_group_role], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_user                    m_user?                   @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_maintenance_staff       m_maintenance_staff[]
+  t_work_order              t_work_order[]
 }
 
-model m_opname_schedule {
-  id                      String                    @id @default(uuid()) @db.Uuid
-  id_location             String?                   @db.Uuid
-  name                    String?                   @db.VarChar
-  id_pic                  String?                   @db.Uuid
-  description             String?
-  scheduled_at            DateTime?                 @db.Timestamptz(6)
-  interval_number         Decimal?                  @db.Decimal
-  id_interval_uom         String?                   @db.Uuid
-  status                  String?                   @db.VarChar
-  created_by              String?                   @db.Uuid
-  updated_at              DateTime?                 @db.Timestamptz(6)
-  updated_by              String?                   @db.Uuid
-  id_client               String                    @db.Uuid
-  deleted_at              DateTime?                 @db.Timestamptz(6)
-  created_at              DateTime?                 @default(now()) @db.Timestamptz(6)
-  m_user                  m_user?                   @relation(fields: [id_pic], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_id_pic")
-  m_uom                   m_uom?                    @relation(fields: [id_interval_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_interval_uom")
-  m_location              m_location?               @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_location")
-  m_opname_schedule_asset m_opname_schedule_asset[]
-  t_opname_schedule       t_opname_schedule[]
+model t_depreciation_detail {
+  id                  String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_depreciation     String?              @db.Uuid
+  id_departement      String?              @db.Uuid
+  id_asset            String?              @db.Uuid
+  expense_value       Decimal?             @db.Decimal
+  asset_period        Int?
+  created_at          DateTime?            @default(now()) @db.Timestamptz(6)
+  created_by          String?              @db.Uuid
+  updated_at          DateTime?            @db.Timestamptz(6)
+  updated_by          String?              @db.Uuid
+  id_client           String               @db.Uuid
+  deleted_at          DateTime?            @db.Timestamptz(6)
+  m_asset             m_asset?             @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_maintenance_group m_maintenance_group? @relation(fields: [id_departement], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  t_depreciation      t_depreciation?      @relation(fields: [id_depreciation], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-model m_opname_schedule_asset {
-  id                   String             @id @default(uuid()) @db.Uuid
-  id_m_opname_schedule String?            @db.Uuid
-  id_asset             String?            @db.Uuid
-  created_by           String?            @db.Uuid
-  updated_at           DateTime?          @db.Timestamptz(6)
-  updated_by           String?            @db.Uuid
-  id_client            String             @db.Uuid
-  deleted_at           DateTime?          @db.Timestamptz(6)
-  created_at           DateTime?          @default(now()) @db.Timestamptz(6)
-  m_asset              m_asset?           @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_asset_asset")
-  m_opname_schedule    m_opname_schedule? @relation(fields: [id_m_opname_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_opname_schedule_asset_opname_schedule")
+model t_movement {
+  id                  String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  document_no         Decimal             @db.Decimal
+  movement_date       DateTime            @db.Timestamptz(6)
+  locator_id          String              @db.Uuid
+  description         String
+  id_departement      String              @db.Uuid
+  id_staff            String              @db.Uuid
+  created_at          DateTime            @default(now()) @db.Timestamptz(6)
+  created_by          String              @db.Uuid
+  updated_at          DateTime            @db.Timestamptz(6)
+  updated_by          String              @db.Uuid
+  deleted_at          DateTime            @db.Timestamptz(6)
+  id_client           Int                 @db.SmallInt
+  m_maintenance_group m_maintenance_group @relation(fields: [id_departement], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_user              m_user              @relation(fields: [id_staff], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-model m_param_category {
-  id          String        @id @default(uuid()) @db.Uuid
-  name        String?       @db.VarChar
-  description String?
-  user_tag    String?       @db.VarChar
-  created_by  String?       @db.Uuid
-  updated_at  DateTime?     @db.Timestamptz(6)
-  updated_by  String?       @db.Uuid
-  id_client   String        @db.Uuid
-  created_at  DateTime?     @default(now()) @db.Timestamptz(6)
-  deleted_at  DateTime?     @db.Timestamptz(6)
-  m_parameter m_parameter[]
-}
-
-model m_parameter {
-  id                          String                        @id @default(uuid()) @db.Uuid
-  id_asset_category           String?                       @db.Uuid
-  name                        String?                       @db.VarChar
-  type                        String?                       @db.VarChar
-  mandatory                   Boolean?
-  meta                        Json?
-  id_param_category           String                        @db.Uuid
-  created_by                  String?                       @db.Uuid
-  updated_at                  DateTime?                     @db.Timestamptz(6)
-  updated_by                  String?                       @db.Uuid
-  id_client                   String                        @db.Uuid
-  created_at                  DateTime?                     @default(now()) @db.Timestamptz(6)
-  deleted_at                  DateTime?                     @db.Timestamptz(6)
-  m_inspection_activity_param m_inspection_activity_param[]
-  m_inspection_schedule_param m_inspection_schedule_param[]
-  m_category                  m_category?                   @relation(fields: [id_asset_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_parameter_fkey_asset_category")
-  m_param_category            m_param_category              @relation(fields: [id_param_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_parameter_fkey_param_category")
-  t_inspection_result         t_inspection_result[]
-  t_inspection_schedule_param t_inspection_schedule_param[]
-
-  @@index([id_param_category], map: "fki_m_parameter_fkey_param_category")
-}
-
-model m_role {
-  id          String        @id(map: "m_role_primary_key_id") @default(uuid()) @db.Uuid
-  name        String        @db.VarChar
-  description String?
-  icon        String?       @db.VarChar
-  created_at  DateTime?     @default(now()) @db.Timestamptz(6)
-  created_by  String?       @db.Uuid
-  updated_at  DateTime?     @db.Timestamptz(6)
-  updated_by  String?       @db.Uuid
-  id_client   String        @db.Uuid
-  deleted_at  DateTime?     @db.Timestamptz(6)
-  m_user_role m_user_role[]
-
-  @@index([created_by], map: "fki_m_role_foreign_key_created_by")
-  @@index([id_client], map: "fki_m_role_foreign_key_id_client")
-  @@index([updated_by], map: "fki_m_role_foreign_key_updated_by")
-}
-
-model m_site {
-  id                 String               @id @default(uuid()) @db.Uuid
-  name               String?              @db.VarChar
-  address            String?              @db.VarChar
-  description        String?              @db.VarChar
-  created_at         DateTime?            @default(now()) @db.Timestamptz(6)
-  created_by         String?              @db.Uuid
-  updated_at         DateTime?            @db.Timestamptz(6)
-  updated_by         String?              @db.Uuid
-  deleted_at         DateTime?            @db.Timestamptz(6)
-  id_client          String               @db.Uuid
-  m_inspection_group m_inspection_group[]
-  m_location         m_location[]
-}
-
-model m_uom {
-  id                     String                   @id @default(uuid()) @db.Uuid
-  name                   String                   @db.VarChar
-  uom_code               String?                  @db.VarChar
-  note                   String?
-  uom_type               String?                  @db.VarChar
-  id_client              String                   @db.Uuid
-  created_by             String?                  @db.Uuid
-  updated_by             String?                  @db.Uuid
-  updated_at             DateTime?                @db.Timestamptz(6)
-  deleted_at             DateTime?                @db.Timestamptz(6)
-  created_at             DateTime?                @default(now()) @db.Timestamptz(6)
-  dimension_uom          m_asset[]                @relation("dimension_uom")
-  m_inspection_schedule  m_inspection_schedule[]
-  m_material             m_material[]
-  m_opname_schedule      m_opname_schedule[]
-  m_wo_activity_material m_wo_activity_material[]
-  t_maintenance_cost     t_maintenance_cost[]
-  m_approval             m_approval[]
-  m_maintenance_schedule m_maintenance_schedule[]
-
-  @@index([created_by], map: "fki_m_uom_foreign_key_created_by")
-  @@index([id_client], map: "fki_m_uom_foreign_key_id_client")
-  @@index([updated_by], map: "fki_m_uom_foreign_key_updated_by")
-}
-
-model m_user {
-  id                          String                        @id(map: "m_user_primary_key_id") @default(uuid()) @db.Uuid
-  name                        String                        @db.VarChar
-  username                    String                        @db.VarChar
-  password                    String                        @db.VarChar
-  email                       String                        @db.VarChar
-  photo                       String?                       @db.VarChar
-  created_at                  DateTime?                     @default(now()) @db.Timestamptz(6)
-  created_by                  String?                       @db.Uuid
-  updated_at                  DateTime?                     @db.Timestamptz(6)
-  updated_by                  String?                       @db.Uuid
-  id_client                   String                        @db.Uuid
-  deleted_at                  DateTime?                     @db.Timestamptz(6)
-  m_inspection_group          m_inspection_group[]
-  m_maintenance_group         m_maintenance_group[]
-  m_maintenance_staff         m_maintenance_staff[]
-  m_opname_schedule           m_opname_schedule[]
-  m_user_role                 m_user_role[]
-  t_asset_history             t_asset_history[]
-  m_maintenance_spv           m_maintenance_spv[]
-  t_work_order                t_work_order[]
-  t_maintenance_task          t_maintenance_task[]
-  t_audit_log                 t_audit_log[]
-  m_maintenance_schedule_task m_maintenance_schedule_task[]
-  t_approval                  t_approval[]
-
-  @@index([id_client], map: "fki_m_user_foreign_key_created_by")
-  @@index([id_client], map: "fki_m_user_foreign_key_id_client")
-  @@index([updated_by], map: "fki_m_user_foreign_key_updated_by")
-}
-
-model m_user_role {
-  id         String    @id(map: "m_user_role_primary_key_id") @default(uuid()) @db.Uuid
-  id_user    String    @db.Uuid
-  id_role    String    @db.Uuid
-  created_at DateTime? @default(now()) @db.Timestamptz(6)
-  created_by String?   @db.Uuid
-  updated_at DateTime? @db.Timestamptz(6)
-  updated_by String?   @db.Uuid
-  id_client  String    @db.Uuid
-  deleted_at DateTime? @db.Timestamptz(6)
-  m_role     m_role    @relation(fields: [id_role], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user_role_foreign_key_id_role")
-  m_user     m_user    @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user_role_foreign_key_id_user")
-
-  @@index([created_by], map: "fki_m_user_role_foreign_key_created_by")
-  @@index([id_client], map: "fki_m_user_role_foreign_key_id_client")
-  @@index([id_role], map: "fki_m_user_role_foreign_key_id_role")
-  @@index([id_user], map: "fki_m_user_role_foreign_key_id_user")
-}
-
-model m_user_tag {
-  id         String    @id(map: "m_user_tag_primary_key_id") @default(uuid()) @db.Uuid
-  id_user    String    @db.Uuid
-  tag        String?   @db.VarChar
-  created_at DateTime? @default(now()) @db.Timestamptz(6)
-  created_by String?   @db.Uuid
-  updated_at DateTime? @db.Timestamptz(6)
-  updated_by String?   @db.Uuid
-  id_client  String    @db.Uuid
-  deleted_at DateTime? @db.Timestamptz(6)
-
-  @@index([created_by], map: "fki_m_user_tag_foreign_key_created_by")
-  @@index([id_client], map: "fki_m_user_tag_foreign_key_id_client")
-  @@index([id_user], map: "fki_m_user_tag_foreign_key_id_user")
-  @@index([updated_by], map: "fki_m_user_tag_foreign_key_updated_by")
-}
-
-model m_vendor {
-  id                     String                   @id @default(uuid()) @db.Uuid
-  name                   String?                  @db.VarChar
-  pic                    String?                  @db.VarChar
-  no_telp                String?                  @db.VarChar
-  email                  String?                  @db.VarChar
-  address                String?                  @db.VarChar
-  description            String?
-  logo                   String?                  @db.VarChar
-  created_by             String?                  @db.Uuid
-  updated_at             DateTime?                @db.Timestamptz(6)
-  updated_by             String?                  @db.Uuid
-  id_client              String                   @db.Uuid
-  created_at             DateTime?                @default(now()) @db.Timestamptz(6)
-  deleted_at             DateTime?                @db.Timestamptz(6)
-  m_wo_activity          m_wo_activity[]
-  m_asset                m_asset[]
-  t_maintenance_schedule t_maintenance_schedule[]
-  t_work_order           t_work_order[]
-}
-
-model m_wo_activity {
-  id                   String               @id @default(uuid()) @db.Uuid
-  id_category          String?              @db.Uuid
-  id_maintenance_group String?              @db.Uuid
-  name                 String?              @db.VarChar
-  notes                String?
-  id_vendor            String?              @db.Uuid
-  attachment           String?              @db.VarChar
-  created_by           String?              @db.Uuid
-  updated_at           DateTime?            @db.Timestamptz(6)
-  updated_by           String?              @db.Uuid
-  id_client            String               @db.Uuid
-  created_at           DateTime?            @default(now()) @db.Timestamptz(6)
-  deleted_at           DateTime?            @db.Timestamptz(6)
-  m_category           m_category?          @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_fkey_category")
-  m_maintenance_group  m_maintenance_group? @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_fkey_maintenance_group")
-  m_vendor             m_vendor?            @relation(fields: [id_vendor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_fkey_vendor")
-  m_wo_activity_task   m_wo_activity_task[]
-}
-
-model m_wo_activity_material {
-  id                           String              @id @default(uuid()) @db.Uuid
-  id_wo_activity_task          String?             @db.Uuid
-  id_maintenance_task_material String?             @db.Uuid
-  quantity                     Decimal?            @db.Decimal
-  price                        Decimal?            @db.Decimal
-  id_uom_material              String?             @db.Uuid
-  notes                        String?
-  created_by                   String?             @db.Uuid
-  updated_at                   DateTime?           @db.Timestamptz(6)
-  updated_by                   String?             @db.Uuid
-  id_client                    String              @db.Uuid
-  created_at                   DateTime?           @default(now()) @db.Timestamptz(6)
-  deleted_at                   DateTime?           @db.Timestamptz(6)
-  m_uom                        m_uom?              @relation(fields: [id_uom_material], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_material_fkey_uom_material")
-  m_wo_activity_task           m_wo_activity_task? @relation(fields: [id_wo_activity_task], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_material_fkey_wo_activity_task")
-}
-
-model m_wo_activity_task {
-  id                     String                   @id @default(uuid()) @db.Uuid
-  id_wo_activity         String?                  @db.Uuid
-  id_maintenance_task    String?                  @db.Uuid
-  id_maintenance_staff   String?                  @db.Uuid
-  price                  Decimal?                 @db.Decimal
-  notes                  String?
-  created_by             String?                  @db.Uuid
-  updated_at             DateTime?                @db.Timestamptz(6)
-  updated_by             String?                  @db.Uuid
-  id_client              String                   @db.Uuid
-  created_at             DateTime?                @default(now()) @db.Timestamptz(6)
-  deleted_at             DateTime?                @db.Timestamptz(6)
-  m_wo_activity_material m_wo_activity_material[]
-  m_maintenance_task     t_maintenance_task?      @relation(fields: [id_maintenance_task], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_task_fkey_maintenance_task")
-  m_wo_activity          m_wo_activity?           @relation(fields: [id_wo_activity], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_activity_task_fkey_wo_activity")
-}
-
-model m_wo_rule {
-  id             String           @id @default(uuid()) @db.Uuid
-  name           String?          @db.VarChar
-  type           String?          @db.VarChar
-  rule           Json?
-  symbol         String?          @db.VarChar
-  nominal        Decimal?         @db.Decimal
-  created_by     String?          @db.Uuid
-  updated_at     DateTime?        @db.Timestamptz(6)
-  updated_by     String?          @db.Uuid
-  id_client      String           @db.Uuid
-  created_at     DateTime?        @default(now()) @db.Timestamptz(6)
-  deleted_at     DateTime?        @db.Timestamptz(6)
-  m_wo_rule_line m_wo_rule_line[]
-}
-
-model m_wo_rule_line {
-  id         String     @id @default(uuid()) @db.Uuid
-  id_wo_rule String?    @db.Uuid
-  id_user    String?    @db.Uuid
-  priority   String?    @db.VarChar
-  created_by String?    @db.Uuid
-  updated_at DateTime?  @db.Timestamptz(6)
-  updated_by String?    @db.Uuid
-  id_client  String     @db.Uuid
-  created_at DateTime?  @default(now()) @db.Timestamptz(6)
-  deleted_at DateTime?  @db.Timestamptz(6)
-  m_wo_rule  m_wo_rule? @relation(fields: [id_wo_rule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_wo_rule_line_fkey_wo_rule")
-}
-
-model t_asset_disposal {
-  id                        String           @id @default(uuid()) @db.Uuid
-  id_asset                  String?          @db.Uuid
-  id_asset_history          String?          @db.Uuid
-  id_remaining_depreciation String?          @db.Uuid
-  pice_sell                 Decimal?         @db.Decimal
-  description               String?
-  status                    String?          @db.VarChar
-  date                      DateTime?        @db.Timestamptz(6)
-  created_by                String?          @db.Uuid
-  updated_at                DateTime?        @db.Timestamptz(6)
-  updated_by                String?          @db.Uuid
-  id_client                 String           @db.Uuid
-  created_at                DateTime?        @default(now()) @db.Timestamptz(6)
-  deleted_at                DateTime?        @db.Timestamptz(6)
-  m_asset                   m_asset?         @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_disposal_asset")
-  t_asset_history           t_asset_history? @relation(fields: [id_asset_history], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_disposal_asset_history")
-  m_depreciation            m_depreciation?  @relation(fields: [id_remaining_depreciation], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_disposal_remaining_depreciation")
-}
-
-model t_asset_history {
-  id               String             @id @default(uuid()) @db.Uuid
-  type             String?            @db.VarChar
-  id_asset         String?            @db.Uuid
-  id_user          String?            @db.Uuid
-  date             DateTime?          @db.Timestamptz(6)
-  created_by       String?            @db.Uuid
-  updated_at       DateTime?          @db.Timestamptz(6)
-  updated_by       String?            @db.Uuid
-  id_client        String             @db.Uuid
-  deleted_at       DateTime?          @db.Timestamptz(6)
-  created_at       DateTime?          @default(now()) @db.Timestamptz(6)
-  t_asset_disposal t_asset_disposal[]
-  m_asset          m_asset?           @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_history_foreign_key_asset")
-  m_user           m_user?            @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_history_foreign_key_id_user")
-}
-
-model t_asset_merge {
-  id                 String               @id @default(uuid()) @db.Uuid
-  id_asset           String?              @db.Uuid
-  date               DateTime?            @db.Timestamptz(6)
-  created_by         String?              @db.Uuid
-  updated_at         DateTime?            @db.Timestamptz(6)
-  updated_by         String?              @db.Uuid
-  id_client          String               @db.Uuid
-  deleted_at         DateTime?            @db.Timestamptz(6)
-  created_at         DateTime?            @default(now()) @db.Timestamptz(6)
-  m_asset            m_asset?             @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_merge_asset")
-  t_asset_merge_from t_asset_merge_from[]
-}
-
-model t_asset_merge_from {
-  id             String         @id @default(uuid()) @db.Uuid
-  id_asset_merge String?        @db.Uuid
-  id_asset       String?        @db.Uuid
-  created_by     String?        @db.Uuid
-  updated_at     DateTime?      @db.Timestamptz(6)
-  updated_by     String?        @db.Uuid
-  id_client      String         @db.Uuid
-  deleted_at     DateTime?      @db.Timestamptz(6)
-  created_at     DateTime?      @default(now()) @db.Timestamptz(6)
-  m_asset        m_asset?       @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_merge_from_asset")
-  t_asset_merge  t_asset_merge? @relation(fields: [id_asset_merge], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_merge_from_asset_merge")
-}
-
-model t_asset_split {
-  id               String             @id @default(uuid()) @db.Uuid
-  id_asset         String?            @db.Uuid
-  date             DateTime?          @db.Timestamptz(6)
-  created_by       String?            @db.Uuid
-  updated_at       DateTime?          @db.Timestamptz(6)
-  updated_by       String?            @db.Uuid
-  id_client        String             @db.Uuid
-  deleted_at       DateTime?          @db.Timestamptz(6)
-  created_at       DateTime?          @default(now()) @db.Timestamptz(6)
-  m_asset          m_asset?           @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_split_asset")
-  t_asset_split_to t_asset_split_to[]
-}
-
-model t_asset_split_to {
-  id             String         @id @default(uuid()) @db.Uuid
-  id_asset_split String?        @db.Uuid
-  id_asset       String?        @db.Uuid
-  created_by     String?        @db.Uuid
-  updated_at     DateTime?      @db.Timestamptz(6)
-  updated_by     String?        @db.Uuid
-  id_client      String         @db.Uuid
-  deleted_at     DateTime?      @db.Timestamptz(6)
-  created_at     DateTime?      @default(now()) @db.Timestamptz(6)
-  m_asset        m_asset?       @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_split_to_asset")
-  t_asset_split  t_asset_split? @relation(fields: [id_asset_split], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_asset_split_to_asset_split")
-
-  @@index([id_asset], map: "fki_t_asset_split_to_asset")
-}
-
-model t_depreciation {
-  id               String          @id @default(uuid()) @db.Uuid
-  id_depreciation  String?         @db.Uuid
-  date             DateTime?       @db.Timestamptz(6)
-  start_book_value Decimal?        @db.Decimal
-  end_book_value   Decimal?        @db.Decimal
-  created_by       String?         @db.Uuid
-  updated_at       DateTime?       @db.Timestamptz(6)
-  updated_by       String?         @db.Uuid
-  id_client        String          @db.Uuid
-  deleted_at       DateTime?       @db.Timestamptz(6)
-  created_at       DateTime?       @default(now()) @db.Timestamptz(6)
-  m_depreciation   m_depreciation? @relation(fields: [id_depreciation], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_depreciation_foreign_key_depreciation")
-
-  @@index([id_depreciation], map: "fki_t_depreciation_foreign_key_depreciation")
-  @@index([id_client], map: "fki_t_depreciation_foreign_key_id_client")
-  @@index([updated_by], map: "fki_t_depreciation_foreign_key_updated_by")
-  @@index([created_by], map: "fki_y")
-}
-
-model t_inspection {
-  id                     String                 @id @default(uuid()) @db.Uuid
-  inspection_no          String?                @db.VarChar
-  id_ticket              String                 @db.Uuid
-  id_asset               String?                @db.Uuid
-  name                   String?                @db.VarChar
-  id_inspection_group    String?                @db.Uuid
-  id_location            String?                @db.Uuid
-  id_inspection_schedule String?                @db.Uuid
-  conclusion             String?                @db.VarChar
-  status_maintenance     String?                @db.VarChar
-  created_at             DateTime?              @default(now()) @db.Timestamptz(6)
-  created_by             String?                @db.Uuid
-  updated_at             DateTime?              @db.Timestamptz(6)
-  updated_by             String?                @db.Uuid
-  id_client              String                 @db.Uuid
-  deleted_at             DateTime?              @db.Timestamptz(6)
-  m_asset                m_asset?               @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_asset")
-  m_inspection_group     m_inspection_group?    @relation(fields: [id_inspection_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_inspection_group")
-  t_inspection_schedule  t_inspection_schedule? @relation(fields: [id_inspection_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_inspection_schedule")
-  m_location             m_location?            @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_location")
-  t_inspection_result    t_inspection_result[]
-
-  @@index([id_inspection_schedule], map: "fki_inspection")
-}
-
-model t_inspection_result {
-  id                  String             @id @default(uuid()) @db.Uuid
-  id_inspection       String?            @db.Uuid
-  id_parameter        String?            @db.Uuid
-  answer              Json?
-  result              String?            @db.VarChar
-  id_inspection_staff String             @db.Uuid
-  created_at          DateTime?          @default(now()) @db.Timestamptz(6)
-  created_by          String?            @db.Uuid
-  updated_at          DateTime?          @db.Timestamptz(6)
-  updated_by          String?            @db.Uuid
-  id_client           String             @db.Uuid
-  deleted_at          DateTime?          @db.Timestamptz(6)
-  t_inspection        t_inspection?      @relation(fields: [id_inspection], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_inspection")
-  m_inspection_staff  m_inspection_staff @relation(fields: [id_inspection_staff], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_inspection_staff")
-  m_parameter         m_parameter?       @relation(fields: [id_parameter], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_parameter")
-
-  @@index([id_inspection_staff], map: "fki_id_inspection_staff")
-}
-
-model t_inspection_schedule {
-  id                          String                        @id @default(uuid()) @db.Uuid
-  id_m_inspection_schedule    String?                       @db.Uuid
-  id_asset                    String?                       @db.Uuid
-  name                        String?                       @db.VarChar
-  id_m_inspection_group       String?                       @db.Uuid
-  description                 String?
-  scheduled_at                DateTime?                     @db.Timestamptz(6)
-  status                      String?                       @db.VarChar
-  created_at                  DateTime?                     @default(now()) @db.Timestamptz(6)
-  created_by                  String?                       @db.Uuid
-  updated_at                  DateTime?                     @db.Timestamptz(6)
-  updated_by                  String?                       @db.Uuid
-  id_client                   String                        @db.Uuid
-  deleted_at                  DateTime?                     @db.Timestamptz(6)
-  t_inspection                t_inspection[]
-  m_asset                     m_asset?                      @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_asset")
-  m_inspection_group          m_inspection_group?           @relation(fields: [id_m_inspection_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_m_inspection_group")
-  m_inspection_schedule       m_inspection_schedule?        @relation(fields: [id_m_inspection_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_m_inspection_schedule")
-  t_inspection_schedule_param t_inspection_schedule_param[]
-}
-
-model t_inspection_schedule_param {
-  id                       String                 @id @default(uuid()) @db.Uuid
-  id_t_inspection_schedule String?                @db.Uuid
-  id_m_parameter           String?                @db.Uuid
-  created_at               DateTime?              @default(now()) @db.Timestamptz(6)
-  created_by               String?                @db.Uuid
-  updated_at               DateTime?              @db.Timestamptz(6)
-  updated_by               String?                @db.Uuid
-  id_client                String                 @db.Uuid
-  deleted_at               DateTime?              @db.Timestamptz(6)
-  m_parameter              m_parameter?           @relation(fields: [id_m_parameter], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_m_parameter")
-  t_inspection_schedule    t_inspection_schedule? @relation(fields: [id_t_inspection_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_t_inspection_schedule")
-}
-
-model t_maintenance_schedule {
-  id                          String                        @id @default(uuid()) @db.Uuid
-  id_location                 String?                       @db.Uuid
-  id_asset                    String?                       @db.Uuid
-  id_maintenance_group        String?                       @db.Uuid
-  name                        String?                       @db.VarChar
-  notes                       String?
-  id_vendor                   String?                       @db.Uuid
-  attachment                  String?                       @db.VarChar
-  planned_date                DateTime?                     @db.Timestamptz(6)
-  status                      String?                       @db.VarChar
-  created_at                  DateTime?                     @default(now()) @db.Timestamptz(6)
-  created_by                  String?                       @db.Uuid
-  updated_at                  DateTime?                     @db.Timestamptz(6)
-  updated_by                  String?                       @db.Uuid
-  id_client                   String                        @db.Uuid
-  id_m_maintenance_schedule   String?                       @db.Uuid
-  deleted_at                  DateTime?                     @db.Timestamptz(6)
-  m_asset                     m_asset?                      @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_asset")
-  m_location                  m_location?                   @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_location")
-  m_maintenance_group         m_maintenance_group?          @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_group")
-  m_vendor                    m_vendor?                     @relation(fields: [id_vendor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_vendor")
-  m_maintenance_schedule      m_maintenance_schedule?       @relation(fields: [id_m_maintenance_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_schedule")
-  t_maintenance_schedule_task t_maintenance_schedule_task[]
-  t_work_order                t_work_order[]
-}
-
-model t_maintenance_schedule_task {
-  id                        String                  @id @default(uuid()) @db.Uuid
-  id_t_maintenance_schedule String?                 @db.Uuid
-  id_maintenance_task       String?                 @db.Uuid
-  id_maintenance_staff      String?                 @db.Uuid
-  price                     Decimal?                @db.Decimal
-  notes                     String?
-  created_at                DateTime?               @default(now()) @db.Timestamptz(6)
-  created_by                String?                 @db.Uuid
-  updated_at                DateTime?               @db.Timestamptz(6)
-  updated_by                String?                 @db.Uuid
-  id_client                 String                  @db.Uuid
-  deleted_at                DateTime?               @db.Timestamptz(6)
-  m_maintenance_task        t_maintenance_task?     @relation(fields: [id_maintenance_task], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_task")
-  t_maintenance_schedule    t_maintenance_schedule? @relation(fields: [id_t_maintenance_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_t_maintenance_schedule")
+model t_movement_line {
+  id               String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  movement_id      String   @db.Uuid
+  movement_line_id String   @db.Uuid
+  locator_id       String   @db.Uuid
+  description      String
+  m_asset          String   @db.Uuid
+  created_at       DateTime @default(now()) @db.Timestamptz(6)
+  created_by       String   @db.Uuid
+  updated_at       DateTime @db.Timestamptz(6)
+  updated_by       String   @db.Uuid
+  deleted_at       DateTime @db.Timestamptz(6)
+  id_client        String   @db.Uuid
 }
 
 model t_opname {
-  id                 String             @id @default(uuid()) @db.Uuid
+  id                 String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   id_opname_schedule String?            @db.Uuid
-  id_location        String?            @db.Uuid
-  date               DateTime?          @db.Timestamptz(6)
-  id_pic             String?            @db.Uuid
-  created_by         String?            @db.Uuid
+  document_no        Decimal?           @db.Decimal
+  date_opname        DateTime?          @db.Timestamptz(6)
+  description        String?
+  location_warehouse String?            @db.Uuid
+  status             String?            @db.VarChar
+  created_at         DateTime?          @default(now()) @db.Timestamptz(6)
+  created__by        String?            @map("created_ by") @db.Uuid
   updated_at         DateTime?          @db.Timestamptz(6)
   updated_by         String?            @db.Uuid
+  deleted_at         DateTime?          @db.Timestamp(6)
   id_client          String             @db.Uuid
-  deleted_at         DateTime?          @db.Timestamptz(6)
-  created_at         DateTime?          @default(now()) @db.Timestamptz(6)
-  m_location         m_location?        @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_fkey_location")
-  t_opname_schedule  t_opname_schedule? @relation(fields: [id_opname_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_fkey_opname_schedule")
-  t_opname_result    t_opname_result[]
+  t_opname_schedule  t_opname_schedule? @relation(fields: [id_opname_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  t_opname_line      t_opname_line[]
 }
 
-model t_opname_result {
-  id                  String    @id @default(uuid()) @db.Uuid
-  id_asset_opname     String?   @db.Uuid
-  id_asset            String?   @db.Uuid
-  availability_status String?   @db.VarChar
-  notes               String?
-  created_by          String?   @db.Uuid
-  updated_at          DateTime? @db.Timestamptz(6)
-  updated_by          String?   @db.Uuid
-  id_client           String    @db.Uuid
-  deleted_at          DateTime? @db.Timestamptz(6)
-  created_at          DateTime? @default(now()) @db.Timestamptz(6)
-  m_asset             m_asset?  @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_result_fkey_asset")
-  t_opname            t_opname? @relation(fields: [id_asset_opname], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_result_fkey_t_opname")
-}
-
-model t_opname_schedule {
-  id                      String                    @id @default(uuid()) @db.Uuid
-  id_m_schedule           String?                   @db.Uuid
-  id_location             String?                   @db.Uuid
-  name                    String?                   @db.VarChar
-  id_pic                  String?                   @db.Uuid
-  description             String?
-  created_by              String?                   @db.Uuid
-  updated_at              DateTime?                 @db.Timestamptz(6)
-  updated_by              String?                   @db.Uuid
-  id_client               String                    @db.Uuid
-  date                    DateTime?                 @db.Timestamptz(6)
-  deleted_at              DateTime?                 @db.Timestamptz(6)
-  created_at              DateTime?                 @default(now()) @db.Timestamptz(6)
-  t_opname                t_opname[]
-  m_location              m_location?               @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_schedule_location")
-  m_opname_schedule       m_opname_schedule?        @relation(fields: [id_m_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_schedule_m_opname_schedule")
-  t_opname_schedule_asset t_opname_schedule_asset[]
-}
-
-model t_opname_schedule_asset {
-  id                   String             @id @default(uuid()) @db.Uuid
-  id_t_opname_schedule String?            @db.Uuid
-  id_asset             String?            @db.Uuid
-  created_by           String?            @db.Uuid
-  updated_at           DateTime?          @db.Timestamptz(6)
-  updated_by           String?            @db.Uuid
-  id_client            String             @db.Uuid
-  deleted_at           DateTime?          @db.Timestamptz(6)
-  created_at           DateTime?          @default(now()) @db.Timestamptz(6)
-  m_asset              m_asset?           @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_schedule_asset_fkey_asset")
-  t_opname_schedule    t_opname_schedule? @relation(fields: [id_t_opname_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_schedule_asset_fkey_t_opname_schedule")
-}
-
-model t_work_order {
-  id                      String                  @id @default(uuid()) @db.Uuid
-  id_asset                String?                 @db.Uuid
-  id_maintenance_group    String?                 @db.Uuid
-  id_vendor               String?                 @db.Uuid
-  id_complaint_user       String?                 @db.Uuid
-  complaint_message       String?
-  complaint_attachment    String?                 @db.VarChar
-  complaint_date_request  DateTime?               @db.Timestamptz(6)
-  id_maintenance_schedule String?                 @db.Uuid
-  id_wo_preventive        String?                 @db.Uuid
-  id_maintenance_leader   String?                 @db.Uuid
-  id_spv                  String?                 @db.Uuid
-  wo_no                   String?                 @db.VarChar
-  name                    String?                 @db.VarChar
-  date                    DateTime?               @db.Timestamptz(6)
-  notes                   String?
-  attachment              String?                 @db.VarChar
-  planned_date            DateTime?               @db.Timestamptz(6)
-  due_date                DateTime?               @db.Timestamptz(6)
-  actual_date             DateTime?               @db.Timestamptz(6)
-  status                  String?                 @db.VarChar
-  created_at              DateTime?               @default(now()) @db.Timestamptz(6)
-  created_by              String?                 @db.Uuid
-  updated_at              DateTime?               @db.Timestamptz(6)
-  updated_by              String?                 @db.Uuid
-  id_client               String                  @db.Uuid
-  deleted_at              DateTime?               @db.Timestamptz(6)
-  m_asset                 m_asset?                @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_asset")
-  m_maintenance_group     m_maintenance_group?    @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_group")
-  m_maintenance_leader    m_maintenance_group?    @relation("id_mainteance_leader", fields: [id_maintenance_leader], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_leader")
-  m_maintenance_spv       m_maintenance_spv?      @relation(fields: [id_spv], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_spv")
-  m_user                  m_user?                 @relation(fields: [id_complaint_user], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_complaint_user")
-  t_maintenance_schedule  t_maintenance_schedule? @relation(fields: [id_maintenance_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_t_maintenance_schedule")
-  m_vendor                m_vendor?               @relation(fields: [id_vendor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_vendor")
-  t_maintenance_task      t_maintenance_task[]
-  cascade_wo              t_maintenance_task[]    @relation("cascade_wo")
-  t_approval              t_approval[]
-}
-
-model t_approval {
-  id                      String                  @id @default(uuid()) @db.Uuid
-  id_wo                   String?                 @db.Uuid
-  id_maintenance_schedule String?                 @db.Uuid
-  id_user_approval        String?                 @db.Uuid
-  status                  String?                 @db.VarChar
-  approval_type           String?
-  approval_date           DateTime?               @db.Timestamptz(6)
-  created_by              String?                 @db.Uuid
-  updated_at              DateTime?               @db.Timestamptz(6)
-  updated_by              String?                 @db.Uuid
-  id_client               String                  @db.Uuid
-  created_at              DateTime?               @default(now()) @db.Timestamptz(6)
-  deleted_at              DateTime?               @db.Timestamptz(6)
-  t_wo                    t_work_order?           @relation(fields: [id_wo], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_wo")
-  m_user                  m_user?                 @relation(fields: [id_user_approval], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user")
-  m_maintenance_schedule  m_maintenance_schedule? @relation(fields: [id_maintenance_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_schedule")
-}
-
-model m_approval {
-  id          String   @id @default(uuid()) @db.Uuid
-  id_task     String?  @db.Uuid
-  name        String?  @db.VarChar
-  description String?
-  stock       String?  @db.VarChar
-  id_uom      String?  @db.Uuid
-  price       Decimal?
-  attachment  String?  @db.VarChar
-  m_uom       m_uom?   @relation(fields: [id_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_uom")
+model t_opname_line {
+  id                 String    @id(map: "t_opname_schedule_detail_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_asset           String?   @db.Uuid
+  id_opname          String?   @db.Uuid
+  quantity           Decimal?  @db.Decimal
+  quantity_actual    Decimal?  @db.Decimal
+  notes              String?
+  opname_description String?
+  date_opname        DateTime? @db.Timestamptz(6)
+  created_by         String?   @db.Uuid
+  updated_at         DateTime? @db.Timestamptz(6)
+  updated_by         String?   @db.Uuid
+  id_client          String    @db.Uuid
+  deleted_at         DateTime? @db.Timestamptz(6)
+  created_at         DateTime? @default(now()) @db.Timestamptz(6)
+  status             String    @db.VarChar
+  t_opname           t_opname? @relation(fields: [id_opname], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_asset            m_asset?  @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_schedule_detail_id_asset_fkey")
 }

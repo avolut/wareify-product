@@ -11,6 +11,14 @@ import {
   LogOut,
   Settings,
   Menu,
+  ArrowRightLeft,
+  ArrowDown10,
+  FileSpreadsheet,
+  ListTodo,
+  MessageSquareWarning,
+  CircleOff,
+  UserCog,
+  LibraryBig,
 } from "lucide-react";
 
 export const icons = {
@@ -26,4 +34,12 @@ export const icons = {
   LogOut,
   Settings,
   Menu,
+  ArrowRightLeft,
+  ArrowDown10,
+  FileSpreadsheet,
+  ListTodo,
+  MessageSquareWarning,
+  CircleOff,
+  UserCog,
+  LibraryBig,
 };
