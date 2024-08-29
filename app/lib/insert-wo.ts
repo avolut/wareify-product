@@ -5,7 +5,6 @@ export const insertWo = async (
   schedule: m_maintenance_schedule,
   idMaintenanceLeader: string
 ): Promise<any> => {
-
   try {
     const wo = await db.t_work_order.create({
       data: {
@@ -17,7 +16,7 @@ export const insertWo = async (
         attachment: schedule.attachment,
         planned_date: schedule.start_date,
         due_date: schedule.end_date,
-        status: schedule.approval_status,
+        status: schedule.approval_status || "",
         id_maintenance_schedule: schedule.id,
       },
     });
