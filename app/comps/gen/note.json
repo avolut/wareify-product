@@ -1,0 +1,2263 @@
+{
+  "id": "ugfi6abr1skruyvbspcit675",
+  "adv": {
+    "js": "<Field\n  on_load={opt__on_load}\n  opt_get_label={opt__label}\n  opt_get_value={opt__get_value}\n  opt_set_value={opt__set_value}\n  opt_selected={opt__is_selected}\n  on_init={ext__on_init}\n  on_upload={upl__on_upload}\n  show_label={ext__show_label}\n  mask={mask}\n  label={label}\n  label_action={label_action}\n  link={{ text: link__text, url: link__url, params: link__params }}\n  name={name}\n  type={type}\n  kv={{ default: kv__default || {}, index: kv__index }}\n  upload={{\n    accept: typeof upl__accept === \"string\" ? upl__accept : undefined,\n    mode: typeof upl__mode === \"string\" ? upl__mode : \"single-file\",\n    cover_text: typeof upl__cover_text === \"string\" ? upl__cover_text : \"\",\n    cover_field: typeof upl__cover_field === \"string\" ? upl__cover_field : \"\",\n  }}\n  field_ref={typeof field_ref !== \"undefined\" ? field_ref : undefined}\n  on_change={ext__on_change}\n  fm={fm}\n  props={props}\n  __props={__props}\n  PassProp={PassProp}\n  required={ext__required}\n  required_msg={ext__required_msg}\n  child={child}\n  disabled={ext__disabled}\n  prefix={ext__prefix}\n  suffix={ext__suffix}\n  custom={custom}\n  desc={ext__desc}\n  width={ext__width}\n  _item={_item}\n  pk={opt__pk}\n  sub_type={sub_type}\n  url_upload={opt__url_upload}\n  placeholder={ext__placeholder}\n  msg_error={msg_error}\n  gen_table={rel__gen_table}\n  gen_fields={rel__gen_fields}\n  tbl_show_header={ext__tbl_show_header}\n  model_upload={upl__upload_type}\n  min_date={ext__min_date}\n  max_date={ext__max_date}\n  upload_style={upl__styling_upload}\n  disabled_search={ext__disabled_search}\n  show={ext__show}\n  label_checkbox={ext__label_checkbox}\n></Field>",
+    "css": "",
+    "jsBuilt": "const _jsxFileName = \"[item: field - zmit41kbgkbqcsmm8aspp8zy]\";render (React.createElement(Field, {\n  on_load: opt__on_load,\n  opt_get_label: opt__label,\n  opt_get_value: opt__get_value,\n  opt_set_value: opt__set_value,\n  opt_selected: opt__is_selected,\n  on_init: ext__on_init,\n  on_upload: upl__on_upload,\n  show_label: ext__show_label,\n  mask: mask,\n  label: label,\n  label_action: label_action,\n  link: { text: link__text, url: link__url, params: link__params },\n  name: name,\n  type: type,\n  kv: { default: kv__default || {}, index: kv__index },\n  upload: {\n    accept: typeof upl__accept === \"string\" ? upl__accept : undefined,\n    mode: typeof upl__mode === \"string\" ? upl__mode : \"single-file\",\n    cover_text: typeof upl__cover_text === \"string\" ? upl__cover_text : \"\",\n    cover_field: typeof upl__cover_field === \"string\" ? upl__cover_field : \"\",\n  },\n  field_ref: typeof field_ref !== \"undefined\" ? field_ref : undefined,\n  on_change: ext__on_change,\n  fm: fm,\n  props: props,\n  __props: __props,\n  PassProp: PassProp,\n  required: ext__required,\n  required_msg: ext__required_msg,\n  child: child,\n  disabled: ext__disabled,\n  prefix: ext__prefix,\n  suffix: ext__suffix,\n  custom: custom,\n  desc: ext__desc,\n  width: ext__width,\n  _item: _item,\n  pk: opt__pk,\n  sub_type: sub_type,\n  url_upload: opt__url_upload,\n  placeholder: ext__placeholder,\n  msg_error: msg_error,\n  gen_table: rel__gen_table,\n  gen_fields: rel__gen_fields,\n  tbl_show_header: ext__tbl_show_header,\n  model_upload: upl__upload_type,\n  min_date: ext__min_date,\n  max_date: ext__max_date,\n  upload_style: upl__styling_upload,\n  disabled_search: ext__disabled_search,\n  show: ext__show,\n  label_checkbox: ext__label_checkbox, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1}}\n))"
+  },
+  "dim": { "h": "full", "w": "full" },
+  "name": "field",
+  "type": "item",
+  "childs": [],
+  "mobile": {
+    "dim": { "h": "full", "w": "full", "hUnit": "px" },
+    "border": { "color": "#ba2f2f", "style": "solid", "stroke": { "b": 1 } },
+    "padding": { "b": 5, "l": 15, "r": 15, "t": 5 }
+  },
+  "script": {
+    "props": {
+      "kv__": { "value": "\"hello\"", "valueBuilt": "\"hello\"" },
+      "mask": {
+        "value": "\"____-____-_______\"",
+        "valueBuilt": "\"____-____-_______\""
+      },
+      "name": {
+        "value": "`m_maintenance_schedule_line`",
+        "valueBuilt": "`m_maintenance_schedule_line`"
+      },
+      "type": { "value": "\"multi-option\"", "valueBuilt": "\"multi-option\"" },
+      "ext__": { "value": "\"hello\"", "valueBuilt": "\"hello\"" },
+      "label": {
+        "value": "`Maintenance Schedule Line`",
+        "valueBuilt": "`Maintenance Schedule Line`"
+      },
+      "opt__": { "value": "\"hello\"", "valueBuilt": "\"hello\"" },
+      "rel__": { "value": "\"hello\"", "valueBuilt": "\"hello\"" },
+      "upl__": { "value": "\"hello\"", "valueBuilt": "\"hello\"" },
+      "custom": {
+        "value": " () => {\n  const result = {\n    field: \"text\",\n    type: \"text\"\n  };\n  return result;\n};\n",
+        "valueBuilt": " () => {\n  const result = {\n    field: \"text\",\n    type: \"text\"\n  };\n  return result;\n};\n"
+      },
+      "link__": { "value": "\"hello\"", "valueBuilt": "\"hello\"" },
+      "opt__pk": { "value": " \"value\";\n", "valueBuilt": " \"value\";\n" },
+      "sub_type": {
+        "value": "\"table-list-edit\"",
+        "valueBuilt": "\"table-list-edit\""
+      },
+      "ext__desc": { "value": " \"\";\n", "valueBuilt": " \"\";\n" },
+      "ext__show": { "value": "\"y\"", "valueBuilt": "\"y\"" },
+      "kv__index": { "value": "\"auto-sort\"", "valueBuilt": "\"auto-sort\"" },
+      "link__url": { "value": "`/d/asset`", "valueBuilt": "`/d/asset`" },
+      "msg_error": { "value": "\"hello\"", "valueBuilt": "\"hello\"" },
+      "upl__mode": {
+        "value": "\"single-file\"",
+        "valueBuilt": "\"single-file\""
+      },
+      "ext__width": { "value": "\"full\"", "valueBuilt": "\"full\"" },
+      "link__text": { "value": " `Detail`;\n", "valueBuilt": " `Detail`;\n" },
+      "opt__label": {
+        "value": "(\n  row,\n  mode, opt\n) => {\n  const cols = [\"name\"];\n  \n  if (isEditor) {\n    return row.label;\n  }\n\n  const prefix = treePrefix({\n    //@ts-ignore\n    rel__feature, rel__id_parent, row, mode, opt\n  });\n\n  const result = [];\n  if (!!row.data && !row.label && !Array.isArray(row.data)) {\n    if(cols.length > 0){\n      cols.map((e) => {\n        if (row.data[e]) {\n          result.push(row.data[e]);\n        }\n      });\n      return prefix + result.join(\" - \");\n    } else {\n      const fields = parseGenField(rel__gen_fields);\n      return prefix + fields\n        .filter((e) => !e.is_pk)\n        .map((e) => row.data[e.name])\n        .filter((e) => e)\n        .join(\" - \");\n    }\n  }\n  return prefix + row.label;\n}",
+        "valueBuilt": "(\n  row,\n  mode, opt\n) => {\n  const cols = [\"name\"];\n  \n  if (isEditor) {\n    return row.label;\n  }\n\n  const prefix = treePrefix({\n    //@ts-ignore\n    rel__feature, rel__id_parent, row, mode, opt\n  });\n\n  const result = [];\n  if (!!row.data && !row.label && !Array.isArray(row.data)) {\n    if(cols.length > 0){\n      cols.map((e) => {\n        if (row.data[e]) {\n          result.push(row.data[e]);\n        }\n      });\n      return prefix + result.join(\" - \");\n    } else {\n      const fields = parseGenField(rel__gen_fields);\n      return prefix + fields\n        .filter((e) => !e.is_pk)\n        .map((e) => row.data[e.name])\n        .filter((e) => e)\n        .join(\" - \");\n    }\n  }\n  return prefix + row.label;\n}"
+      },
+      "ext__prefix": {
+        "value": " () => {\n  return null;\n};\n",
+        "valueBuilt": " () => {\n  return null;\n};\n"
+      },
+      "ext__suffix": {
+        "value": " () => {\n  return null;\n};\n",
+        "valueBuilt": " () => {\n  return null;\n};\n"
+      },
+      "kv__default": { "value": "({})", "valueBuilt": "({})" },
+      "upl__accept": {
+        "value": "`image/*, \napplication/pdf,\napplication/vnd.*`",
+        "valueBuilt": "`image/*, \napplication/pdf,\napplication/vnd.*`"
+      },
+      "ext__on_init": {
+        "value": "({field}) => {\r\n\r\n}",
+        "valueBuilt": "({field}) => {\r\n\r\n}"
+      },
+      "label_action": {
+        "value": "(() => { const _jsxFileName = \"\"; return React.createElement(Button, {\n  style: { height: 28 ,gap: 5 },\n  onClick: () => {\n    navigate(`${link__url}#root=+`, { breads: [{ label: link__text }] });\n  }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1}}\n\n  , React.createElement('svg', {\n    xmlns: \"http://www.w3.org/2000/svg\",\n    width: \"16\",\n    height: \"16\",\n    viewBox: \"0 0 24 24\"   ,\n    fill: \"none\",\n    stroke: \"currentColor\",\n    'strokeWidth': \"2\",\n    'strokeLinecap': \"round\",\n    'strokeLinejoin': \"round\",\n    class: \"lucide lucide-plus\" , __self: this, __source: {fileName: _jsxFileName, lineNumber: 7}}\n\n    , React.createElement('path', { d: \"M5 12h14\" , __self: this, __source: {fileName: _jsxFileName, lineNumber: 19}} )\n    , React.createElement('path', { d: \"M12 5v14\" , __self: this, __source: {fileName: _jsxFileName, lineNumber: 20}} )\n  ), \"Add New\"\n\n) })()",
+        "valueBuilt": "(() => { const _jsxFileName = \"\"; return React.createElement(Button, {\n  style: { height: 28 ,gap: 5 },\n  onClick: () => {\n    navigate(`${link__url}#root=+`, { breads: [{ label: link__text }] });\n  }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1}}\n\n  , React.createElement('svg', {\n    xmlns: \"http://www.w3.org/2000/svg\",\n    width: \"16\",\n    height: \"16\",\n    viewBox: \"0 0 24 24\"   ,\n    fill: \"none\",\n    stroke: \"currentColor\",\n    'strokeWidth': \"2\",\n    'strokeLinecap': \"round\",\n    'strokeLinejoin': \"round\",\n    class: \"lucide lucide-plus\" , __self: this, __source: {fileName: _jsxFileName, lineNumber: 7}}\n\n    , React.createElement('path', { d: \"M5 12h14\" , __self: this, __source: {fileName: _jsxFileName, lineNumber: 19}} )\n    , React.createElement('path', { d: \"M12 5v14\" , __self: this, __source: {fileName: _jsxFileName, lineNumber: 20}} )\n  ), \"Add New\"\n\n) })()"
+      },
+      "link__params": {
+        "value": " async (field) => {\n  return {\n    where: {\n      id: \"\"\n    }\n  };\n};\n",
+        "valueBuilt": " async (field) => {\n  return {\n    where: {\n      id: \"\"\n    }\n  };\n};\n"
+      },
+      "opt__on_load": {
+        "value": "async (arg\n\n) => {\n  if (isEditor) return [{\"label\":\"sample\",\"value\":\"sample\",\"data\":null}];\n\n  return new Promise(async (done, reject) => {\n    try {\n      \n      const fields = parseGenField(rel__gen_fields);\n      const res = generateSelect(fields);\n      \n\n      const is_tree =\n        typeof rel__feature !== \"undefined\" &&\n        Array.isArray(rel__feature) &&\n        rel__feature.includes(\"tree\");\n      \n      const ext_select = {};\n      if (is_tree && typeof rel__id_parent === \"string\" && rel__id_parent) {\n        ext_select[rel__id_parent] = true;\n      }\n\n      let where = \n      (await call_prasi_events(\"field\", \"relation_load\", [fm, arg.field]) || {}) ;\n\n      let items = await db.m_maintenance_group.findMany({\n        select: {\n          ...ext_select,\n          ...{\"id\":true,\"name\":true}\n          ,...(res?.select || {})\n        },\n        where,\n        orderBy: {\n          id: \"desc\"\n        },\n      });\n\n      if (is_tree && typeof rel__id_parent === \"string\" && rel__id_parent) {\n        items = sortTree(items, rel__id_parent, \"id\");\n      }\n\n      if(Array.isArray(items) && items.length){\n        const cols = [\"name\"];\n        const getLabel = (data)  => {\n          const result = [];\n          cols.map((e) => {\n            if(data[e]){\n              result.push(data[e]);\n            }\n          })\n          return result.join(\" - \");\n        }\n        \n        let blank = undefined;\n        if ((ext__required ) !== \"y\" && (sub_type ) === 'dropdown') {\n          blank = { value: undefined, label: \"\", data: {} };\n        }\n          \n        done(\n          [\n            blank,\n            ...items.map((e) => {\n              return {\n                value: e.id,\n                label: getLabel(e),\n                data: e,\n              };\n            }),\n          ].filter((e) => e),\n        );\n      } else {\n        done([])\n      }\n    } catch(e) {\n    reject(e);\n    }\n  })\n}",
+        "valueBuilt": "async (arg\n\n) => {\n  if (isEditor) return [{\"label\":\"sample\",\"value\":\"sample\",\"data\":null}];\n\n  return new Promise(async (done, reject) => {\n    try {\n      \n      const fields = parseGenField(rel__gen_fields);\n      const res = generateSelect(fields);\n      \n\n      const is_tree =\n        typeof rel__feature !== \"undefined\" &&\n        Array.isArray(rel__feature) &&\n        rel__feature.includes(\"tree\");\n      \n      const ext_select = {};\n      if (is_tree && typeof rel__id_parent === \"string\" && rel__id_parent) {\n        ext_select[rel__id_parent] = true;\n      }\n\n      let where = \n      (await call_prasi_events(\"field\", \"relation_load\", [fm, arg.field]) || {}) ;\n\n      let items = await db.m_maintenance_group.findMany({\n        select: {\n          ...ext_select,\n          ...{\"id\":true,\"name\":true}\n          ,...(res?.select || {})\n        },\n        where,\n        orderBy: {\n          id: \"desc\"\n        },\n      });\n\n      if (is_tree && typeof rel__id_parent === \"string\" && rel__id_parent) {\n        items = sortTree(items, rel__id_parent, \"id\");\n      }\n\n      if(Array.isArray(items) && items.length){\n        const cols = [\"name\"];\n        const getLabel = (data)  => {\n          const result = [];\n          cols.map((e) => {\n            if(data[e]){\n              result.push(data[e]);\n            }\n          })\n          return result.join(\" - \");\n        }\n        \n        let blank = undefined;\n        if ((ext__required ) !== \"y\" && (sub_type ) === 'dropdown') {\n          blank = { value: undefined, label: \"\", data: {} };\n        }\n          \n        done(\n          [\n            blank,\n            ...items.map((e) => {\n              return {\n                value: e.id,\n                label: getLabel(e),\n                data: e,\n              };\n            }),\n          ].filter((e) => e),\n        );\n      } else {\n        done([])\n      }\n    } catch(e) {\n    reject(e);\n    }\n  })\n}"
+      },
+      "rel__btn_gen": {
+        "value": " [\n  {\n    label: \"Generate\",\n    onClick: (m, d) => {\n      generateField(d, _item, true);\n    }\n  }\n];\n",
+        "valueBuilt": " [\n  {\n    label: \"Generate\",\n    onClick: (m, d) => {\n      generateField(d, _item, true);\n    }\n  }\n];\n"
+      },
+      "rel__feature": { "value": " [];\n", "valueBuilt": " [];\n" },
+      "ext__disabled": {
+        "value": "() => {\r\n  return [\"Approved\", \"Waiting Approval\"].includes(fm?.data?.approval_status) ;\r\n}",
+        "valueBuilt": "() => {\r\n  return [\"Approved\", \"Waiting Approval\"].includes(fm?.data?.approval_status) ;\r\n}"
+      },
+      "ext__max_date": { "value": " null;\n", "valueBuilt": " null;\n" },
+      "ext__min_date": { "value": " null;\n", "valueBuilt": " null;\n" },
+      "ext__required": { "value": "\"n\"", "valueBuilt": "\"n\"" },
+      "opt__max_size": { "value": " \"50\";\n", "valueBuilt": " \"50\";\n" },
+      "type_relation": { "value": "\"hello\"", "valueBuilt": "\"hello\"" },
+      "ext__on_change": {
+        "value": " ({ value }) => {\n};\n",
+        "valueBuilt": " ({ value }) => {\n};\n"
+      },
+      "opt__get_value": {
+        "value": "(arg\n\n\n\n\n) => {\n  const { options, fm, name, type } = arg;\n  if(isEditor){\n    return fm.data[name];\n  }\n  let result = null;\n  result =  fm.data[name];\n  try{\n    const data = fm.data[\"m_maintenance_group\"];\n    if(typeof data === \"object\"){\n      if(typeof data?.connect?.id !== \"undefined\") {\n        result = data.connect.id;\n      } else if (typeof data?.id !== \"undefined\") {\n        result = data.id;\n      } else if (data?.disconnect === true) {\n        result = undefined;\n      }\n    }\n  }catch(ex){\n  }\n  return result;\n}",
+        "valueBuilt": "(arg\n\n\n\n\n) => {\n  const { options, fm, name, type } = arg;\n  if(isEditor){\n    return fm.data[name];\n  }\n  let result = null;\n  result =  fm.data[name];\n  try{\n    const data = fm.data[\"m_maintenance_group\"];\n    if(typeof data === \"object\"){\n      if(typeof data?.connect?.id !== \"undefined\") {\n        result = data.connect.id;\n      } else if (typeof data?.id !== \"undefined\") {\n        result = data.id;\n      } else if (data?.disconnect === true) {\n        result = undefined;\n      }\n    }\n  }catch(ex){\n  }\n  return result;\n}"
+      },
+      "opt__set_value": {
+        "value": "(arg\n\n\n\n\n\n) => {\n  const { selected, options, fm, name, type } = arg;\n  // const old = \n  if (type === \"single-option\") {\n    if (selected[0]) {\n      fm.data[name] = {\n        connect: {\n          id: selected[0],\n        },\n      };\n    } else if (fm.data[\"id\"]) {\n      fm.data[name] = {\n        disconnect: true,\n      };\n    }\n  } else {\n    fm.data[name] = selected.map((e) => e);\n  }\n  fm.render();\n  try {\n    fm.fields.assign_spv.reload_options()\n  } catch (ex) {\n\n  }\n}",
+        "valueBuilt": "(arg\n\n\n\n\n\n) => {\n  const { selected, options, fm, name, type } = arg;\n  // const old = \n  if (type === \"single-option\") {\n    if (selected[0]) {\n      fm.data[name] = {\n        connect: {\n          id: selected[0],\n        },\n      };\n    } else if (fm.data[\"id\"]) {\n      fm.data[name] = {\n        disconnect: true,\n      };\n    }\n  } else {\n    fm.data[name] = selected.map((e) => e);\n  }\n  fm.render();\n  try {\n    fm.fields.assign_spv.reload_options()\n  } catch (ex) {\n\n  }\n}"
+      },
+      "rel__gen_table": {
+        "value": "\"m_maintenance_schedule_line\"",
+        "valueBuilt": "\"m_maintenance_schedule_line\""
+      },
+      "rel__id_parent": { "value": " \"\";\n", "valueBuilt": " \"\";\n" },
+      "upl__on_upload": {
+        "value": "(file) => {}",
+        "valueBuilt": "(file) => {}"
+      },
+      "ext__show_label": { "value": "\"y\"", "valueBuilt": "\"y\"" },
+      "opt__url_upload": { "value": "\"hello\"", "valueBuilt": "\"hello\"" },
+      "rel__gen_fields": {
+        "value": "[\"{\\\"name\\\":\\\"id\\\",\\\"is_pk\\\":true,\\\"type\\\":\\\"uuid\\\",\\\"optional\\\":false,\\\"default\\\":{\\\"type\\\":\\\"attribute\\\",\\\"name\\\":\\\"default\\\",\\\"kind\\\":\\\"field\\\",\\\"args\\\":[{\\\"type\\\":\\\"attributeArgument\\\",\\\"value\\\":{\\\"type\\\":\\\"function\\\",\\\"name\\\":\\\"dbgenerated\\\",\\\"params\\\":[\\\"\\\\\\\"gen_random_uuid()\\\\\\\"\\\"]}}]}}\",\"{\\\"name\\\":\\\"due_date\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"timestamptz\\\",\\\"optional\\\":true}\",\"{\\\"name\\\":\\\"planned_date\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"timestamptz\\\",\\\"optional\\\":true}\",\"{\\\"name\\\":\\\"notes\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"string\\\",\\\"optional\\\":true,\\\"default\\\":null}\"]",
+        "valueBuilt": "[\"{\\\"name\\\":\\\"id\\\",\\\"is_pk\\\":true,\\\"type\\\":\\\"uuid\\\",\\\"optional\\\":false,\\\"default\\\":{\\\"type\\\":\\\"attribute\\\",\\\"name\\\":\\\"default\\\",\\\"kind\\\":\\\"field\\\",\\\"args\\\":[{\\\"type\\\":\\\"attributeArgument\\\",\\\"value\\\":{\\\"type\\\":\\\"function\\\",\\\"name\\\":\\\"dbgenerated\\\",\\\"params\\\":[\\\"\\\\\\\"gen_random_uuid()\\\\\\\"\\\"]}}]}}\",\"{\\\"name\\\":\\\"due_date\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"timestamptz\\\",\\\"optional\\\":true}\",\"{\\\"name\\\":\\\"planned_date\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"timestamptz\\\",\\\"optional\\\":true}\",\"{\\\"name\\\":\\\"notes\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"string\\\",\\\"optional\\\":true,\\\"default\\\":null}\"]"
+      },
+      "upl__cover_text": { "value": "\"Cover\"", "valueBuilt": "\"Cover\"" },
+      "ext__placeholder": { "value": " \"\";\n", "valueBuilt": " \"\";\n" },
+      "opt__is_selected": {
+        "value": " (arg) => {\n  const { item, current, options } = arg;\n  if (item) {\n    if (current === item.value) {\n      return true;\n    }\n  }\n  return false;\n};\n",
+        "valueBuilt": " (arg) => {\n  const { item, current, options } = arg;\n  if (item) {\n    if (current === item.value) {\n      return true;\n    }\n  }\n  return false;\n};\n"
+      },
+      "upl__cover_field": { "value": "\"hello\"", "valueBuilt": "\"hello\"" },
+      "upl__upload_type": {
+        "value": " \"upload-file\";\n",
+        "valueBuilt": " \"upload-file\";\n"
+      },
+      "ext__required_msg": {
+        "value": " (name) => {\n  return `${name} harus diisi`;\n};\n",
+        "valueBuilt": " (name) => {\n  return `${name} harus diisi`;\n};\n"
+      },
+      "ext__label_checkbox": { "value": "\"\"", "valueBuilt": "\"\"" },
+      "upl__styling_upload": {
+        "value": "\"inline\"",
+        "valueBuilt": "\"inline\""
+      },
+      "ext__disabled_search": { "value": "\"y\"", "valueBuilt": "\"y\"" },
+      "ext__tbl_show_header": {
+        "value": " \"y\";\n",
+        "valueBuilt": " \"y\";\n"
+      }
+    },
+    "passprop": {}
+  },
+  "component": {
+    "id": "32550d01-42a3-4b15-a04a-2c2d5c3c8e67",
+    "props": {
+      "kv__": {
+        "idx": 10,
+        "meta": { "type": "text" },
+        "name": "new_prop_11",
+        "type": "string",
+        "label": "key value",
+        "value": "\"hello\"",
+        "visible": "typeof sub_type === \"string\" && sub_type === \"key-value\"",
+        "valueBuilt": "\"hello\""
+      },
+      "mask": {
+        "idx": 9,
+        "meta": { "type": "text" },
+        "name": "new_prop_11",
+        "type": "string",
+        "value": "\"____-____-_______\"",
+        "visible": "typeof sub_type === \"string\" && sub_type === \"mask\"",
+        "valueBuilt": "\"____-____-_______\""
+      },
+      "name": {
+        "idx": 0,
+        "meta": { "type": "text" },
+        "name": "prop_1",
+        "type": "string",
+        "value": "`m_maintenance_schedule_line`",
+        "is_name": true,
+        "valueBuilt": "`m_maintenance_schedule_line`"
+      },
+      "type": {
+        "idx": 3,
+        "meta": {
+          "type": "option",
+          "options": "[\n  \"-\",\n  \"input\",\n  \"link\",\n  \"date\",\n  \"single-option\",\n  \"multi-option\",\n  \"custom\",\n  // \"relation\",\n  // \"switch\",\n  // \"dropdown\",\n  // \"checkbox\",\n  // \"toggle\",\n  // \"textarea\",\n  // \"radio\",\n  // \"datetime\",\n  // \"money\",\n  // \"upload\",\n  // \"time\",\n  // \"rich-text\",\n]",
+          "option_mode": "dropdown",
+          "optionsBuilt": " [\n  \"-\",\n  \"input\",\n  \"link\",\n  \"date\",\n  \"single-option\",\n  \"multi-option\",\n  \"custom\"\n  // \"relation\",\n  // \"switch\",\n  // \"dropdown\",\n  // \"checkbox\",\n  // \"toggle\",\n  // \"textarea\",\n  // \"radio\",\n  // \"datetime\",\n  // \"money\",\n  // \"upload\",\n  // \"time\",\n  // \"rich-text\",\n];\n"
+        },
+        "name": "prop_3",
+        "type": "string",
+        "value": "\"multi-option\"",
+        "is_name": false,
+        "valueBuilt": "\"multi-option\""
+      },
+      "child": {
+        "idx": 5,
+        "meta": { "type": "content-element" },
+        "name": "prop_11",
+        "type": "string",
+        "value": "",
+        "content": {
+          "id": "xy3km382p8hc6izq1dtcu6yf",
+          "name": "child",
+          "type": "item",
+          "childs": [
+            {
+              "id": "m0tjm6wn9p8pkitzrls8ra7v",
+              "adv": {
+                "css": "& {\n  display: flex;\n  // &.mobile {}\n  // &.desktop {}\n  // &:hover {}\n}"
+              },
+              "dim": { "h": 300, "w": "full", "hUnit": "px" },
+              "name": "list",
+              "type": "item",
+              "childs": [
+                {
+                  "id": "j4livfi4l1wdiuejd5d6cb30",
+                  "adv": {
+                    "js": "<TableList\n  child={child}\n  on_load={opt__on_load}\n  name={name}\n  PassProp={PassProp}\n  mode={mode}\n  __props={__props}\n  gen_fields={gen__fields}\n  row_click={opt__row_click}\n  selected={opt__selected}\n  id_parent={opt__id_parent}\n  on_init={opt__on_init}\n  list={{ type: list__type, item_w: list__item_w }}\n  feature={opt__feature}\n  _item={_item}\n  filter_name={flt__filter_name}\n  softdel_field={sft__fields}\n  paging={opt__paging === \"y\"}\n  softdel_type={sft__type}\n  md={typeof md !== \"undefined\" ? md : undefined}\n/>",
+                    "css": "",
+                    "jsBuilt": "const _jsxFileName = \"[item: table-list - mue8cf415ba4g5fbwjxhbqs3]\";render (React.createElement(TableList, {\n  child: child,\n  on_load: opt__on_load,\n  name: name,\n  PassProp: PassProp,\n  mode: mode,\n  __props: __props,\n  gen_fields: gen__fields,\n  row_click: opt__row_click,\n  selected: opt__selected,\n  id_parent: opt__id_parent,\n  on_init: opt__on_init,\n  list: { type: list__type, item_w: list__item_w },\n  feature: opt__feature,\n  _item: _item,\n  filter_name: flt__filter_name,\n  softdel_field: sft__fields,\n  paging: opt__paging === \"y\",\n  softdel_type: sft__type,\n  md: typeof md !== \"undefined\" ? md : undefined, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1}}\n))"
+                  },
+                  "dim": { "h": "full", "w": "full" },
+                  "name": "table-list",
+                  "type": "item",
+                  "childs": [
+                    {
+                      "id": "u36hr9f72s36bhjsbvqwj52m",
+                      "adv": { "css": "" },
+                      "dim": { "h": "full", "w": "full" },
+                      "name": "jsx: child",
+                      "type": "item",
+                      "childs": [
+                        {
+                          "id": "stbdmqh4j3joztq9otngpesx",
+                          "adv": { "css": "" },
+                          "dim": { "h": "full", "w": "full" },
+                          "name": "table: columns",
+                          "type": "item",
+                          "childs": [],
+                          "originalId": "x6hffi3ftxknfbozpc90bnjs"
+                        },
+                        {
+                          "id": "zsp2dw9lqq65x07456d84f9n",
+                          "adv": { "css": "" },
+                          "dim": { "h": "full", "w": "full" },
+                          "name": "list: fields",
+                          "type": "item",
+                          "childs": [],
+                          "originalId": "kala3nl47ejunbu89367w5xj"
+                        }
+                      ],
+                      "originalId": "lpe3qbhzdip2nlxbg0ct3hg3"
+                    }
+                  ],
+                  "script": {
+                    "props": {
+                      "mode": { "value": "\"auto\"", "valueBuilt": "\"auto\"" },
+                      "name": {
+                        "value": "\"m_maintenance_schedule_line\"",
+                        "valueBuilt": "\"m_maintenance_schedule_line\""
+                      },
+                      "flt__": {
+                        "value": "\"hello\"",
+                        "valueBuilt": "\"hello\""
+                      },
+                      "gen__": {
+                        "value": "\"hello\"",
+                        "valueBuilt": "\"hello\""
+                      },
+                      "opt__": {
+                        "value": "\"hello\"",
+                        "valueBuilt": "\"hello\""
+                      },
+                      "sft__": {
+                        "value": "\"hello\"",
+                        "valueBuilt": "\"hello\""
+                      },
+                      "list__": {
+                        "value": "\"hello\"",
+                        "valueBuilt": "\"hello\""
+                      },
+                      "gen__btn": {
+                        "value": " [\n  {\n    label: \"Generate\",\n    onClick: (m, d) => {\n      generateTableList(m, d, _item, { mode, id_parent: opt__id_parent }, true);\n    }\n  }\n];\n",
+                        "valueBuilt": " [\n  {\n    label: \"Generate\",\n    onClick: (m, d) => {\n      generateTableList(m, d, _item, { mode, id_parent: opt__id_parent }, true);\n    }\n  }\n];\n"
+                      },
+                      "sft__type": {
+                        "value": "\"hello\"",
+                        "valueBuilt": "\"hello\""
+                      },
+                      "export_btn": {
+                        "value": " [\n  {\n    label: \"Export\",\n    onClick: (m, d) => {\n      prasi_gen.export_excel(m, d, { mode, id_parent });\n    }\n  }\n];\n",
+                        "valueBuilt": " [\n  {\n    label: \"Export\",\n    onClick: (m, d) => {\n      prasi_gen.export_excel(m, d, { mode, id_parent });\n    }\n  }\n];\n"
+                      },
+                      "gen__table": {
+                        "value": "\"m_maintenance_schedule_line\"",
+                        "valueBuilt": "\"m_maintenance_schedule_line\""
+                      },
+                      "list__type": {
+                        "value": "\"list\"",
+                        "valueBuilt": "\"list\""
+                      },
+                      "gen__fields": {
+                        "value": "[\"{\\\"name\\\":\\\"id\\\",\\\"is_pk\\\":true,\\\"type\\\":\\\"uuid\\\",\\\"optional\\\":false,\\\"default\\\":{\\\"type\\\":\\\"attribute\\\",\\\"name\\\":\\\"default\\\",\\\"kind\\\":\\\"field\\\",\\\"args\\\":[{\\\"type\\\":\\\"attributeArgument\\\",\\\"value\\\":{\\\"type\\\":\\\"function\\\",\\\"name\\\":\\\"dbgenerated\\\",\\\"params\\\":[\\\"\\\\\\\"gen_random_uuid()\\\\\\\"\\\"]}}]}}\",\"{\\\"name\\\":\\\"due_date\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"timestamptz\\\",\\\"optional\\\":true}\",\"{\\\"name\\\":\\\"planned_date\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"timestamptz\\\",\\\"optional\\\":true}\",\"{\\\"name\\\":\\\"notes\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"string\\\",\\\"optional\\\":true,\\\"default\\\":null}\"]",
+                        "valueBuilt": "[\"{\\\"name\\\":\\\"id\\\",\\\"is_pk\\\":true,\\\"type\\\":\\\"uuid\\\",\\\"optional\\\":false,\\\"default\\\":{\\\"type\\\":\\\"attribute\\\",\\\"name\\\":\\\"default\\\",\\\"kind\\\":\\\"field\\\",\\\"args\\\":[{\\\"type\\\":\\\"attributeArgument\\\",\\\"value\\\":{\\\"type\\\":\\\"function\\\",\\\"name\\\":\\\"dbgenerated\\\",\\\"params\\\":[\\\"\\\\\\\"gen_random_uuid()\\\\\\\"\\\"]}}]}}\",\"{\\\"name\\\":\\\"due_date\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"timestamptz\\\",\\\"optional\\\":true}\",\"{\\\"name\\\":\\\"planned_date\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"timestamptz\\\",\\\"optional\\\":true}\",\"{\\\"name\\\":\\\"notes\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"string\\\",\\\"optional\\\":true,\\\"default\\\":null}\"]"
+                      },
+                      "opt__paging": {
+                        "value": "\"y\"",
+                        "valueBuilt": "\"y\""
+                      },
+                      "sft__fields": {
+                        "value": " \"\";\n",
+                        "valueBuilt": " \"\";\n"
+                      },
+                      "list__item_w": {
+                        "value": "\"150\"",
+                        "valueBuilt": "\"150\""
+                      },
+                      "opt__feature": {
+                        "value": " [\"sorting\"];\n",
+                        "valueBuilt": " [\"sorting\"];\n"
+                      },
+                      "opt__on_init": {
+                        "value": " () => {\n  return null;\n};\n",
+                        "valueBuilt": " () => {\n  return null;\n};\n"
+                      },
+                      "opt__on_load": {
+                        "value": "async (arg) => {\n  if (isEditor)\n    return [{\"id\":\"Id\",\"due_date\":\"Due Date\",\"planned_date\":\"Planned Date\",\"notes\":\"Notes\"}];\n\n  let where = arg.where ;\n  if (arg.mode === \"count\") {\n    return await db.m_maintenance_schedule_line.count({\n      where: {\n        ...where,\n      },\n    });\n  }\n\n  return new Promise(async (done, reject) => {\n    try {\n      //@ts-ignore\n      const fields = parseGenField(gen__fields);\n      const gen = generateSelect(fields);\n\n      if (opt__feature.includes(\"tree\") && opt__id_parent) {\n        gen.select[opt__id_parent] = true\n      }\n\n      const result = {items: []}\n      result.items = await db.m_maintenance_schedule_line.findMany({\n        select: gen.select,\n        orderBy: arg.orderBy || {\n          id: \"desc\",\n        },\n        where: {\n          ...where,\n        },\n        ...arg.paging,\n      });\n\n      await call_prasi_events(\"tablelist\", \"after_load\", [\"m_maintenance_schedule_line\", result.items, (input) => {\n        result.items = input;\n      }]);\n\n      done(result.items);\n    } catch(e) {\n      reject(e);\n    }\n  });\n};",
+                        "valueBuilt": "async (arg) => {\n  if (isEditor)\n    return [{\"id\":\"Id\",\"due_date\":\"Due Date\",\"planned_date\":\"Planned Date\",\"notes\":\"Notes\"}];\n\n  let where = arg.where ;\n  if (arg.mode === \"count\") {\n    return await db.m_maintenance_schedule_line.count({\n      where: {\n        ...where,\n      },\n    });\n  }\n\n  return new Promise(async (done, reject) => {\n    try {\n      //@ts-ignore\n      const fields = parseGenField(gen__fields);\n      const gen = generateSelect(fields);\n\n      if (opt__feature.includes(\"tree\") && opt__id_parent) {\n        gen.select[opt__id_parent] = true\n      }\n\n      const result = {items: []}\n      result.items = await db.m_maintenance_schedule_line.findMany({\n        select: gen.select,\n        orderBy: arg.orderBy || {\n          id: \"desc\",\n        },\n        where: {\n          ...where,\n        },\n        ...arg.paging,\n      });\n\n      await call_prasi_events(\"tablelist\", \"after_load\", [\"m_maintenance_schedule_line\", result.items, (input) => {\n        result.items = input;\n      }]);\n\n      done(result.items);\n    } catch(e) {\n      reject(e);\n    }\n  });\n};"
+                      },
+                      "opt__selected": {
+                        "value": "({ row, rows, idx }) => {\n  try {\n  if (typeof md === \"object\") {\n  if (Array.isArray(md.selected)) {\n  if (md.selected.length) {\n    let select = md.selected.find((e) => e === row)\n    if(select) return true\n  }\n  } else {\n  if (md.selected === row) {\n    return true;\n  }\n  }\n  }\n  } catch (e) {\n  \n  }\n  return false;\n  };",
+                        "valueBuilt": "({ row, rows, idx }) => {\n  try {\n  if (typeof md === \"object\") {\n  if (Array.isArray(md.selected)) {\n  if (md.selected.length) {\n    let select = md.selected.find((e) => e === row)\n    if(select) return true\n  }\n  } else {\n  if (md.selected === row) {\n    return true;\n  }\n  }\n  }\n  } catch (e) {\n  \n  }\n  return false;\n  };"
+                      },
+                      "opt__id_parent": {
+                        "value": " ``;\n",
+                        "valueBuilt": " ``;\n"
+                      },
+                      "opt__row_click": {
+                        "value": "({ row, rows, idx, event }) => {\n  cn.data.navigate(`#root=${row.id}`)\n  ;\n};",
+                        "valueBuilt": "({ row, rows, idx, event }) => {\n  cn.data.navigate(`#root=${row.id}`)\n  ;\n};"
+                      },
+                      "flt__filter_name": {
+                        "value": " \"root\";\n",
+                        "valueBuilt": " \"root\";\n"
+                      }
+                    },
+                    "passprop": {}
+                  },
+                  "component": {
+                    "id": "567d5362-2cc8-4ca5-a531-f771a5c866c2",
+                    "props": {
+                      "mode": {
+                        "idx": 1,
+                        "meta": {
+                          "type": "option",
+                          "options": "[ \"table\", \"list\", \"auto\"]",
+                          "optionsBuilt": "[ \"table\", \"list\", \"auto\"]"
+                        },
+                        "name": "prop_4",
+                        "type": "string",
+                        "value": "\"auto\"",
+                        "valueBuilt": "\"auto\""
+                      },
+                      "name": {
+                        "idx": 0,
+                        "meta": { "type": "text" },
+                        "name": "prop_3",
+                        "type": "string",
+                        "value": "\"m_maintenance_schedule_line\"",
+                        "is_name": true,
+                        "valueBuilt": "\"m_maintenance_schedule_line\""
+                      },
+                      "child": {
+                        "idx": 2,
+                        "meta": { "type": "content-element" },
+                        "name": "prop_1",
+                        "type": "string",
+                        "value": "",
+                        "content": {
+                          "id": "y9u6fqs5ecgfmtd6clsi6q6l",
+                          "dim": { "h": "full", "w": "full" },
+                          "name": "child",
+                          "type": "item",
+                          "childs": [
+                            {
+                              "id": "yadfwihxehb86niteegxowxp",
+                              "dim": { "h": "full", "w": "full" },
+                              "name": "table: columns",
+                              "type": "item",
+                              "childs": [
+                                {
+                                  "id": "q7g4adatufd4qkwfr89hlqhs",
+                                  "adv": {
+                                    "js": "<>{child}</>",
+                                    "css": "",
+                                    "jsBuilt": "render (React.createElement(React.Fragment, null, child))"
+                                  },
+                                  "dim": { "h": "full", "w": "full" },
+                                  "name": "col",
+                                  "type": "item",
+                                  "childs": [
+                                    {
+                                      "id": "yqisbdvt0vjrgpkz8mi6bm1q",
+                                      "adv": {
+                                        "js": "",
+                                        "css": "",
+                                        "jsBuilt": "render();\n"
+                                      },
+                                      "dim": { "h": "full", "w": "full" },
+                                      "name": "jsx: child",
+                                      "type": "item",
+                                      "childs": [
+                                        {
+                                          "id": "z1m0u9xitn89w9cik1e7bmsn",
+                                          "adv": {
+                                            "js": "<div {...props} className={cx(props.className, \"\")}>\n  <FormatValue value={col.value} name={col.name} gen_fields={gen_fields} />\n</div>",
+                                            "css": "",
+                                            "jsBuilt": "render(/* @__PURE__ */ React.createElement(\"div\", { ...props, className: cx(props.className, \"\") }, /* @__PURE__ */ React.createElement(FormatValue, { value: col.value, name: col.name, gen_fields })));\n"
+                                          },
+                                          "dim": { "h": "full", "w": "full" },
+                                          "name": "cell",
+                                          "type": "item",
+                                          "childs": [],
+                                          "script": {},
+                                          "originalId": "crzf0s4m894yyxock71mghk0"
+                                        }
+                                      ],
+                                      "layout": {
+                                        "dir": "col",
+                                        "gap": 0,
+                                        "wrap": "flex-nowrap",
+                                        "align": "left"
+                                      },
+                                      "padding": {
+                                        "b": 0,
+                                        "l": 8,
+                                        "r": 8,
+                                        "t": 0
+                                      },
+                                      "originalId": "rr13v0ilacvzr1cm7165qfxy"
+                                    }
+                                  ],
+                                  "script": {
+                                    "props": {
+                                      "name": {
+                                        "value": "\"due_date\"",
+                                        "valueBuilt": "\"due_date\""
+                                      },
+                                      "show": {
+                                        "value": "\"y\"",
+                                        "valueBuilt": "\"y\""
+                                      },
+                                      "type": {
+                                        "value": " \"text\";\n",
+                                        "valueBuilt": " \"text\";\n"
+                                      },
+                                      "opt__": {
+                                        "value": "\"hello\"",
+                                        "valueBuilt": "\"hello\""
+                                      },
+                                      "title": {
+                                        "value": "\"Due Date\"",
+                                        "valueBuilt": "\"Due Date\""
+                                      },
+                                      "width": {
+                                        "value": " \"0\";\n",
+                                        "valueBuilt": " \"0\";\n"
+                                      },
+                                      "sortir": {
+                                        "value": "\"y\"",
+                                        "valueBuilt": "\"y\""
+                                      },
+                                      "opt__on_click": {
+                                        "value": " () => {\n};\n",
+                                        "valueBuilt": " () => {\n};\n"
+                                      }
+                                    }
+                                  },
+                                  "component": {
+                                    "id": "297023a4-d552-464a-971d-f40dcd940b77",
+                                    "props": {
+                                      "name": {
+                                        "idx": 1,
+                                        "meta": { "type": "text" },
+                                        "name": "prop_1",
+                                        "type": "string",
+                                        "value": "\"due_date\"",
+                                        "is_name": true,
+                                        "valueBuilt": "\"due_date\""
+                                      },
+                                      "show": {
+                                        "idx": 11,
+                                        "meta": {
+                                          "type": "option",
+                                          "options": "[\n  {\n    label: \"show\",\n    value: \"y\"\n  },\n  {\n    label: \"hide\",\n    value: \"n\"\n  },\n]",
+                                          "optionsBuilt": "[\n  {\n    label: \"show\",\n    value: \"y\"\n  },\n  {\n    label: \"hide\",\n    value: \"n\"\n  },\n]"
+                                        },
+                                        "name": "new_prop_11",
+                                        "type": "string",
+                                        "label": "show",
+                                        "value": "\"y\"",
+                                        "valueBuilt": "\"y\""
+                                      },
+                                      "type": {
+                                        "idx": 7,
+                                        "meta": {
+                                          "type": "option",
+                                          "options": "[\"text\", \"checkbox\"]",
+                                          "option_mode": "dropdown",
+                                          "optionsBuilt": " [\"text\", \"checkbox\"];\n"
+                                        },
+                                        "name": "prop_7",
+                                        "type": "string",
+                                        "value": "\"text\"",
+                                        "valueBuilt": " \"text\";\n"
+                                      },
+                                      "child": {
+                                        "idx": 1,
+                                        "meta": { "type": "content-element" },
+                                        "name": "prop_1",
+                                        "type": "string",
+                                        "value": "",
+                                        "content": {
+                                          "id": "qx5wp6taejgxnbyl1him6h8z",
+                                          "adv": {
+                                            "js": "<div {...props} className={cx(props.className, _item?.edit?.parent?.item?.id && `s-${_item?.edit?.parent?.item?.id}` , \"table-col\")}>\n  <FormatValue value={col.value} name={col.name} gen_fields={gen__fields} />\n</div>",
+                                            "jsBuilt": "render(React.createElement(\"div\", Object.assign({}, props, { className: cx(props.className, _item?.edit?.parent?.item?.id && `s-${_item?.edit?.parent?.item?.id}` , \"\") }),React.createElement(FormatValue, { value: col.value, name: col.name, gen_fields: gen__fields })));\n              "
+                                          },
+                                          "dim": { "h": "full", "w": "full" },
+                                          "name": "child",
+                                          "type": "item",
+                                          "childs": [],
+                                          "layout": {
+                                            "dir": "col",
+                                            "gap": 0,
+                                            "wrap": "flex-nowrap",
+                                            "align": "left"
+                                          },
+                                          "padding": {
+                                            "b": 0,
+                                            "l": 8,
+                                            "r": 8,
+                                            "t": 0
+                                          },
+                                          "script": {}
+                                        },
+                                        "typings": "const typings = {\n  col: `{ name: string, value: any; depth: number }`,\n  row: `any`,\n  idx: `number`,\n  rows: `any[]`,\n  type: `\"text\"`,\n  gen_fields: \"any\",\n}",
+                                        "valueBuilt": "",
+                                        "jsxCalledBy": [
+                                          "q7g4adatufd4qkwfr89hlqhs",
+                                          "xvhrxdryqwthiceonjgkkxqc"
+                                        ]
+                                      },
+                                      "opt__": {
+                                        "idx": 9,
+                                        "meta": { "type": "text" },
+                                        "name": "prop_9",
+                                        "type": "string",
+                                        "label": "option",
+                                        "value": "\"hello\"",
+                                        "visible": "[\"checkbox\"].includes(type)",
+                                        "valueBuilt": "\"hello\""
+                                      },
+                                      "title": {
+                                        "idx": 3,
+                                        "meta": { "type": "text" },
+                                        "name": "prop_3",
+                                        "type": "string",
+                                        "value": "\"Due Date\"",
+                                        "valueBuilt": "\"Due Date\""
+                                      },
+                                      "width": {
+                                        "idx": 5,
+                                        "meta": { "type": "text" },
+                                        "name": "prop_5",
+                                        "type": "string",
+                                        "value": "\"0\"",
+                                        "valueBuilt": " \"0\";\n"
+                                      },
+                                      "sortir": {
+                                        "idx": 11,
+                                        "meta": {
+                                          "type": "option",
+                                          "options": "[\n  {\n    label: \"yes\",\n    value: \"y\",\n  },\n  {\n    label: \"no\",\n    value: \"n\",\n  },\n]",
+                                          "optionsBuilt": "[\n  {\n    label: \"yes\",\n    value: \"y\",\n  },\n  {\n    label: \"no\",\n    value: \"n\",\n  },\n]"
+                                        },
+                                        "name": "new_prop_11",
+                                        "type": "string",
+                                        "label": "sortir",
+                                        "value": "\"y\"",
+                                        "valueBuilt": "\"y\""
+                                      },
+                                      "opt__on_click": {
+                                        "idx": 11,
+                                        "meta": { "type": "text" },
+                                        "name": "prop_11",
+                                        "type": "string",
+                                        "label": "on click",
+                                        "value": "() => {\r\n  \r\n}",
+                                        "valueBuilt": " () => {\n};\n"
+                                      }
+                                    },
+                                    "ref_ids": {},
+                                    "useStyle": true,
+                                    "instances": {
+                                      "q7g4adatufd4qkwfr89hlqhs": {
+                                        "xvhrxdryqwthiceonjgkkxqc": "etp2bsc1mk3tfievmf2bzxbc",
+                                        "rr13v0ilacvzr1cm7165qfxy": "yqisbdvt0vjrgpkz8mi6bm1q",
+                                        "crzf0s4m894yyxock71mghk0": "z1m0u9xitn89w9cik1e7bmsn"
+                                      }
+                                    }
+                                  },
+                                  "originalId": "xvhrxdryqwthiceonjgkkxqc"
+                                },
+                                {
+                                  "id": "ijxbcmnan9zwa6ih4tg6qjqy",
+                                  "adv": {
+                                    "js": "<>{child}</>",
+                                    "css": "",
+                                    "jsBuilt": "render (React.createElement(React.Fragment, null, child))"
+                                  },
+                                  "dim": { "h": "full", "w": "full" },
+                                  "name": "col",
+                                  "type": "item",
+                                  "childs": [
+                                    {
+                                      "id": "oweqc18vmic86ruzk7pv009z",
+                                      "adv": {
+                                        "js": "",
+                                        "css": "",
+                                        "jsBuilt": "render();\n"
+                                      },
+                                      "dim": { "h": "full", "w": "full" },
+                                      "name": "jsx: child",
+                                      "type": "item",
+                                      "childs": [
+                                        {
+                                          "id": "jjwkywhir7btrxam2biv824u",
+                                          "adv": {
+                                            "js": "<div {...props} className={cx(props.className, \"\")}>\n  <FormatValue value={col.value} name={col.name} gen_fields={gen_fields} />\n</div>",
+                                            "css": "",
+                                            "jsBuilt": "render(/* @__PURE__ */ React.createElement(\"div\", { ...props, className: cx(props.className, \"\") }, /* @__PURE__ */ React.createElement(FormatValue, { value: col.value, name: col.name, gen_fields })));\n"
+                                          },
+                                          "dim": { "h": "full", "w": "full" },
+                                          "name": "cell",
+                                          "type": "item",
+                                          "childs": [],
+                                          "script": {},
+                                          "originalId": "crzf0s4m894yyxock71mghk0"
+                                        }
+                                      ],
+                                      "layout": {
+                                        "dir": "col",
+                                        "gap": 0,
+                                        "wrap": "flex-nowrap",
+                                        "align": "left"
+                                      },
+                                      "padding": {
+                                        "b": 0,
+                                        "l": 8,
+                                        "r": 8,
+                                        "t": 0
+                                      },
+                                      "originalId": "rr13v0ilacvzr1cm7165qfxy"
+                                    }
+                                  ],
+                                  "script": {
+                                    "props": {
+                                      "name": {
+                                        "value": "\"planned_date\"",
+                                        "valueBuilt": "\"planned_date\""
+                                      },
+                                      "show": {
+                                        "value": "\"y\"",
+                                        "valueBuilt": "\"y\""
+                                      },
+                                      "type": {
+                                        "value": " \"text\";\n",
+                                        "valueBuilt": " \"text\";\n"
+                                      },
+                                      "opt__": {
+                                        "value": "\"hello\"",
+                                        "valueBuilt": "\"hello\""
+                                      },
+                                      "title": {
+                                        "value": "\"Planned Date\"",
+                                        "valueBuilt": "\"Planned Date\""
+                                      },
+                                      "width": {
+                                        "value": " \"0\";\n",
+                                        "valueBuilt": " \"0\";\n"
+                                      },
+                                      "sortir": {
+                                        "value": "\"y\"",
+                                        "valueBuilt": "\"y\""
+                                      },
+                                      "opt__on_click": {
+                                        "value": " () => {\n};\n",
+                                        "valueBuilt": " () => {\n};\n"
+                                      }
+                                    }
+                                  },
+                                  "component": {
+                                    "id": "297023a4-d552-464a-971d-f40dcd940b77",
+                                    "props": {
+                                      "name": {
+                                        "idx": 1,
+                                        "meta": { "type": "text" },
+                                        "name": "prop_1",
+                                        "type": "string",
+                                        "value": "\"planned_date\"",
+                                        "is_name": true,
+                                        "valueBuilt": "\"planned_date\""
+                                      },
+                                      "show": {
+                                        "idx": 11,
+                                        "meta": {
+                                          "type": "option",
+                                          "options": "[\n  {\n    label: \"show\",\n    value: \"y\"\n  },\n  {\n    label: \"hide\",\n    value: \"n\"\n  },\n]",
+                                          "optionsBuilt": "[\n  {\n    label: \"show\",\n    value: \"y\"\n  },\n  {\n    label: \"hide\",\n    value: \"n\"\n  },\n]"
+                                        },
+                                        "name": "new_prop_11",
+                                        "type": "string",
+                                        "label": "show",
+                                        "value": "\"y\"",
+                                        "valueBuilt": "\"y\""
+                                      },
+                                      "type": {
+                                        "idx": 7,
+                                        "meta": {
+                                          "type": "option",
+                                          "options": "[\"text\", \"checkbox\"]",
+                                          "option_mode": "dropdown",
+                                          "optionsBuilt": " [\"text\", \"checkbox\"];\n"
+                                        },
+                                        "name": "prop_7",
+                                        "type": "string",
+                                        "value": "\"text\"",
+                                        "valueBuilt": " \"text\";\n"
+                                      },
+                                      "child": {
+                                        "idx": 1,
+                                        "meta": { "type": "content-element" },
+                                        "name": "prop_1",
+                                        "type": "string",
+                                        "value": "",
+                                        "content": {
+                                          "id": "c28wh8exket1wlzzceycfin5",
+                                          "adv": {
+                                            "js": "<div {...props} className={cx(props.className, _item?.edit?.parent?.item?.id && `s-${_item?.edit?.parent?.item?.id}` , \"table-col\")}>\n  <FormatValue value={col.value} name={col.name} gen_fields={gen__fields} />\n</div>",
+                                            "jsBuilt": "render(React.createElement(\"div\", Object.assign({}, props, { className: cx(props.className, _item?.edit?.parent?.item?.id && `s-${_item?.edit?.parent?.item?.id}` , \"\") }),React.createElement(FormatValue, { value: col.value, name: col.name, gen_fields: gen__fields })));\n              "
+                                          },
+                                          "dim": { "h": "full", "w": "full" },
+                                          "name": "child",
+                                          "type": "item",
+                                          "childs": [],
+                                          "layout": {
+                                            "dir": "col",
+                                            "gap": 0,
+                                            "wrap": "flex-nowrap",
+                                            "align": "left"
+                                          },
+                                          "padding": {
+                                            "b": 0,
+                                            "l": 8,
+                                            "r": 8,
+                                            "t": 0
+                                          },
+                                          "script": {}
+                                        },
+                                        "typings": "const typings = {\n  col: `{ name: string, value: any; depth: number }`,\n  row: `any`,\n  idx: `number`,\n  rows: `any[]`,\n  type: `\"text\"`,\n  gen_fields: \"any\",\n}",
+                                        "valueBuilt": "",
+                                        "jsxCalledBy": [
+                                          "ijxbcmnan9zwa6ih4tg6qjqy",
+                                          "xvhrxdryqwthiceonjgkkxqc"
+                                        ]
+                                      },
+                                      "opt__": {
+                                        "idx": 9,
+                                        "meta": { "type": "text" },
+                                        "name": "prop_9",
+                                        "type": "string",
+                                        "label": "option",
+                                        "value": "\"hello\"",
+                                        "visible": "[\"checkbox\"].includes(type)",
+                                        "valueBuilt": "\"hello\""
+                                      },
+                                      "title": {
+                                        "idx": 3,
+                                        "meta": { "type": "text" },
+                                        "name": "prop_3",
+                                        "type": "string",
+                                        "value": "\"Planned Date\"",
+                                        "valueBuilt": "\"Planned Date\""
+                                      },
+                                      "width": {
+                                        "idx": 5,
+                                        "meta": { "type": "text" },
+                                        "name": "prop_5",
+                                        "type": "string",
+                                        "value": "\"0\"",
+                                        "valueBuilt": " \"0\";\n"
+                                      },
+                                      "sortir": {
+                                        "idx": 11,
+                                        "meta": {
+                                          "type": "option",
+                                          "options": "[\n  {\n    label: \"yes\",\n    value: \"y\",\n  },\n  {\n    label: \"no\",\n    value: \"n\",\n  },\n]",
+                                          "optionsBuilt": "[\n  {\n    label: \"yes\",\n    value: \"y\",\n  },\n  {\n    label: \"no\",\n    value: \"n\",\n  },\n]"
+                                        },
+                                        "name": "new_prop_11",
+                                        "type": "string",
+                                        "label": "sortir",
+                                        "value": "\"y\"",
+                                        "valueBuilt": "\"y\""
+                                      },
+                                      "opt__on_click": {
+                                        "idx": 11,
+                                        "meta": { "type": "text" },
+                                        "name": "prop_11",
+                                        "type": "string",
+                                        "label": "on click",
+                                        "value": "() => {\r\n  \r\n}",
+                                        "valueBuilt": " () => {\n};\n"
+                                      }
+                                    },
+                                    "ref_ids": {},
+                                    "useStyle": true,
+                                    "instances": {
+                                      "ijxbcmnan9zwa6ih4tg6qjqy": {
+                                        "xvhrxdryqwthiceonjgkkxqc": "hn58amwpkfm007eck34xpjtw",
+                                        "rr13v0ilacvzr1cm7165qfxy": "oweqc18vmic86ruzk7pv009z",
+                                        "crzf0s4m894yyxock71mghk0": "jjwkywhir7btrxam2biv824u"
+                                      }
+                                    }
+                                  },
+                                  "originalId": "xvhrxdryqwthiceonjgkkxqc"
+                                },
+                                {
+                                  "id": "zli8gzzztj632vzo8m44u2t1",
+                                  "adv": {
+                                    "js": "<>{child}</>",
+                                    "css": "",
+                                    "jsBuilt": "render (React.createElement(React.Fragment, null, child))"
+                                  },
+                                  "dim": { "h": "full", "w": "full" },
+                                  "name": "col",
+                                  "type": "item",
+                                  "childs": [
+                                    {
+                                      "id": "m29vpruoll70x09cjsif3djp",
+                                      "adv": {
+                                        "js": "",
+                                        "css": "",
+                                        "jsBuilt": "render();\n"
+                                      },
+                                      "dim": { "h": "full", "w": "full" },
+                                      "name": "jsx: child",
+                                      "type": "item",
+                                      "childs": [
+                                        {
+                                          "id": "y0ephe045aof58xqlj243sx5",
+                                          "adv": {
+                                            "js": "<div {...props} className={cx(props.className, \"\")}>\n  <FormatValue value={col.value} name={col.name} gen_fields={gen_fields} />\n</div>",
+                                            "css": "",
+                                            "jsBuilt": "render(/* @__PURE__ */ React.createElement(\"div\", { ...props, className: cx(props.className, \"\") }, /* @__PURE__ */ React.createElement(FormatValue, { value: col.value, name: col.name, gen_fields })));\n"
+                                          },
+                                          "dim": { "h": "full", "w": "full" },
+                                          "name": "cell",
+                                          "type": "item",
+                                          "childs": [],
+                                          "script": {},
+                                          "originalId": "crzf0s4m894yyxock71mghk0"
+                                        }
+                                      ],
+                                      "layout": {
+                                        "dir": "col",
+                                        "gap": 0,
+                                        "wrap": "flex-nowrap",
+                                        "align": "left"
+                                      },
+                                      "padding": {
+                                        "b": 0,
+                                        "l": 8,
+                                        "r": 8,
+                                        "t": 0
+                                      },
+                                      "originalId": "rr13v0ilacvzr1cm7165qfxy"
+                                    }
+                                  ],
+                                  "script": {
+                                    "props": {
+                                      "name": {
+                                        "value": "\"notes\"",
+                                        "valueBuilt": "\"notes\""
+                                      },
+                                      "show": {
+                                        "value": "\"y\"",
+                                        "valueBuilt": "\"y\""
+                                      },
+                                      "type": {
+                                        "value": " \"text\";\n",
+                                        "valueBuilt": " \"text\";\n"
+                                      },
+                                      "opt__": {
+                                        "value": "\"hello\"",
+                                        "valueBuilt": "\"hello\""
+                                      },
+                                      "title": {
+                                        "value": "\"Notes\"",
+                                        "valueBuilt": "\"Notes\""
+                                      },
+                                      "width": {
+                                        "value": " \"0\";\n",
+                                        "valueBuilt": " \"0\";\n"
+                                      },
+                                      "sortir": {
+                                        "value": "\"y\"",
+                                        "valueBuilt": "\"y\""
+                                      },
+                                      "opt__on_click": {
+                                        "value": " () => {\n};\n",
+                                        "valueBuilt": " () => {\n};\n"
+                                      }
+                                    }
+                                  },
+                                  "component": {
+                                    "id": "297023a4-d552-464a-971d-f40dcd940b77",
+                                    "props": {
+                                      "name": {
+                                        "idx": 1,
+                                        "meta": { "type": "text" },
+                                        "name": "prop_1",
+                                        "type": "string",
+                                        "value": "\"notes\"",
+                                        "is_name": true,
+                                        "valueBuilt": "\"notes\""
+                                      },
+                                      "show": {
+                                        "idx": 11,
+                                        "meta": {
+                                          "type": "option",
+                                          "options": "[\n  {\n    label: \"show\",\n    value: \"y\"\n  },\n  {\n    label: \"hide\",\n    value: \"n\"\n  },\n]",
+                                          "optionsBuilt": "[\n  {\n    label: \"show\",\n    value: \"y\"\n  },\n  {\n    label: \"hide\",\n    value: \"n\"\n  },\n]"
+                                        },
+                                        "name": "new_prop_11",
+                                        "type": "string",
+                                        "label": "show",
+                                        "value": "\"y\"",
+                                        "valueBuilt": "\"y\""
+                                      },
+                                      "type": {
+                                        "idx": 7,
+                                        "meta": {
+                                          "type": "option",
+                                          "options": "[\"text\", \"checkbox\"]",
+                                          "option_mode": "dropdown",
+                                          "optionsBuilt": " [\"text\", \"checkbox\"];\n"
+                                        },
+                                        "name": "prop_7",
+                                        "type": "string",
+                                        "value": "\"text\"",
+                                        "valueBuilt": " \"text\";\n"
+                                      },
+                                      "child": {
+                                        "idx": 1,
+                                        "meta": { "type": "content-element" },
+                                        "name": "prop_1",
+                                        "type": "string",
+                                        "value": "",
+                                        "content": {
+                                          "id": "wp1hzurb2bfsvt9sobdxplwq",
+                                          "adv": {
+                                            "js": "<div {...props} className={cx(props.className, _item?.edit?.parent?.item?.id && `s-${_item?.edit?.parent?.item?.id}` , \"table-col\")}>\n  <FormatValue value={col.value} name={col.name} gen_fields={gen__fields} />\n</div>",
+                                            "jsBuilt": "render(React.createElement(\"div\", Object.assign({}, props, { className: cx(props.className, _item?.edit?.parent?.item?.id && `s-${_item?.edit?.parent?.item?.id}` , \"\") }),React.createElement(FormatValue, { value: col.value, name: col.name, gen_fields: gen__fields })));\n              "
+                                          },
+                                          "dim": { "h": "full", "w": "full" },
+                                          "name": "child",
+                                          "type": "item",
+                                          "childs": [],
+                                          "layout": {
+                                            "dir": "col",
+                                            "gap": 0,
+                                            "wrap": "flex-nowrap",
+                                            "align": "left"
+                                          },
+                                          "padding": {
+                                            "b": 0,
+                                            "l": 8,
+                                            "r": 8,
+                                            "t": 0
+                                          },
+                                          "script": {}
+                                        },
+                                        "typings": "const typings = {\n  col: `{ name: string, value: any; depth: number }`,\n  row: `any`,\n  idx: `number`,\n  rows: `any[]`,\n  type: `\"text\"`,\n  gen_fields: \"any\",\n}",
+                                        "valueBuilt": "",
+                                        "jsxCalledBy": [
+                                          "zli8gzzztj632vzo8m44u2t1",
+                                          "xvhrxdryqwthiceonjgkkxqc"
+                                        ]
+                                      },
+                                      "opt__": {
+                                        "idx": 9,
+                                        "meta": { "type": "text" },
+                                        "name": "prop_9",
+                                        "type": "string",
+                                        "label": "option",
+                                        "value": "\"hello\"",
+                                        "visible": "[\"checkbox\"].includes(type)",
+                                        "valueBuilt": "\"hello\""
+                                      },
+                                      "title": {
+                                        "idx": 3,
+                                        "meta": { "type": "text" },
+                                        "name": "prop_3",
+                                        "type": "string",
+                                        "value": "\"Notes\"",
+                                        "valueBuilt": "\"Notes\""
+                                      },
+                                      "width": {
+                                        "idx": 5,
+                                        "meta": { "type": "text" },
+                                        "name": "prop_5",
+                                        "type": "string",
+                                        "value": "\"0\"",
+                                        "valueBuilt": " \"0\";\n"
+                                      },
+                                      "sortir": {
+                                        "idx": 11,
+                                        "meta": {
+                                          "type": "option",
+                                          "options": "[\n  {\n    label: \"yes\",\n    value: \"y\",\n  },\n  {\n    label: \"no\",\n    value: \"n\",\n  },\n]",
+                                          "optionsBuilt": "[\n  {\n    label: \"yes\",\n    value: \"y\",\n  },\n  {\n    label: \"no\",\n    value: \"n\",\n  },\n]"
+                                        },
+                                        "name": "new_prop_11",
+                                        "type": "string",
+                                        "label": "sortir",
+                                        "value": "\"y\"",
+                                        "valueBuilt": "\"y\""
+                                      },
+                                      "opt__on_click": {
+                                        "idx": 11,
+                                        "meta": { "type": "text" },
+                                        "name": "prop_11",
+                                        "type": "string",
+                                        "label": "on click",
+                                        "value": "() => {\r\n  \r\n}",
+                                        "valueBuilt": " () => {\n};\n"
+                                      }
+                                    },
+                                    "ref_ids": {},
+                                    "useStyle": true,
+                                    "instances": {
+                                      "zli8gzzztj632vzo8m44u2t1": {
+                                        "xvhrxdryqwthiceonjgkkxqc": "x4bn1ic31ky9fibk5y91x1xm",
+                                        "rr13v0ilacvzr1cm7165qfxy": "m29vpruoll70x09cjsif3djp",
+                                        "crzf0s4m894yyxock71mghk0": "y0ephe045aof58xqlj243sx5"
+                                      }
+                                    }
+                                  },
+                                  "originalId": "xvhrxdryqwthiceonjgkkxqc"
+                                }
+                              ]
+                            },
+                            {
+                              "id": "x60hw8bfy5z4k62o9c556q3c",
+                              "adv": {
+                                "css": "& {\n  display: flex;\n\n &.desktop { &:hover {\n    background: #ecf4ff;\n  } }\n}"
+                              },
+                              "dim": { "h": "full", "w": "full" },
+                              "name": "list: fields",
+                              "type": "item",
+                              "border": {
+                                "color": "#e6e6e6",
+                                "style": "solid",
+                                "stroke": { "b": 1 }
+                              },
+                              "childs": [
+                                {
+                                  "id": "ge4xmemkzwpxscv2r8vn1boq",
+                                  "dim": { "h": "full", "w": "full" },
+                                  "name": "line",
+                                  "type": "item",
+                                  "childs": [
+                                    {
+                                      "id": "oldglkbwna3do32ru67wh5og",
+                                      "adv": {
+                                        "js": "<>{child}</>",
+                                        "css": "",
+                                        "jsBuilt": "render(/* @__PURE__ */ React.createElement(React.Fragment, null, child));\n"
+                                      },
+                                      "dim": { "h": "full", "w": "full" },
+                                      "name": "fld",
+                                      "type": "item",
+                                      "childs": [
+                                        {
+                                          "id": "z6dewn6cp8ql44asicl1axt7",
+                                          "adv": {
+                                            "js": "<div {...props} className={cx(props.className, \"\")}>\n  <FormatValue value={_get(row, name)} name={name} gen_fields={gen__fields} />\n</div>",
+                                            "css": "",
+                                            "jsBuilt": "const _jsxFileName = \"[item: jsx: child - z3oyvltmocag5b3zbh6f4opa]\";render (React.createElement('div', { ...props, className: cx(props.className, \"\"), __self: this, __source: {fileName: _jsxFileName, lineNumber: 1}}\n  , React.createElement(FormatValue, { value: _get(row, name), name: name, gen_fields: gen__fields, __self: this, __source: {fileName: _jsxFileName, lineNumber: 2}} )\n))"
+                                          },
+                                          "dim": { "h": "full", "w": "full" },
+                                          "name": "jsx: child",
+                                          "type": "item",
+                                          "childs": [],
+                                          "script": {},
+                                          "originalId": "z3oyvltmocag5b3zbh6f4opa"
+                                        }
+                                      ],
+                                      "script": {},
+                                      "component": {
+                                        "id": "7ce18cbd-02d5-4aff-9acb-150d3a75e34e",
+                                        "props": {
+                                          "row": {
+                                            "idx": 2,
+                                            "meta": { "type": "text" },
+                                            "name": "new_prop_3",
+                                            "type": "string",
+                                            "value": "row",
+                                            "is_name": false,
+                                            "valueBuilt": " row;\n"
+                                          },
+                                          "name": {
+                                            "idx": 0,
+                                            "meta": { "type": "text" },
+                                            "name": "new_prop_1",
+                                            "type": "string",
+                                            "value": "\"due_date\"",
+                                            "is_name": true,
+                                            "valueBuilt": "\"due_date\""
+                                          },
+                                          "child": {
+                                            "idx": 1,
+                                            "meta": {
+                                              "type": "content-element"
+                                            },
+                                            "name": "new_prop_1",
+                                            "type": "string",
+                                            "value": "",
+                                            "content": {
+                                              "id": "c8xczjnyu4w378pqh1evum81",
+                                              "adv": {
+                                                "js": "<div {...props} className={cx(props.className, _item?.edit?.parent?.item?.id && `s-${_item?.edit?.parent?.item?.id}` , \"list-field\")}>\n  <FormatValue value={_get(row, name)} name={name} gen_fields={gen__fields} />\n</div>",
+                                                "jsBuilt": "render(React.createElement(\"div\", Object.assign({}, props, { className: cx(props.className, _item?.edit?.parent?.item?.id && `s-${_item?.edit?.parent?.item?.id}` , \"\") }),React.createElement(FormatValue, { value: _get(row, name), name: name, gen_fields: gen__fields })));\n            "
+                                              },
+                                              "dim": {
+                                                "h": "full",
+                                                "w": "fit"
+                                              },
+                                              "name": "child",
+                                              "type": "item",
+                                              "childs": [],
+                                              "script": {}
+                                            },
+                                            "is_name": false,
+                                            "valueBuilt": ""
+                                          }
+                                        },
+                                        "ref_ids": {},
+                                        "useStyle": false,
+                                        "instances": {
+                                          "oldglkbwna3do32ru67wh5og": {
+                                            "hu9onpjzesuio5kgec9bu4ud": "ivbbjnmzwlqgrvz1zkka9t2d",
+                                            "z3oyvltmocag5b3zbh6f4opa": "z6dewn6cp8ql44asicl1axt7"
+                                          }
+                                        }
+                                      },
+                                      "originalId": "hu9onpjzesuio5kgec9bu4ud"
+                                    },
+                                    {
+                                      "id": "kcv4qix29uhayiv8ieorlbpl",
+                                      "adv": {
+                                        "js": "<>{child}</>",
+                                        "css": "",
+                                        "jsBuilt": "render(/* @__PURE__ */ React.createElement(React.Fragment, null, child));\n"
+                                      },
+                                      "dim": { "h": "full", "w": "full" },
+                                      "name": "fld",
+                                      "type": "item",
+                                      "childs": [
+                                        {
+                                          "id": "zv66xh47h2ta9zd71da2emlp",
+                                          "adv": {
+                                            "js": "<div {...props} className={cx(props.className, \"\")}>\n  <FormatValue value={_get(row, name)} name={name} gen_fields={gen__fields} />\n</div>",
+                                            "css": "",
+                                            "jsBuilt": "const _jsxFileName = \"[item: jsx: child - z3oyvltmocag5b3zbh6f4opa]\";render (React.createElement('div', { ...props, className: cx(props.className, \"\"), __self: this, __source: {fileName: _jsxFileName, lineNumber: 1}}\n  , React.createElement(FormatValue, { value: _get(row, name), name: name, gen_fields: gen__fields, __self: this, __source: {fileName: _jsxFileName, lineNumber: 2}} )\n))"
+                                          },
+                                          "dim": { "h": "full", "w": "full" },
+                                          "name": "jsx: child",
+                                          "type": "item",
+                                          "childs": [],
+                                          "script": {},
+                                          "originalId": "z3oyvltmocag5b3zbh6f4opa"
+                                        }
+                                      ],
+                                      "script": {},
+                                      "component": {
+                                        "id": "7ce18cbd-02d5-4aff-9acb-150d3a75e34e",
+                                        "props": {
+                                          "row": {
+                                            "idx": 2,
+                                            "meta": { "type": "text" },
+                                            "name": "new_prop_3",
+                                            "type": "string",
+                                            "value": "row",
+                                            "is_name": false,
+                                            "valueBuilt": " row;\n"
+                                          },
+                                          "name": {
+                                            "idx": 0,
+                                            "meta": { "type": "text" },
+                                            "name": "new_prop_1",
+                                            "type": "string",
+                                            "value": "\"planned_date\"",
+                                            "is_name": true,
+                                            "valueBuilt": "\"planned_date\""
+                                          },
+                                          "child": {
+                                            "idx": 1,
+                                            "meta": {
+                                              "type": "content-element"
+                                            },
+                                            "name": "new_prop_1",
+                                            "type": "string",
+                                            "value": "",
+                                            "content": {
+                                              "id": "h6nyrerhubfokxwrg7wfsnzv",
+                                              "adv": {
+                                                "js": "<div {...props} className={cx(props.className, _item?.edit?.parent?.item?.id && `s-${_item?.edit?.parent?.item?.id}` , \"list-field\")}>\n  <FormatValue value={_get(row, name)} name={name} gen_fields={gen__fields} />\n</div>",
+                                                "jsBuilt": "render(React.createElement(\"div\", Object.assign({}, props, { className: cx(props.className, _item?.edit?.parent?.item?.id && `s-${_item?.edit?.parent?.item?.id}` , \"\") }),React.createElement(FormatValue, { value: _get(row, name), name: name, gen_fields: gen__fields })));\n            "
+                                              },
+                                              "dim": {
+                                                "h": "full",
+                                                "w": "fit"
+                                              },
+                                              "name": "child",
+                                              "type": "item",
+                                              "childs": [],
+                                              "script": {}
+                                            },
+                                            "is_name": false,
+                                            "valueBuilt": ""
+                                          }
+                                        },
+                                        "ref_ids": {},
+                                        "useStyle": false,
+                                        "instances": {
+                                          "kcv4qix29uhayiv8ieorlbpl": {
+                                            "hu9onpjzesuio5kgec9bu4ud": "vqykpcbyqt71jjl5rocu6veo",
+                                            "z3oyvltmocag5b3zbh6f4opa": "zv66xh47h2ta9zd71da2emlp"
+                                          }
+                                        }
+                                      },
+                                      "originalId": "hu9onpjzesuio5kgec9bu4ud"
+                                    }
+                                  ],
+                                  "layout": {
+                                    "dir": "row",
+                                    "gap": "auto",
+                                    "wrap": "flex-nowrap",
+                                    "align": "center"
+                                  }
+                                },
+                                {
+                                  "id": "j01t22qu9puk5zb8nvdpm27f",
+                                  "dim": { "h": "full", "w": "full" },
+                                  "name": "line",
+                                  "type": "item",
+                                  "childs": [
+                                    {
+                                      "id": "s34a81ku3113dezchr9j04xi",
+                                      "adv": {
+                                        "js": "<>{child}</>",
+                                        "css": "",
+                                        "jsBuilt": "render(/* @__PURE__ */ React.createElement(React.Fragment, null, child));\n"
+                                      },
+                                      "dim": { "h": "full", "w": "full" },
+                                      "name": "fld",
+                                      "type": "item",
+                                      "childs": [
+                                        {
+                                          "id": "fx8a8ors3colngm0lyrn810x",
+                                          "adv": {
+                                            "js": "<div {...props} className={cx(props.className, \"\")}>\n  <FormatValue value={_get(row, name)} name={name} gen_fields={gen__fields} />\n</div>",
+                                            "css": "",
+                                            "jsBuilt": "const _jsxFileName = \"[item: jsx: child - z3oyvltmocag5b3zbh6f4opa]\";render (React.createElement('div', { ...props, className: cx(props.className, \"\"), __self: this, __source: {fileName: _jsxFileName, lineNumber: 1}}\n  , React.createElement(FormatValue, { value: _get(row, name), name: name, gen_fields: gen__fields, __self: this, __source: {fileName: _jsxFileName, lineNumber: 2}} )\n))"
+                                          },
+                                          "dim": { "h": "full", "w": "full" },
+                                          "name": "jsx: child",
+                                          "type": "item",
+                                          "childs": [],
+                                          "script": {},
+                                          "originalId": "z3oyvltmocag5b3zbh6f4opa"
+                                        }
+                                      ],
+                                      "script": {},
+                                      "component": {
+                                        "id": "7ce18cbd-02d5-4aff-9acb-150d3a75e34e",
+                                        "props": {
+                                          "row": {
+                                            "idx": 2,
+                                            "meta": { "type": "text" },
+                                            "name": "new_prop_3",
+                                            "type": "string",
+                                            "value": "row",
+                                            "is_name": false,
+                                            "valueBuilt": " row;\n"
+                                          },
+                                          "name": {
+                                            "idx": 0,
+                                            "meta": { "type": "text" },
+                                            "name": "new_prop_1",
+                                            "type": "string",
+                                            "value": "\"notes\"",
+                                            "is_name": true,
+                                            "valueBuilt": "\"notes\""
+                                          },
+                                          "child": {
+                                            "idx": 1,
+                                            "meta": {
+                                              "type": "content-element"
+                                            },
+                                            "name": "new_prop_1",
+                                            "type": "string",
+                                            "value": "",
+                                            "content": {
+                                              "id": "wlek0zxpshlsjhgbymv9bcpt",
+                                              "adv": {
+                                                "js": "<div {...props} className={cx(props.className, _item?.edit?.parent?.item?.id && `s-${_item?.edit?.parent?.item?.id}` , \"list-field\")}>\n  <FormatValue value={_get(row, name)} name={name} gen_fields={gen__fields} />\n</div>",
+                                                "jsBuilt": "render(React.createElement(\"div\", Object.assign({}, props, { className: cx(props.className, _item?.edit?.parent?.item?.id && `s-${_item?.edit?.parent?.item?.id}` , \"\") }),React.createElement(FormatValue, { value: _get(row, name), name: name, gen_fields: gen__fields })));\n            "
+                                              },
+                                              "dim": {
+                                                "h": "full",
+                                                "w": "fit"
+                                              },
+                                              "name": "child",
+                                              "type": "item",
+                                              "childs": [],
+                                              "script": {}
+                                            },
+                                            "is_name": false,
+                                            "valueBuilt": ""
+                                          }
+                                        },
+                                        "ref_ids": {},
+                                        "useStyle": false,
+                                        "instances": {
+                                          "s34a81ku3113dezchr9j04xi": {
+                                            "hu9onpjzesuio5kgec9bu4ud": "vhsseuhvffcwwhmtemcoja7x",
+                                            "z3oyvltmocag5b3zbh6f4opa": "fx8a8ors3colngm0lyrn810x"
+                                          }
+                                        }
+                                      },
+                                      "originalId": "hu9onpjzesuio5kgec9bu4ud"
+                                    }
+                                  ],
+                                  "layout": {
+                                    "dir": "row",
+                                    "gap": "auto",
+                                    "wrap": "flex-nowrap",
+                                    "align": "center"
+                                  }
+                                }
+                              ],
+                              "padding": { "b": 3, "l": 10, "r": 10, "t": 3 }
+                            }
+                          ]
+                        },
+                        "is_name": false,
+                        "valueBuilt": ""
+                      },
+                      "flt__": {
+                        "idx": 6,
+                        "meta": { "type": "text" },
+                        "name": "prop_11",
+                        "type": "string",
+                        "label": "filter",
+                        "value": "\"hello\"",
+                        "valueBuilt": "\"hello\""
+                      },
+                      "gen__": {
+                        "idx": 15,
+                        "meta": { "type": "text" },
+                        "name": "prop_11",
+                        "type": "string",
+                        "label": "generate",
+                        "value": "\"hello\"",
+                        "valueBuilt": "\"hello\""
+                      },
+                      "opt__": {
+                        "idx": 7,
+                        "meta": { "type": "text" },
+                        "name": "prop_11",
+                        "type": "string",
+                        "label": "option",
+                        "value": "\"hello\"",
+                        "valueBuilt": "\"hello\""
+                      },
+                      "sft__": {
+                        "idx": 20,
+                        "meta": { "type": "text" },
+                        "name": "prop_11",
+                        "type": "string",
+                        "label": "soft delete",
+                        "value": "\"hello\"",
+                        "visible": "typeof opt__feature === \"undefined\"\n  ? false\n  : Array.isArray(opt__feature)\n    ? opt__feature.find((e) => e === \"soft_delete\")\n      ? true\n      : false\n    : false",
+                        "valueBuilt": "\"hello\""
+                      },
+                      "list__": {
+                        "idx": 4,
+                        "meta": { "type": "text" },
+                        "name": "new_prop_11",
+                        "type": "string",
+                        "value": "\"hello\"",
+                        "visible": "typeof mode === \"string\" && mode === \"list\"",
+                        "valueBuilt": "\"hello\""
+                      },
+                      "gen__btn": {
+                        "idx": 18,
+                        "meta": { "type": "button" },
+                        "name": "prop_10",
+                        "type": "string",
+                        "label": "_",
+                        "value": "[\n  {\n    label: \"Generate\",\n    onClick: (m, d) => {\n      // prasi_gen.table_list(m, d, item, { mode, id_parent });\n      generateTableList(m, d, _item, { mode, id_parent: opt__id_parent }, true);\n    },\n  },\n]",
+                        "visible": "",
+                        "valueBuilt": " [\n  {\n    label: \"Generate\",\n    onClick: (m, d) => {\n      generateTableList(m, d, _item, { mode, id_parent: opt__id_parent }, true);\n    }\n  }\n];\n"
+                      },
+                      "sft__type": {
+                        "idx": 21,
+                        "meta": {
+                          "type": "option",
+                          "options": "[\"boolean\", \"nullable\"]",
+                          "option_mode": "dropdown",
+                          "optionsBuilt": " [\"boolean\", \"nullable\"];\n"
+                        },
+                        "name": "prop_11",
+                        "type": "string",
+                        "label": "type",
+                        "value": "\"hello\"",
+                        "content": {
+                          "id": "oj3mugnvbh8kjfoagn3tdcbi",
+                          "adv": { "css": "" },
+                          "dim": { "h": "full", "w": "full" },
+                          "name": "sft__type",
+                          "type": "item",
+                          "childs": []
+                        },
+                        "valueBuilt": "\"hello\""
+                      },
+                      "export_btn": {
+                        "idx": 3,
+                        "meta": { "type": "button" },
+                        "name": "prop_11",
+                        "type": "string",
+                        "label": "_",
+                        "value": "[\r\n  {\r\n    label: \"Export\",\r\n    onClick: (m, d) => {\r\n      prasi_gen.export_excel(m, d, { mode, id_parent });\r\n    },\r\n  },\r\n]",
+                        "visible": "false",
+                        "valueBuilt": " [\n  {\n    label: \"Export\",\n    onClick: (m, d) => {\n      prasi_gen.export_excel(m, d, { mode, id_parent });\n    }\n  }\n];\n"
+                      },
+                      "gen__table": {
+                        "idx": 16,
+                        "meta": {
+                          "type": "option",
+                          "options": "async () => {\n  return typeof prasi_gen !== \"undefined\" ? await prasi_gen.prop.table() : [];\n}",
+                          "option_mode": "dropdown",
+                          "optionsBuilt": " async () => {\n  return typeof prasi_gen !== \"undefined\" ? await prasi_gen.prop.table() : [];\n};\n"
+                        },
+                        "name": "prop_8",
+                        "type": "string",
+                        "label": "table",
+                        "value": "\"m_maintenance_schedule_line\"",
+                        "visible": "",
+                        "valueBuilt": "\"m_maintenance_schedule_line\""
+                      },
+                      "list__type": {
+                        "idx": 5,
+                        "meta": {
+                          "type": "option",
+                          "options": "[\"list\", \"grid\", \"slider\"]",
+                          "optionsBuilt": "[\"list\", \"grid\", \"slider\"]"
+                        },
+                        "name": "new_prop_11",
+                        "type": "string",
+                        "value": "\"list\"",
+                        "valueBuilt": "\"list\""
+                      },
+                      "gen__fields": {
+                        "idx": 17,
+                        "meta": {
+                          "type": "option",
+                          "options": "({\n  fn: async () => {\n    const result =\n      typeof prasi_gen !== \"undefined\"\n        ? await prasi_gen.prop.fields(gen__table)\n        : [];\n\n    return result;\n  },\n  deps: [gen__table],\n  reset: true,\n})",
+                          "option_mode": "checkbox",
+                          "optionsBuilt": " {\n  fn: async () => {\n    const result = typeof prasi_gen !== \"undefined\" ? await prasi_gen.prop.fields(gen__table) : [];\n    return result;\n  },\n  deps: [gen__table],\n  reset: true\n};\n"
+                        },
+                        "name": "prop_10",
+                        "type": "string",
+                        "label": "fields",
+                        "value": "[\"{\\\"name\\\":\\\"id\\\",\\\"is_pk\\\":true,\\\"type\\\":\\\"uuid\\\",\\\"optional\\\":false,\\\"default\\\":{\\\"type\\\":\\\"attribute\\\",\\\"name\\\":\\\"default\\\",\\\"kind\\\":\\\"field\\\",\\\"args\\\":[{\\\"type\\\":\\\"attributeArgument\\\",\\\"value\\\":{\\\"type\\\":\\\"function\\\",\\\"name\\\":\\\"dbgenerated\\\",\\\"params\\\":[\\\"\\\\\\\"gen_random_uuid()\\\\\\\"\\\"]}}]}}\",\"{\\\"name\\\":\\\"due_date\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"timestamptz\\\",\\\"optional\\\":true}\",\"{\\\"name\\\":\\\"planned_date\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"timestamptz\\\",\\\"optional\\\":true}\",\"{\\\"name\\\":\\\"notes\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"string\\\",\\\"optional\\\":true,\\\"default\\\":null}\"]",
+                        "visible": "",
+                        "valueBuilt": "[\"{\\\"name\\\":\\\"id\\\",\\\"is_pk\\\":true,\\\"type\\\":\\\"uuid\\\",\\\"optional\\\":false,\\\"default\\\":{\\\"type\\\":\\\"attribute\\\",\\\"name\\\":\\\"default\\\",\\\"kind\\\":\\\"field\\\",\\\"args\\\":[{\\\"type\\\":\\\"attributeArgument\\\",\\\"value\\\":{\\\"type\\\":\\\"function\\\",\\\"name\\\":\\\"dbgenerated\\\",\\\"params\\\":[\\\"\\\\\\\"gen_random_uuid()\\\\\\\"\\\"]}}]}}\",\"{\\\"name\\\":\\\"due_date\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"timestamptz\\\",\\\"optional\\\":true}\",\"{\\\"name\\\":\\\"planned_date\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"timestamptz\\\",\\\"optional\\\":true}\",\"{\\\"name\\\":\\\"notes\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"string\\\",\\\"optional\\\":true,\\\"default\\\":null}\"]"
+                      },
+                      "opt__paging": {
+                        "idx": 14,
+                        "meta": {
+                          "type": "option",
+                          "options": "[\n  {\n    label: \"yes\",\n    value: \"y\",\n  },\n  {\n    label: \"no\",\n    value: \"n\",\n  },\n]",
+                          "optionsBuilt": "[\n  {\n    label: \"yes\",\n    value: \"y\",\n  },\n  {\n    label: \"no\",\n    value: \"n\",\n  },\n]"
+                        },
+                        "name": "new_prop_11",
+                        "type": "string",
+                        "value": "\"y\"",
+                        "valueBuilt": "\"y\""
+                      },
+                      "sft__fields": {
+                        "idx": 22,
+                        "meta": {
+                          "type": "option",
+                          "options": "({\n  fn: async () => {\n    const field =\n      typeof prasi_gen !== \"undefined\"\n        ? await prasi_gen.prop.fields(gen__table)\n        : [];\n    const value = field.filter((e) => {\n      const val = JSON.parse(e.value);\n      if (val.type === \"has-one\" || val.type === \"has-many\" || val.is_pk) {\n        return false;\n      }\n      return true;\n    });\n    let res = prasi_gen.prop.rel(value.map((e) => e.value));\n    const result = [] as Array<string>;\n    Object.entries(res).map(([key, value]) => {\n      if (typeof value !== \"object\") {\n        result.push(key);\n      }\n    });\n    return result;\n  },\n  deps: [gen__table],\n  reset: true,\n})",
+                          "option_mode": "dropdown",
+                          "optionsBuilt": " {\n  fn: async () => {\n    const field = typeof prasi_gen !== \"undefined\" ? await prasi_gen.prop.fields(gen__table) : [];\n    const value = field.filter((e) => {\n      const val = JSON.parse(e.value);\n      if (val.type === \"has-one\" || val.type === \"has-many\" || val.is_pk) {\n        return false;\n      }\n      return true;\n    });\n    let res = prasi_gen.prop.rel(value.map((e) => e.value));\n    const result = [];\n    Object.entries(res).map(([key, value2]) => {\n      if (typeof value2 !== \"object\") {\n        result.push(key);\n      }\n    });\n    return result;\n  },\n  deps: [gen__table],\n  reset: true\n};\n"
+                        },
+                        "name": "prop_11",
+                        "type": "string",
+                        "label": "fields",
+                        "value": "\"\"",
+                        "valueBuilt": " \"\";\n"
+                      },
+                      "list__item_w": {
+                        "idx": 11,
+                        "meta": { "type": "text" },
+                        "name": "new_prop_11",
+                        "type": "string",
+                        "label": "item width",
+                        "value": "\"150\"",
+                        "valueBuilt": "\"150\""
+                      },
+                      "opt__feature": {
+                        "idx": 12,
+                        "meta": {
+                          "type": "option",
+                          "options": "[\n  {\n    label: \"checkbox\",\n    value: \"checkbox\",\n  },\n  {\n    label: \"export pdf\",\n    value: \"export_pdf\",\n  },\n  {\n    label: \"export excel\",\n    value: \"export_excel\",\n  },\n  {\n    label: \"sorting\",\n    value: \"sorting\",\n  },\n  {\n    label: \"tree\",\n    value: \"tree\",\n  },\n]",
+                          "option_mode": "checkbox",
+                          "optionsBuilt": " [\n  {\n    label: \"checkbox\",\n    value: \"checkbox\"\n  },\n  {\n    label: \"export pdf\",\n    value: \"export_pdf\"\n  },\n  {\n    label: \"export excel\",\n    value: \"export_excel\"\n  },\n  {\n    label: \"sorting\",\n    value: \"sorting\"\n  },\n  {\n    label: \"tree\",\n    value: \"tree\"\n  }\n];\n"
+                        },
+                        "name": "prop_11",
+                        "type": "string",
+                        "label": "feature",
+                        "value": "[\"sorting\"]",
+                        "valueBuilt": " [\"sorting\"];\n"
+                      },
+                      "opt__on_init": {
+                        "idx": 11,
+                        "meta": { "type": "text" },
+                        "name": "prop_11",
+                        "type": "string",
+                        "value": "() => {\r\n  return null;\r\n}",
+                        "valueBuilt": " () => {\n  return null;\n};\n"
+                      },
+                      "opt__on_load": {
+                        "idx": 8,
+                        "meta": { "type": "text" },
+                        "name": "prop_1",
+                        "type": "string",
+                        "value": "async (arg: TableOnLoad) => {\n  if (isEditor)\n    return [{\"id\":\"Id\",\"due_date\":\"Due Date\",\"planned_date\":\"Planned Date\",\"notes\":\"Notes\"}];\n\n  let where = arg.where as Prisma.m_maintenance_schedule_lineWhereInput;\n  if (arg.mode === \"count\") {\n    return await db.m_maintenance_schedule_line.count({\n      where: {\n        ...where,\n      },\n    });\n  }\n\n  return new Promise(async (done, reject) => {\n    try {\n      //@ts-ignore\n      const fields = parseGenField(gen__fields);\n      const gen = generateSelect(fields);\n\n      if (opt__feature.includes(\"tree\") && opt__id_parent) {\n        gen.select[opt__id_parent] = true\n      }\n\n      const result = {items: []}\n      result.items = await db.m_maintenance_schedule_line.findMany({\n        select: gen.select,\n        orderBy: arg.orderBy || {\n          id: \"desc\",\n        },\n        where: {\n          ...where,\n        },\n        ...arg.paging,\n      });\n\n      await call_prasi_events(\"tablelist\", \"after_load\", [\"m_maintenance_schedule_line\", result.items, (input) => {\n        result.items = input;\n      }]);\n\n      done(result.items);\n    } catch(e) {\n      reject(e);\n    }\n  });\n};\n\ntype TableOnLoad = {\n  reload: () => Promise<void>;\n  orderBy?: Record<string, \"asc\" | \"desc\">;\n  paging: { take: number; skip: number };\n  mode: \"count\" | \"query\";\n  where?: any;\n}",
+                        "is_name": false,
+                        "valueBuilt": "async (arg) => {\n  if (isEditor)\n    return [{\"id\":\"Id\",\"due_date\":\"Due Date\",\"planned_date\":\"Planned Date\",\"notes\":\"Notes\"}];\n\n  let where = arg.where ;\n  if (arg.mode === \"count\") {\n    return await db.m_maintenance_schedule_line.count({\n      where: {\n        ...where,\n      },\n    });\n  }\n\n  return new Promise(async (done, reject) => {\n    try {\n      //@ts-ignore\n      const fields = parseGenField(gen__fields);\n      const gen = generateSelect(fields);\n\n      if (opt__feature.includes(\"tree\") && opt__id_parent) {\n        gen.select[opt__id_parent] = true\n      }\n\n      const result = {items: []}\n      result.items = await db.m_maintenance_schedule_line.findMany({\n        select: gen.select,\n        orderBy: arg.orderBy || {\n          id: \"desc\",\n        },\n        where: {\n          ...where,\n        },\n        ...arg.paging,\n      });\n\n      await call_prasi_events(\"tablelist\", \"after_load\", [\"m_maintenance_schedule_line\", result.items, (input) => {\n        result.items = input;\n      }]);\n\n      done(result.items);\n    } catch(e) {\n      reject(e);\n    }\n  });\n};"
+                      },
+                      "opt__selected": {
+                        "idx": 10,
+                        "meta": { "type": "text" },
+                        "name": "prop_9",
+                        "type": "string",
+                        "label": "selected",
+                        "value": "  ({ row, rows, idx }: SelectedRow) => {\n  try {\n  if (typeof md === \"object\") {\n  if (Array.isArray(md.selected)) {\n  if (md.selected.length) {\n    let select = md.selected.find((e) => e === row)\n    if(select) return true\n  }\n  } else {\n  if (md.selected === row) {\n    return true;\n  }\n  }\n  }\n  } catch (e) {\n  \n  }\n  return false;\n  };\n  \n  type SelectedRow = {\n  row: any;\n  rows: any[];\n  idx: any;\n  }",
+                        "valueBuilt": "({ row, rows, idx }) => {\n  try {\n  if (typeof md === \"object\") {\n  if (Array.isArray(md.selected)) {\n  if (md.selected.length) {\n    let select = md.selected.find((e) => e === row)\n    if(select) return true\n  }\n  } else {\n  if (md.selected === row) {\n    return true;\n  }\n  }\n  }\n  } catch (e) {\n  \n  }\n  return false;\n  };"
+                      },
+                      "opt__id_parent": {
+                        "idx": 13,
+                        "meta": {
+                          "type": "option",
+                          "options": "async () => {\n  const result =\n    typeof prasi_gen !== \"undefined\"\n      ? await prasi_gen.prop.fields(gen__table)\n      : [];\n\n  const final = [\"\"];\n  for (const raw of result) {\n    const r = JSON.parse(raw.value);\n    if (r.type.startsWith(\"has-\")) continue;\n    final.push(r.name);\n  }\n  return final;\n}",
+                          "option_mode": "dropdown",
+                          "optionsBuilt": " async () => {\n  const result = typeof prasi_gen !== \"undefined\" ? await prasi_gen.prop.fields(gen__table) : [];\n  const final = [\"\"];\n  for (const raw of result) {\n    const r = JSON.parse(raw.value);\n    if (r.type.startsWith(\"has-\"))\n      continue;\n    final.push(r.name);\n  }\n  return final;\n};\n"
+                        },
+                        "name": "prop_11",
+                        "type": "string",
+                        "label": "",
+                        "value": "``",
+                        "visible": "typeof opt__feature !== \"undefined\" &&\n  Array.isArray(opt__feature) &&\n  opt__feature.find((e) => {\n    if (e === \"tree\") return true;\n    return false;\n  })",
+                        "valueBuilt": " ``;\n"
+                      },
+                      "opt__row_click": {
+                        "idx": 9,
+                        "meta": { "type": "text" },
+                        "name": "prop_10",
+                        "type": "string",
+                        "value": "({ row, rows, idx, event }: OnRowClick) => {\n  cn.data.navigate(`#root=${row.id}`)\n  ;\n};\n\ntype OnRowClick = {\n  row: any;\n  rows: any[];\n  idx: any;\n  event: React.MouseEvent<HTMLDivElement, MouseEvent>;\n}",
+                        "valueBuilt": "({ row, rows, idx, event }) => {\n  cn.data.navigate(`#root=${row.id}`)\n  ;\n};"
+                      },
+                      "flt__filter_name": {
+                        "idx": 19,
+                        "meta": { "type": "text" },
+                        "name": "prop_12",
+                        "type": "string",
+                        "label": "filter name",
+                        "value": "\"root\"",
+                        "valueBuilt": " \"root\";\n"
+                      }
+                    },
+                    "ref_ids": {},
+                    "instances": {
+                      "j4livfi4l1wdiuejd5d6cb30": {
+                        "mue8cf415ba4g5fbwjxhbqs3": "caemxf9rsgl6vh41ipmg7cod",
+                        "lpe3qbhzdip2nlxbg0ct3hg3": "u36hr9f72s36bhjsbvqwj52m",
+                        "x6hffi3ftxknfbozpc90bnjs": "stbdmqh4j3joztq9otngpesx",
+                        "kala3nl47ejunbu89367w5xj": "zsp2dw9lqq65x07456d84f9n"
+                      }
+                    }
+                  },
+                  "originalId": "mue8cf415ba4g5fbwjxhbqs3"
+                }
+              ]
+            }
+          ]
+        },
+        "valueBuilt": "",
+        "jsxCalledBy": ["qoqt6em9lsstmqb4r2ktaohj", "zmit41kbgkbqcsmm8aspp8zy"]
+      },
+      "ext__": {
+        "idx": 21,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "label": "setting",
+        "value": "\"hello\"",
+        "valueBuilt": "\"hello\""
+      },
+      "label": {
+        "idx": 1,
+        "meta": { "type": "text" },
+        "name": "prop_1",
+        "type": "string",
+        "value": "`Maintenance Schedule Line`",
+        "is_name": false,
+        "valueBuilt": "`Maintenance Schedule Line`"
+      },
+      "opt__": {
+        "idx": 43,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "label": "option",
+        "value": "\"hello\"",
+        "visible": "typeof type === \"string\" ? [\"single-option\", \"multi-option\"].includes(type) : false",
+        "valueBuilt": "\"hello\""
+      },
+      "rel__": {
+        "idx": 52,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "label": "relation",
+        "value": "\"hello\"",
+        "visible": "[\"multi-option\",\"single-option\"].includes(type)",
+        "valueBuilt": "\"hello\""
+      },
+      "upl__": {
+        "idx": 13,
+        "meta": { "type": "option" },
+        "name": "new_prop_11",
+        "type": "string",
+        "label": "upload",
+        "value": "\"hello\"",
+        "visible": "typeof sub_type === \"string\" && sub_type === \"upload\"",
+        "valueBuilt": "\"hello\""
+      },
+      "custom": {
+        "idx": 6,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "value": "() => {\n  const result: CustomField = {\n    field: \"text\",\n    type: \"text\",\n  };\n  return result;\n}",
+        "typings": "const typings = {\n  _raw: FieldTypeCustom,\n}",
+        "visible": "type === \"custom\"",
+        "valueBuilt": " () => {\n  const result = {\n    field: \"text\",\n    type: \"text\"\n  };\n  return result;\n};\n"
+      },
+      "link__": {
+        "idx": 39,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "value": "\"hello\"",
+        "visible": "(typeof type === \"string\" && type === \"link\") ||\n  (type === \"multi-option\" && sub_type === \"table-list-edit\")",
+        "valueBuilt": "\"hello\""
+      },
+      "opt__pk": {
+        "idx": 44,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "value": "\"value\"",
+        "visible": "typeof sub_type !== \"undefined\" ? sub_type !== \"upload\" : false",
+        "valueBuilt": " \"value\";\n"
+      },
+      "sub_type": {
+        "idx": 4,
+        "meta": {
+          "type": "option",
+          "options": "(() => {\r\n  switch (type) {\r\n    case \"input\":\r\n      return [\r\n        \"-\",\r\n        \"textarea\",\r\n        \"text\",\r\n        \"money\",\r\n        \"number\",\r\n        \"phone\",\r\n        \"mask\",\r\n        \"rich-text\",\r\n        \"upload\",\r\n        \"password\",\r\n        \"datetime\",\r\n        \"date\",\r\n        \"time\",\r\n        \"toggle\",\r\n        \"import\",\r\n        \"monthly\",\r\n        \"key-value\",\r\n        \"search\",\r\n        \"otp\",\r\n      ];\r\n    case \"link\":\r\n      return [\"-\"];\r\n    case \"date\":\r\n      return [\"-\", \"datetime\", \"date\", \"time\"];\r\n    case \"single-option\":\r\n      return [\"-\", \"dropdown\", \"radio\", \"toggle\", \"button\", \"checkbox\"];\r\n    case \"multi-option\":\r\n      return [\r\n        \"-\",\r\n        \"typeahead\",\r\n        \"checkbox\",\r\n        \"button\",\r\n        \"table-edit\",\r\n        \"table-list-edit\",\r\n      ];\r\n  }\r\n  return [];\r\n})()",
+          "option_mode": "dropdown",
+          "optionsBuilt": "(() => {\r\n  switch (type) {\r\n    case \"input\":\r\n      return [\r\n        \"-\",\r\n        \"textarea\",\r\n        \"text\",\r\n        \"money\",\r\n        \"number\",\r\n        \"phone\",\r\n        \"mask\",\r\n        \"rich-text\",\r\n        \"upload\",\r\n        \"password\",\r\n        \"datetime\",\r\n        \"date\",\r\n        \"time\",\r\n        \"toggle\",\r\n        \"import\",\r\n        \"monthly\",\r\n        \"key-value\",\r\n        \"search\",\r\n        \"otp\",\r\n      ];\r\n    case \"link\":\r\n      return [\"-\"];\r\n    case \"date\":\r\n      return [\"-\", \"datetime\", \"date\", \"time\"];\r\n    case \"single-option\":\r\n      return [\"-\", \"dropdown\", \"radio\", \"toggle\", \"button\", \"checkbox\"];\r\n    case \"multi-option\":\r\n      return [\r\n        \"-\",\r\n        \"typeahead\",\r\n        \"checkbox\",\r\n        \"button\",\r\n        \"table-edit\",\r\n        \"table-list-edit\",\r\n      ];\r\n  }\r\n  return [];\r\n})()"
+        },
+        "name": "prop_11",
+        "type": "string",
+        "value": "\"table-list-edit\"",
+        "visible": "type !== \"link\"",
+        "valueBuilt": "\"table-list-edit\""
+      },
+      "ext__desc": {
+        "idx": 25,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "label": "description",
+        "value": "\"\"",
+        "valueBuilt": " \"\";\n"
+      },
+      "ext__show": {
+        "idx": 22,
+        "meta": {
+          "type": "option",
+          "options": "[\n  {\n    label: \"show\",\n    value: \"y\"\n  },\n  {\n    label: \"hide\",\n    value: \"n\"\n  },\n]",
+          "optionsBuilt": "[\n  {\n    label: \"show\",\n    value: \"y\"\n  },\n  {\n    label: \"hide\",\n    value: \"n\"\n  },\n]"
+        },
+        "name": "new_prop_11",
+        "type": "string",
+        "value": "\"y\"",
+        "valueBuilt": "\"y\""
+      },
+      "kv__index": {
+        "idx": 11,
+        "meta": {
+          "type": "option",
+          "options": "[\"auto-sort\", \"preserve\"]",
+          "optionsBuilt": "[\"auto-sort\", \"preserve\"]"
+        },
+        "name": "new_prop_11",
+        "type": "string",
+        "label": "",
+        "value": "\"auto-sort\"",
+        "valueBuilt": "\"auto-sort\""
+      },
+      "link__url": {
+        "idx": 40,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "label": "",
+        "value": "`/d/asset`",
+        "visible": "(typeof type === \"string\" && type === \"link\") ||\n  (type === \"multi-option\" && sub_type === \"table-list-edit\")",
+        "valueBuilt": "`/d/asset`"
+      },
+      "msg_error": {
+        "idx": 8,
+        "meta": { "type": "text" },
+        "name": "prop_12",
+        "type": "string",
+        "value": "\"hello\"",
+        "visible": "false",
+        "valueBuilt": "\"hello\""
+      },
+      "upl__mode": {
+        "idx": 14,
+        "meta": {
+          "type": "option",
+          "options": "[\"single-file\", \"multi-file\"]",
+          "optionsBuilt": "[\"single-file\", \"multi-file\"]"
+        },
+        "name": "new_prop_11",
+        "type": "string",
+        "value": "\"single-file\"",
+        "valueBuilt": "\"single-file\""
+      },
+      "ext__width": {
+        "idx": 26,
+        "meta": {
+          "type": "option",
+          "options": "[\"auto\", \"full\", \"¾\", \"½\", \"⅓\", \"¼\"]",
+          "option_mode": "dropdown",
+          "optionsBuilt": " [\"auto\", \"full\", \"\\xBE\", \"\\xBD\", \"\\u2153\", \"\\xBC\"];\n"
+        },
+        "name": "prop_11",
+        "type": "string",
+        "label": "",
+        "value": "\"full\"",
+        "valueBuilt": "\"full\""
+      },
+      "link__text": {
+        "idx": 41,
+        "meta": { "type": "text" },
+        "name": "new_prop_11",
+        "type": "string",
+        "value": "`Detail`",
+        "valueBuilt": " `Detail`;\n"
+      },
+      "opt__label": {
+        "idx": 45,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "label": "get_label",
+        "value": "(\n  row: { value: string; label: string; data?: any },\n  mode: \"list\" | \"label\", opt: any\n) => {\n  const cols = [\"name\"];\n  \n  if (isEditor) {\n    return row.label;\n  }\n\n  const prefix = treePrefix({\n    //@ts-ignore\n    rel__feature, rel__id_parent, row, mode, opt\n  });\n\n  const result = [];\n  if (!!row.data && !row.label && !Array.isArray(row.data)) {\n    if(cols.length > 0){\n      cols.map((e) => {\n        if (row.data[e]) {\n          result.push(row.data[e]);\n        }\n      });\n      return prefix + result.join(\" - \");\n    } else {\n      const fields = parseGenField(rel__gen_fields);\n      return prefix + fields\n        .filter((e) => !e.is_pk)\n        .map((e) => row.data[e.name])\n        .filter((e) => e)\n        .join(\" - \");\n    }\n  }\n  return prefix + row.label;\n}\n  ",
+        "visible": "typeof sub_type !== \"undefined\" ? sub_type !== \"upload\" : false",
+        "valueBuilt": "(\n  row,\n  mode, opt\n) => {\n  const cols = [\"name\"];\n  \n  if (isEditor) {\n    return row.label;\n  }\n\n  const prefix = treePrefix({\n    //@ts-ignore\n    rel__feature, rel__id_parent, row, mode, opt\n  });\n\n  const result = [];\n  if (!!row.data && !row.label && !Array.isArray(row.data)) {\n    if(cols.length > 0){\n      cols.map((e) => {\n        if (row.data[e]) {\n          result.push(row.data[e]);\n        }\n      });\n      return prefix + result.join(\" - \");\n    } else {\n      const fields = parseGenField(rel__gen_fields);\n      return prefix + fields\n        .filter((e) => !e.is_pk)\n        .map((e) => row.data[e.name])\n        .filter((e) => e)\n        .join(\" - \");\n    }\n  }\n  return prefix + row.label;\n}"
+      },
+      "ext__prefix": {
+        "idx": 28,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "label": "",
+        "value": "() => {\n  return null;\n}",
+        "visible": "true",
+        "valueBuilt": " () => {\n  return null;\n};\n"
+      },
+      "ext__suffix": {
+        "idx": 29,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "value": "() => {\n  return null;\n}",
+        "visible": "true",
+        "valueBuilt": " () => {\n  return null;\n};\n"
+      },
+      "kv__default": {
+        "idx": 12,
+        "meta": { "type": "text" },
+        "name": "new_prop_11",
+        "type": "string",
+        "value": "({})",
+        "valueBuilt": "({})"
+      },
+      "upl__accept": {
+        "idx": 15,
+        "meta": { "type": "text" },
+        "name": "new_prop_11",
+        "type": "string",
+        "label": "file type",
+        "value": "`image/*, \napplication/pdf,\napplication/vnd.*`",
+        "valueBuilt": "`image/*, \napplication/pdf,\napplication/vnd.*`"
+      },
+      "ext__on_init": {
+        "idx": 27,
+        "meta": { "type": "text" },
+        "name": "new_prop_11",
+        "type": "string",
+        "label": "on init",
+        "value": "({field}) => {\r\n\r\n}",
+        "valueBuilt": "({field}) => {\r\n\r\n}"
+      },
+      "label_action": {
+        "idx": 2,
+        "meta": { "type": "text" },
+        "name": "new_prop_11",
+        "type": "string",
+        "value": "<Button\n  style={{ height: 28 ,gap: 5 }}\n  onClick={() => {\n    navigate(`${link__url}#root=+`, { breads: [{ label: link__text }] });\n  }}\n>\n  <svg\n    xmlns=\"http://www.w3.org/2000/svg\"\n    width=\"16\"\n    height=\"16\"\n    viewBox=\"0 0 24 24\"\n    fill=\"none\"\n    stroke=\"currentColor\"\n    stroke-width=\"2\"\n    stroke-linecap=\"round\"\n    stroke-linejoin=\"round\"\n    class=\"lucide lucide-plus\"\n  >\n    <path d=\"M5 12h14\" />\n    <path d=\"M12 5v14\" />\n  </svg>\n  Add New\n</Button>",
+        "valueBuilt": "(() => { const _jsxFileName = \"\"; return React.createElement(Button, {\n  style: { height: 28 ,gap: 5 },\n  onClick: () => {\n    navigate(`${link__url}#root=+`, { breads: [{ label: link__text }] });\n  }, __self: this, __source: {fileName: _jsxFileName, lineNumber: 1}}\n\n  , React.createElement('svg', {\n    xmlns: \"http://www.w3.org/2000/svg\",\n    width: \"16\",\n    height: \"16\",\n    viewBox: \"0 0 24 24\"   ,\n    fill: \"none\",\n    stroke: \"currentColor\",\n    'stroke-width': \"2\",\n    'stroke-linecap': \"round\",\n    'stroke-linejoin': \"round\",\n    class: \"lucide lucide-plus\" , __self: this, __source: {fileName: _jsxFileName, lineNumber: 7}}\n\n    , React.createElement('path', { d: \"M5 12h14\" , __self: this, __source: {fileName: _jsxFileName, lineNumber: 19}} )\n    , React.createElement('path', { d: \"M12 5v14\" , __self: this, __source: {fileName: _jsxFileName, lineNumber: 20}} )\n  ), \"Add New\"\n\n) })()"
+      },
+      "link__params": {
+        "idx": 42,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "label": "",
+        "value": "async (field: any) => {\n  return {\n    where: {\n      id: \"\",\n    },\n  };\n}",
+        "visible": "(typeof type === \"string\" && type === \"link\") ||\n  (type === \"multi-option\" && sub_type === \"table-list-edit\")",
+        "onChange": "(value: any, page: { id: string; name: string; url: string }) => {}",
+        "valueBuilt": " async (field) => {\n  return {\n    where: {\n      id: \"\"\n    }\n  };\n};\n",
+        "onChangeBuilt": " (value, page) => {\n};\n"
+      },
+      "opt__on_load": {
+        "idx": 46,
+        "meta": { "type": "option" },
+        "name": "prop_11",
+        "type": "string",
+        "label": "on load",
+        "value": "async (arg: {\n  field: any;\n}) => {\n  if (isEditor) return [{\"label\":\"sample\",\"value\":\"sample\",\"data\":null}];\n\n  return new Promise(async (done, reject) => {\n    try {\n      \n      const fields = parseGenField(rel__gen_fields);\n      const res = generateSelect(fields);\n      \n\n      const is_tree =\n        typeof rel__feature !== \"undefined\" &&\n        Array.isArray(rel__feature) &&\n        rel__feature.includes(\"tree\");\n      \n      const ext_select: Record<string, any> = {};\n      if (is_tree && typeof rel__id_parent === \"string\" && rel__id_parent) {\n        ext_select[rel__id_parent] = true;\n      }\n\n      let where = \n      (await call_prasi_events(\"field\", \"relation_load\", [fm, arg.field]) || {}) as Prisma.m_maintenance_groupWhereInput;\n\n      let items = await db.m_maintenance_group.findMany({\n        select: {\n          ...ext_select,\n          ...{\"id\":true,\"name\":true}\n          ,...(res?.select || {})\n        },\n        where,\n        orderBy: {\n          id: \"desc\"\n        },\n      });\n\n      if (is_tree && typeof rel__id_parent === \"string\" && rel__id_parent) {\n        items = sortTree(items, rel__id_parent, \"id\");\n      }\n\n      if(Array.isArray(items) && items.length){\n        const cols = [\"name\"];\n        const getLabel = (data: any)  => {\n          const result = [];\n          cols.map((e) => {\n            if(data[e]){\n              result.push(data[e]);\n            }\n          })\n          return result.join(\" - \");\n        }\n        \n        let blank: any = undefined;\n        if ((ext__required as any) !== \"y\" && (sub_type as any) === 'dropdown') {\n          blank = { value: undefined, label: \"\", data: {} };\n        }\n          \n        done(\n          [\n            blank,\n            ...items.map((e) => {\n              return {\n                value: e.id,\n                label: getLabel(e),\n                data: e,\n              };\n            }),\n          ].filter((e) => e),\n        );\n      } else {\n        done([])\n      }\n    } catch(e) {\n    reject(e);\n    }\n  })\n}\n  ",
+        "visible": "typeof sub_type !== 'undefined' && sub_type !== 'upload'",
+        "valueBuilt": "async (arg\n\n) => {\n  if (isEditor) return [{\"label\":\"sample\",\"value\":\"sample\",\"data\":null}];\n\n  return new Promise(async (done, reject) => {\n    try {\n      \n      const fields = parseGenField(rel__gen_fields);\n      const res = generateSelect(fields);\n      \n\n      const is_tree =\n        typeof rel__feature !== \"undefined\" &&\n        Array.isArray(rel__feature) &&\n        rel__feature.includes(\"tree\");\n      \n      const ext_select = {};\n      if (is_tree && typeof rel__id_parent === \"string\" && rel__id_parent) {\n        ext_select[rel__id_parent] = true;\n      }\n\n      let where = \n      (await call_prasi_events(\"field\", \"relation_load\", [fm, arg.field]) || {}) ;\n\n      let items = await db.m_maintenance_group.findMany({\n        select: {\n          ...ext_select,\n          ...{\"id\":true,\"name\":true}\n          ,...(res?.select || {})\n        },\n        where,\n        orderBy: {\n          id: \"desc\"\n        },\n      });\n\n      if (is_tree && typeof rel__id_parent === \"string\" && rel__id_parent) {\n        items = sortTree(items, rel__id_parent, \"id\");\n      }\n\n      if(Array.isArray(items) && items.length){\n        const cols = [\"name\"];\n        const getLabel = (data)  => {\n          const result = [];\n          cols.map((e) => {\n            if(data[e]){\n              result.push(data[e]);\n            }\n          })\n          return result.join(\" - \");\n        }\n        \n        let blank = undefined;\n        if ((ext__required ) !== \"y\" && (sub_type ) === 'dropdown') {\n          blank = { value: undefined, label: \"\", data: {} };\n        }\n          \n        done(\n          [\n            blank,\n            ...items.map((e) => {\n              return {\n                value: e.id,\n                label: getLabel(e),\n                data: e,\n              };\n            }),\n          ].filter((e) => e),\n        );\n      } else {\n        done([])\n      }\n    } catch(e) {\n    reject(e);\n    }\n  })\n}"
+      },
+      "rel__btn_gen": {
+        "idx": 57,
+        "meta": { "type": "button" },
+        "name": "prop_12",
+        "type": "string",
+        "label": "_",
+        "value": "[\r\n  {\r\n    label: \"Generate\",\r\n    onClick: (m, d) => {\r\n      generateField(d, _item, true);\r\n    },\r\n  },\r\n]",
+        "valueBuilt": " [\n  {\n    label: \"Generate\",\n    onClick: (m, d) => {\n      generateField(d, _item, true);\n    }\n  }\n];\n"
+      },
+      "rel__feature": {
+        "idx": 55,
+        "meta": {
+          "type": "option",
+          "options": "[\"tree\"]",
+          "option_mode": "checkbox",
+          "optionsBuilt": " [\"tree\"];\n"
+        },
+        "name": "prop_11",
+        "type": "string",
+        "value": "[]",
+        "valueBuilt": " [];\n"
+      },
+      "ext__disabled": {
+        "idx": 30,
+        "meta": {
+          "type": "option",
+          "options": "[\n  {\n    label: \"yes\",\n    value: \"y\",\n  },\n  {\n    label: \"no\",\n    value: \"n\",\n  },\n]",
+          "optionsBuilt": " [\n  {\n    label: \"yes\",\n    value: \"y\"\n  },\n  {\n    label: \"no\",\n    value: \"n\"\n  }\n];\n"
+        },
+        "name": "prop_11",
+        "type": "string",
+        "value": "() => {\r\n  return [\"Approved\", \"Waiting Approval\"].includes(fm?.data?.approval_status) ;\r\n}",
+        "valueBuilt": "() => {\r\n  return [\"Approved\", \"Waiting Approval\"].includes(fm?.data?.approval_status) ;\r\n}"
+      },
+      "ext__max_date": {
+        "idx": 31,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "label": "max  date",
+        "value": "null",
+        "visible": "typeof sub_type !== \"undefined\" ? [\"date\"].includes(sub_type) : false",
+        "valueBuilt": " null;\n"
+      },
+      "ext__min_date": {
+        "idx": 32,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "label": "min date",
+        "value": "null",
+        "visible": "typeof sub_type !== \"undefined\" ? [\"date\"].includes(sub_type) : false",
+        "valueBuilt": " null;\n"
+      },
+      "ext__required": {
+        "idx": 33,
+        "meta": {
+          "type": "option",
+          "options": "[\n  {\n    label: \"yes\",\n    value: \"y\"\n  },\n  {\n    label: \"no\",\n    value: \"n\"\n  },\n]",
+          "option_mode": "button",
+          "optionsBuilt": " [\n  {\n    label: \"yes\",\n    value: \"y\"\n  },\n  {\n    label: \"no\",\n    value: \"n\"\n  }\n];\n"
+        },
+        "name": "prop_7",
+        "type": "string",
+        "value": "\"n\"",
+        "is_name": false,
+        "valueBuilt": "\"n\""
+      },
+      "opt__max_size": {
+        "idx": 47,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "label": "maximal file size (MB)",
+        "value": "\"50\"",
+        "visible": "typeof sub_type !== \"undefined\" ? sub_type === \"upload\" : false",
+        "valueBuilt": " \"50\";\n"
+      },
+      "type_relation": {
+        "idx": 7,
+        "meta": {
+          "type": "option",
+          "options": "[\"has-one\", \"has-many\"]",
+          "optionsBuilt": " [\"has-one\", \"has-many\"];\n"
+        },
+        "name": "prop_11",
+        "type": "string",
+        "value": "\"hello\"",
+        "visible": "type === \"relation\"",
+        "valueBuilt": "\"hello\""
+      },
+      "ext__on_change": {
+        "idx": 34,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "label": "",
+        "value": "({ value }) => {}",
+        "is_name": false,
+        "visible": "typeof type !== \"undefined\" && type !== \"relation\"",
+        "valueBuilt": " ({ value }) => {\n};\n"
+      },
+      "opt__get_value": {
+        "idx": 48,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "label": "get_value",
+        "value": "(arg: {\n  options: { label: string; value: string; item?: string }[];\n  fm: FMLocal;\n  name: string;\n  type: string;\n}) => {\n  const { options, fm, name, type } = arg;\n  if(isEditor){\n    return fm.data[name];\n  }\n  let result = null;\n  result =  fm.data[name];\n  try{\n    const data = fm.data[\"m_maintenance_group\"];\n    if(typeof data === \"object\"){\n      if(typeof data?.connect?.id !== \"undefined\") {\n        result = data.connect.id;\n      } else if (typeof data?.id !== \"undefined\") {\n        result = data.id;\n      } else if (data?.disconnect === true) {\n        result = undefined;\n      }\n    }\n  }catch(ex){\n  }\n  return result;\n}\n  ",
+        "visible": "typeof sub_type !== \"undefined\" ? sub_type !== \"upload\" : false",
+        "valueBuilt": "(arg\n\n\n\n\n) => {\n  const { options, fm, name, type } = arg;\n  if(isEditor){\n    return fm.data[name];\n  }\n  let result = null;\n  result =  fm.data[name];\n  try{\n    const data = fm.data[\"m_maintenance_group\"];\n    if(typeof data === \"object\"){\n      if(typeof data?.connect?.id !== \"undefined\") {\n        result = data.connect.id;\n      } else if (typeof data?.id !== \"undefined\") {\n        result = data.id;\n      } else if (data?.disconnect === true) {\n        result = undefined;\n      }\n    }\n  }catch(ex){\n  }\n  return result;\n}"
+      },
+      "opt__set_value": {
+        "idx": 49,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "label": "set_value",
+        "value": "(arg: {\n  selected: any[];\n  options: { label: string; value: string; item?: string }[];\n  fm: FMLocal;\n  name: string;\n  type: string;\n}) => {\n  const { selected, options, fm, name, type } = arg;\n  // const old = \n  if (type === \"single-option\") {\n    if (selected[0]) {\n      fm.data[name] = {\n        connect: {\n          id: selected[0],\n        },\n      };\n    } else if (fm.data[\"id\"]) {\n      fm.data[name] = {\n        disconnect: true,\n      };\n    }\n  } else {\n    fm.data[name] = selected.map((e) => e);\n  }\n  fm.render();\n  try {\n    fm.fields.assign_spv.reload_options()\n  } catch (ex) {\n\n  }\n}",
+        "visible": "typeof sub_type !== \"undefined\" ? sub_type !== \"upload\" : false",
+        "valueBuilt": "(arg\n\n\n\n\n\n) => {\n  const { selected, options, fm, name, type } = arg;\n  // const old = \n  if (type === \"single-option\") {\n    if (selected[0]) {\n      fm.data[name] = {\n        connect: {\n          id: selected[0],\n        },\n      };\n    } else if (fm.data[\"id\"]) {\n      fm.data[name] = {\n        disconnect: true,\n      };\n    }\n  } else {\n    fm.data[name] = selected.map((e) => e);\n  }\n  fm.render();\n  try {\n    fm.fields.assign_spv.reload_options()\n  } catch (ex) {\n\n  }\n}"
+      },
+      "rel__gen_table": {
+        "idx": 53,
+        "meta": {
+          "type": "option",
+          "options": "async () => {\n  const result = [{ value: \"\", label: \"\" }];\n  return [\n    ...result,\n    ...(await db._schema.tables()).map((e) => ({\n      value: e,\n      label: e,\n      reload: [\"gen_fields\", \"gen_label\"],\n    })),\n  ];\n}",
+          "option_mode": "dropdown",
+          "optionsBuilt": " async () => {\n  const result = [{ value: \"\", label: \"\" }];\n  return [\n    ...result,\n    ...(await db._schema.tables()).map((e) => ({\n      value: e,\n      label: e,\n      reload: [\"gen_fields\", \"gen_label\"]\n    }))\n  ];\n};\n"
+        },
+        "name": "prop_11",
+        "type": "string",
+        "label": "table",
+        "value": "\"m_maintenance_schedule_line\"",
+        "visible": "",
+        "valueBuilt": "\"m_maintenance_schedule_line\""
+      },
+      "rel__id_parent": {
+        "idx": 56,
+        "meta": {
+          "type": "option",
+          "options": "async () => {\n    const fields = parseGenField(rel__gen_fields);\n    const has_one = fields.find((e) => e.type === \"has-one\");\n    let table = rel__gen_table;\n    if (has_one) {\n      table = has_one.relation?.to.table;\n    }\n\n    const result =\n      typeof prasi_gen !== \"undefined\"\n        ? await prasi_gen.prop.fields(table)\n        : [];\n\n    const final = [\"\"];\n    for (const raw of result) {\n      const r = JSON.parse((raw as any).value);\n      if (r.type.startsWith(\"has-\")) continue;\n      final.push(r.name);\n    }\n    return final;\n  }",
+          "option_mode": "dropdown",
+          "optionsBuilt": " async () => {\n  const fields = parseGenField(rel__gen_fields);\n  const has_one = fields.find((e) => e.type === \"has-one\");\n  let table = rel__gen_table;\n  if (has_one) {\n    table = has_one.relation?.to.table;\n  }\n  const result = typeof prasi_gen !== \"undefined\" ? await prasi_gen.prop.fields(table) : [];\n  const final = [\"\"];\n  for (const raw of result) {\n    const r = JSON.parse(raw.value);\n    if (r.type.startsWith(\"has-\")) continue;\n    final.push(r.name);\n  }\n  return final;\n};\n"
+        },
+        "name": "prop_11",
+        "type": "string",
+        "value": "\"\"",
+        "visible": "typeof rel__feature === \"object\" &&\n  Array.isArray(rel__feature) &&\n  rel__feature.includes(\"tree\")",
+        "valueBuilt": " \"\";\n"
+      },
+      "upl__on_upload": {
+        "idx": 16,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "value": "(file: Array<string>) => {}",
+        "visible": "true",
+        "valueBuilt": "(file) => {}"
+      },
+      "ext__show_label": {
+        "idx": 35,
+        "meta": {
+          "type": "option",
+          "options": "[\n  {\n    label: \"yes\",\n    value: \"y\",\n  },\n  {\n    label: \"no\",\n    value: \"n\",\n  },\n]",
+          "optionsBuilt": " [\n  {\n    label: \"yes\",\n    value: \"y\"\n  },\n  {\n    label: \"no\",\n    value: \"n\"\n  }\n];\n"
+        },
+        "name": "prop_11",
+        "type": "string",
+        "label": "show label",
+        "value": "\"y\"",
+        "valueBuilt": "\"y\""
+      },
+      "opt__url_upload": {
+        "idx": 50,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "value": "\"hello\"",
+        "visible": "typeof sub_type !== \"undefined\" ? sub_type === \"upload\" : false",
+        "valueBuilt": "\"hello\""
+      },
+      "rel__gen_fields": {
+        "idx": 54,
+        "meta": {
+          "type": "option",
+          "options": "({\n  fn: async () => {\n    const result =\n      typeof prasi_gen !== \"undefined\"\n        ? await prasi_gen.prop.fields(rel__gen_table)\n        : [];\n\n    return result;\n  },\n  deps: [rel__gen_table],\n  reset: true,\n})",
+          "option_mode": "checkbox",
+          "optionsBuilt": " {\n  fn: async () => {\n    const result = typeof prasi_gen !== \"undefined\" ? await prasi_gen.prop.fields(rel__gen_table) : [];\n    return result;\n  },\n  deps: [rel__gen_table],\n  reset: true\n};\n"
+        },
+        "name": "prop_11",
+        "type": "string",
+        "label": "fields",
+        "value": "[\"{\\\"name\\\":\\\"id\\\",\\\"is_pk\\\":true,\\\"type\\\":\\\"uuid\\\",\\\"optional\\\":false,\\\"default\\\":{\\\"type\\\":\\\"attribute\\\",\\\"name\\\":\\\"default\\\",\\\"kind\\\":\\\"field\\\",\\\"args\\\":[{\\\"type\\\":\\\"attributeArgument\\\",\\\"value\\\":{\\\"type\\\":\\\"function\\\",\\\"name\\\":\\\"dbgenerated\\\",\\\"params\\\":[\\\"\\\\\\\"gen_random_uuid()\\\\\\\"\\\"]}}]}}\",\"{\\\"name\\\":\\\"due_date\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"timestamptz\\\",\\\"optional\\\":true}\",\"{\\\"name\\\":\\\"planned_date\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"timestamptz\\\",\\\"optional\\\":true}\",\"{\\\"name\\\":\\\"notes\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"string\\\",\\\"optional\\\":true,\\\"default\\\":null}\"]",
+        "visible": "",
+        "valueBuilt": "[\"{\\\"name\\\":\\\"id\\\",\\\"is_pk\\\":true,\\\"type\\\":\\\"uuid\\\",\\\"optional\\\":false,\\\"default\\\":{\\\"type\\\":\\\"attribute\\\",\\\"name\\\":\\\"default\\\",\\\"kind\\\":\\\"field\\\",\\\"args\\\":[{\\\"type\\\":\\\"attributeArgument\\\",\\\"value\\\":{\\\"type\\\":\\\"function\\\",\\\"name\\\":\\\"dbgenerated\\\",\\\"params\\\":[\\\"\\\\\\\"gen_random_uuid()\\\\\\\"\\\"]}}]}}\",\"{\\\"name\\\":\\\"due_date\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"timestamptz\\\",\\\"optional\\\":true}\",\"{\\\"name\\\":\\\"planned_date\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"timestamptz\\\",\\\"optional\\\":true}\",\"{\\\"name\\\":\\\"notes\\\",\\\"is_pk\\\":false,\\\"type\\\":\\\"string\\\",\\\"optional\\\":true,\\\"default\\\":null}\"]"
+      },
+      "upl__cover_text": {
+        "idx": 18,
+        "meta": { "type": "text" },
+        "name": "new_prop_11",
+        "type": "string",
+        "value": "\"Cover\"",
+        "visible": "typeof upl__cover_field === \"string\" && upl__cover_field",
+        "valueBuilt": "\"Cover\""
+      },
+      "ext__placeholder": {
+        "idx": 36,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "label": "placeholder",
+        "value": "\"\"",
+        "valueBuilt": " \"\";\n"
+      },
+      "opt__is_selected": {
+        "idx": 51,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "label": "is_selected",
+        "value": "(arg: {\n  item?: { value: string; label: string; item?: any };\n  current: any;\n  options: { value: string; label: string; item?: any }[];\n}) => {\n  const { item, current, options } = arg;\n  if (item) {\n    if (current === item.value) {\n      return true;\n    }\n  }\n  return false;\n}",
+        "visible": "typeof sub_type !== \"undefined\" ? sub_type !== \"upload\" : false",
+        "valueBuilt": " (arg) => {\n  const { item, current, options } = arg;\n  if (item) {\n    if (current === item.value) {\n      return true;\n    }\n  }\n  return false;\n};\n"
+      },
+      "upl__cover_field": {
+        "idx": 17,
+        "meta": {
+          "type": "option",
+          "options": "async () => {\n  const table =\n    //@ts-ignore\n    _metas?.[_meta?.parent?.instance_id || \"\"]?.editor_props?.gen_table;\n\n  const result =\n    typeof prasi_gen !== \"undefined\" ? await prasi_gen.prop.fields(table) : [];\n\n  const final = [\"\"];\n  for (const item of result) {\n    const col = JSON.parse((item as any).value);\n    console.log(col);\n    if (col.type === \"string\") {\n      final.push(col.name);\n    }\n  }\n  return final;\n}",
+          "option_mode": "dropdown",
+          "optionsBuilt": "async () => {\n  const table =\n    //@ts-ignore\n    _metas?.[_meta?.parent?.instance_id || \"\"]?.editor_props?.gen_table;\n\n  const result =\n    typeof prasi_gen !== \"undefined\" ? await prasi_gen.prop.fields(table) : [];\n\n  const final = [\"\"];\n  for (const item of result) {\n    const col = JSON.parse((item ).value);\n    console.log(col);\n    if (col.type === \"string\") {\n      final.push(col.name);\n    }\n  }\n  return final;\n}"
+        },
+        "name": "new_prop_11",
+        "type": "string",
+        "label": "cover_field",
+        "value": "\"hello\"",
+        "visible": "(typeof upl__mode === \"string\" && upl__mode === \"multi-file\")",
+        "valueBuilt": "\"hello\""
+      },
+      "upl__upload_type": {
+        "idx": 19,
+        "meta": {
+          "type": "option",
+          "options": "[\"upload\",\"import\"]",
+          "option_mode": "dropdown",
+          "optionsBuilt": " [\"upload\", \"import\"];\n"
+        },
+        "name": "prop_13",
+        "type": "string",
+        "label": "action",
+        "value": "\"upload-file\"",
+        "visible": "(typeof upl__mode === \"string\" && upl__mode === \"single-file\")",
+        "valueBuilt": " \"upload-file\";\n"
+      },
+      "ext__required_msg": {
+        "idx": 37,
+        "meta": { "type": "text" },
+        "name": "prop_11",
+        "type": "string",
+        "label": "error_msg",
+        "value": "(name: string) => {\n  return `${name} harus diisi`;\n}",
+        "visible": "typeof ext__required === \"string\" && ext__required === \"y\"",
+        "valueBuilt": " (name) => {\n  return `${name} harus diisi`;\n};\n"
+      },
+      "ext__label_checkbox": {
+        "idx": 23,
+        "meta": { "type": "text" },
+        "name": "new_prop_11",
+        "type": "string",
+        "label": "label checkbox",
+        "value": "\"\"",
+        "visible": "typeof sub_type !== \"undefined\" && typeof type !== \"undefined\"\r\n  ? [\"checkbox\"].includes(sub_type) && [\"single-option\"].includes(type)\r\n  : false",
+        "valueBuilt": "\"\""
+      },
+      "upl__styling_upload": {
+        "idx": 20,
+        "meta": {
+          "type": "option",
+          "options": "[\n  {\n    label: \"inline\",\n    value: \"inline\"\n  },\n  {\n    label: \"full\",\n    value: \"full\"\n  },\n]",
+          "optionsBuilt": "[\n  {\n    label: \"inline\",\n    value: \"inline\"\n  },\n  {\n    label: \"full\",\n    value: \"full\"\n  },\n]"
+        },
+        "name": "new_prop_12",
+        "type": "string",
+        "label": "style",
+        "value": "\"inline\"",
+        "visible": "(typeof upl__mode === \"string\" && upl__mode === \"single-file\")",
+        "valueBuilt": "\"inline\""
+      },
+      "ext__disabled_search": {
+        "idx": 24,
+        "meta": {
+          "type": "option",
+          "options": "[\n  {\n    label: \"active\",\n    value: \"y\"\n  },\n  {\n    label: \"disable\",\n    value: \"n\"\n  },\n]",
+          "optionsBuilt": "[\n  {\n    label: \"active\",\n    value: \"y\"\n  },\n  {\n    label: \"disable\",\n    value: \"n\"\n  },\n]"
+        },
+        "name": "new_prop_11",
+        "type": "string",
+        "label": "search",
+        "value": "\"y\"",
+        "visible": "typeof sub_type !== \"undefined\" ? [\"dropdown\"].includes(sub_type) : false",
+        "valueBuilt": "\"y\""
+      },
+      "ext__tbl_show_header": {
+        "idx": 38,
+        "meta": {
+          "type": "option",
+          "options": "[\n  {\n    label: \"yes\",\n    value: \"y\",\n  },\n  {\n    label: \"no\",\n    value: \"n\",\n  },\n]",
+          "optionsBuilt": " [\n  {\n    label: \"yes\",\n    value: \"y\"\n  },\n  {\n    label: \"no\",\n    value: \"n\"\n  }\n];\n"
+        },
+        "name": "prop_11",
+        "type": "string",
+        "label": "table header",
+        "value": "\"y\"",
+        "visible": "typeof sub_type !== \"undefined\" && sub_type === \"table-edit\"",
+        "valueBuilt": " \"y\";\n"
+      }
+    },
+    "ref_ids": {},
+    "typings": "const typings = {\n  _raw: {\n    field: fieldType(_item, _meta, fm),\n  },\n}",
+    "useStyle": false,
+    "instances": {
+      "b71tlnhrz7wxhbzglzqvkxgu": {
+        "zmit41kbgkbqcsmm8aspp8zy": "ynp64zlk6az7hf9ghvtpgaik"
+      },
+      "bpzu5qwxemack980jnq7ugbx": {
+        "zmit41kbgkbqcsmm8aspp8zy": "huf0sm6ia7g3eh9803f1efy8"
+      },
+      "fk1snvphm38gufkd8m3a0qb9": {
+        "zmit41kbgkbqcsmm8aspp8zy": "r9oidm84mncxql3znyobsllp"
+      },
+      "pios9sf3qyahyn7n4fhwn4ov": {
+        "zmit41kbgkbqcsmm8aspp8zy": "ipahjbxbv4mu4d170l0yg0fu"
+      },
+      "qoh8lis14hy1kx617lqwltlg": {
+        "zmit41kbgkbqcsmm8aspp8zy": "larb7463ix53koo9setzs3t2"
+      },
+      "qoqt6em9lsstmqb4r2ktaohj": {
+        "zmit41kbgkbqcsmm8aspp8zy": "g1iihbpr1dxns58alu520ly8"
+      },
+      "r0hlca6ukgzzoz7qunt69pbc": {
+        "zmit41kbgkbqcsmm8aspp8zy": "dvjf6v8j054gjuee6wzy1u37"
+      },
+      "xeij5z4rq4x5zcsy606mto9g": {
+        "zmit41kbgkbqcsmm8aspp8zy": "hebskdlx3fuhh36l0pphurz2"
+      },
+      "xvdkvkjw6syixkncbdi8o5mz": {
+        "zmit41kbgkbqcsmm8aspp8zy": "tpkuxsg4hw96n9hrdfpl7bhh"
+      },
+      "ymr5haf9xc2q1czb95im73mi": {
+        "zmit41kbgkbqcsmm8aspp8zy": "l0pr9trzkzpyok3wkz9yy38a"
+      },
+      "zzhdemk2ibcgujpx9569vuph": {
+        "zmit41kbgkbqcsmm8aspp8zy": "aaglyyqb4za7s1pnqho7y5sw"
+      },
+      "ugfi6abr1skruyvbspcit675": {
+        "zmit41kbgkbqcsmm8aspp8zy": "ptmtv9sl3lw0nyrrkr539mbg"
+      }
+    }
+  },
+  "originalId": "zmit41kbgkbqcsmm8aspp8zy"
+}

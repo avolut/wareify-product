@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -8,118 +9,136 @@ datasource db {
 }
 
 model m_asset {
-  id                             String                        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  id_category                    String                        @db.Uuid
-  id_location                    String?                       @db.Uuid
-  name                           String                        @db.VarChar
-  brand                          String?                       @db.VarChar
-  type                           String?                       @db.VarChar
-  serial_number                  String?                       @db.VarChar
+  id                             String                           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_category                    String                           @db.Uuid
+  id_location                    String?                          @db.Uuid
+  name                           String                           @db.VarChar
+  brand                          String?                          @db.VarChar
+  type                           String?                          @db.VarChar
+  serial_number                  String?                          @db.VarChar
   description                    String?
-  latitude                       String?                       @db.VarChar
-  longitude                      String?                       @db.VarChar
-  acquired_date                  DateTime?                     @db.Timestamptz(6)
-  attachment                     String?                       @db.VarChar
-  asset_status                   String?                       @db.VarChar
+  latitude                       String?                          @db.VarChar
+  longitude                      String?                          @db.VarChar
+  acquired_date                  DateTime?                        @db.Timestamptz(6)
+  attachment                     String?                          @db.VarChar
+  asset_status                   String?                          @db.VarChar
   dimesion_height                Int?
   dimesion_weight                Int?
   dimesion_width                 Int?
-  id_dimesion_uom                String?                       @db.Uuid
-  id_client                      String                        @db.Uuid
-  created_by                     String?                       @db.Uuid
-  updated_at                     DateTime?                     @db.Timestamptz(6)
-  updated_by                     String?                       @db.Uuid
-  deleted_at                     DateTime?                     @db.Timestamptz(6)
-  created_at                     DateTime?                     @default(now()) @db.Timestamptz(6)
-  manufacture_year               DateTime?                     @db.Timestamptz(6)
-  accumulated_depreciation_value Decimal?                      @db.Decimal
-  asset_value                    Decimal?                      @db.Decimal
-  book_value                     Decimal?                      @db.Decimal
-  codeification                  String?                       @db.VarChar
-  color                          String?                       @db.VarChar
-  depreciation_method            String?                       @db.VarChar
-  id_maintenance_group           String?                       @db.Uuid
-  id_vendor                      String?                       @db.Uuid
+  id_dimesion_uom                String?                          @db.Uuid
+  id_client                      String                           @db.Uuid
+  created_by                     String?                          @db.Uuid
+  updated_at                     DateTime?                        @db.Timestamptz(6)
+  updated_by                     String?                          @db.Uuid
+  deleted_at                     DateTime?                        @db.Timestamptz(6)
+  created_at                     DateTime?                        @default(now()) @db.Timestamptz(6)
+  manufacture_year               DateTime?                        @db.Timestamptz(6)
+  accumulated_depreciation_value Decimal?                         @db.Decimal
+  asset_value                    Decimal?                         @db.Decimal
+  book_value                     Decimal?                         @db.Decimal
+  codeification                  String?                          @db.VarChar
+  color                          String?                          @db.VarChar
+  depreciation_method            String?                          @db.VarChar
+  id_maintenance_group           String?                          @db.Uuid
+  id_vendor                      String?                          @db.Uuid
   kso                            Boolean?
+  remaining_depreciation_value   Decimal?                         @db.Decimal
+  usable_life                    Decimal?                         @db.Decimal
+  penerimaan_barang_number       String?                          @db.VarChar
+  depreciate                     Boolean?                         @default(false)
+  expense                        Float?
+  life                           Int?
   period_start                   Int?
-  remaining_depreciation_value   Decimal?                      @db.Decimal
-  usable_life                    Decimal?                      @db.Decimal
-  m_category                     m_category                    @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_category")
-  m_maintenance_group            m_maintenance_group?          @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_departement")
-  dimension_uom                  m_uom?                        @relation("dimension_uom", fields: [id_dimesion_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_dimension_uom")
-  m_location                     m_location?                   @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_location")
-  m_vendor                       m_vendor?                     @relation(fields: [id_vendor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_vendor")
+  m_category                     m_category                       @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_category")
+  m_maintenance_group            m_maintenance_group?             @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_departement")
+  dimension_uom                  m_uom?                           @relation("dimension_uom", fields: [id_dimesion_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_dimension_uom")
+  m_location                     m_location?                      @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_location")
+  m_vendor                       m_vendor?                        @relation(fields: [id_vendor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_asset_foreign_key_vendor")
   m_maintenance_schedule_line    m_maintenance_schedule_line[]
+  t_complaint                    t_complaint[]
   t_depreciation_detail          t_depreciation_detail[]
+  t_depreciation_expense         t_depreciation_expense[]
   t_disposal                     t_disposal[]
   t_disposal_details             t_disposal_details[]
   t_movement_line                t_movement_line[]
   t_opname_line                  t_opname_line[]
+  t_preventive_work_order_header t_preventive_work_order_header[]
   t_wo                           t_work_order[]
+  v_asset_depreciation           v_asset_depreciation[]
 }
 
 model m_category {
-  id                            String                          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  id_parent                     String?                         @db.Uuid
-  name                          String                          @db.VarChar
-  description                   String?
-  summary_level                 Boolean?
-  created_at                    DateTime?                       @default(now()) @db.Timestamptz(6)
-  created_by                    String?                         @db.Uuid
-  updated_at                    DateTime?                       @db.Timestamptz(6)
-  updated_by                    String?                         @db.Uuid
-  id_client                     String                          @db.Uuid
-  deleted_at                    DateTime?                       @db.Timestamptz(6)
-  m_asset                       m_asset[]
-  m_category                    m_category?                     @relation("m_category", fields: [id_parent], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  other_m_category              m_category[]                    @relation("m_category")
-  m_maintenance_schedule_header m_maintenance_schedule_header[]
-  t_opname                      t_opname[]
-  t_opname_schedule             t_opname_schedule[]
+  id                             String                           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_parent                      String?                          @db.Uuid
+  name                           String                           @db.VarChar
+  description                    String?
+  summary_level                  Boolean?
+  created_at                     DateTime?                        @default(now()) @db.Timestamptz(6)
+  created_by                     String?                          @db.Uuid
+  updated_at                     DateTime?                        @db.Timestamptz(6)
+  updated_by                     String?                          @db.Uuid
+  id_client                      String                           @db.Uuid
+  deleted_at                     DateTime?                        @db.Timestamptz(6)
+  m_asset                        m_asset[]
+  m_category                     m_category?                      @relation("m_category", fields: [id_parent], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  other_m_category               m_category[]                     @relation("m_category")
+  m_maintenance_schedule_header  m_maintenance_schedule_header[]
+  m_task                         m_task[]
+  t_depreciation                 t_depreciation[]
+  t_opname                       t_opname[]
+  t_opname_schedule              t_opname_schedule[]
+  t_preventive_work_order_header t_preventive_work_order_header[]
 }
 
 model m_location {
-  id                            String                          @id(map: "m_location_primary_key_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  id_parent                     String?                         @db.Uuid
-  name                          String                          @db.VarChar
-  description                   String?
-  created_at                    DateTime?                       @default(now()) @db.Timestamptz(6)
-  created_by                    String?                         @db.Uuid
-  updated_at                    DateTime?                       @db.Timestamptz(6)
-  updated_by                    String?                         @db.Uuid
-  id_client                     String                          @db.Uuid
-  deleted_at                    DateTime?                       @db.Timestamptz(6)
-  id_site                       String?                         @db.Uuid
-  id_category                   String?                         @db.Uuid
-  patch_code                    String?                         @db.VarChar
-  m_asset                       m_asset[]
-  m_location                    m_location?                     @relation("m_location", fields: [id_parent], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_parent")
-  other_m_location              m_location[]                    @relation("m_location")
-  m_maintenance_schedule_header m_maintenance_schedule_header[]
-  location_from                 t_movement_line[]               @relation("location_from")
-  location_to                   t_movement_line[]               @relation("location_to")
-  t_opname                      t_opname[]
-  t_opname_schedule             t_opname_schedule[]
+  id                             String                           @id(map: "m_location_primary_key_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_parent                      String?                          @db.Uuid
+  name                           String                           @db.VarChar
+  description                    String?
+  created_at                     DateTime?                        @default(now()) @db.Timestamptz(6)
+  created_by                     String?                          @db.Uuid
+  updated_at                     DateTime?                        @db.Timestamptz(6)
+  updated_by                     String?                          @db.Uuid
+  id_client                      String                           @db.Uuid
+  deleted_at                     DateTime?                        @db.Timestamptz(6)
+  id_site                        String?                          @db.Uuid
+  id_category                    String?                          @db.Uuid
+  patch_code                     String?                          @db.VarChar
+  disposal_location              Boolean?                         @default(false)
+  m_asset                        m_asset[]
+  m_location                     m_location?                      @relation("m_location", fields: [id_parent], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_parent")
+  other_m_location               m_location[]                     @relation("m_location")
+  m_maintenance_schedule_header  m_maintenance_schedule_header[]
+  t_complaint                    t_complaint[]
+  t_movement                     t_movement[]
+  location_from                  t_movement_line[]                @relation("location_from")
+  location_to                    t_movement_line[]                @relation("location_to")
+  t_opname                       t_opname[]
+  t_opname_schedule              t_opname_schedule[]
+  t_preventive_work_order_header t_preventive_work_order_header[]
 }
 
 model m_maintenance_group {
-  id                            String                          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name                          String?                         @db.VarChar
-  code                          String?                         @db.VarChar
-  description                   String?
-  created_by                    String?                         @db.Uuid
-  updated_at                    DateTime?                       @db.Timestamptz(6)
-  updated_by                    String?                         @db.Uuid
-  deleted_at                    DateTime?                       @db.Timestamptz(6)
-  created_at                    DateTime?                       @default(now()) @db.Timestamptz(6)
-  id_client                     String                          @db.Uuid
-  m_asset                       m_asset[]
-  m_maintenance_group_role      m_maintenance_group_role[]
-  m_maintenance_schedule_header m_maintenance_schedule_header[]
-  t_depreciation_detail         t_depreciation_detail[]
-  t_disposal                    t_disposal[]
-  t_movement                    t_movement[]
-  t_work_order                  t_work_order[]
+  id                             String                           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                           String?                          @db.VarChar
+  code                           String?                          @db.VarChar
+  description                    String?
+  created_by                     String?                          @db.Uuid
+  updated_at                     DateTime?                        @db.Timestamptz(6)
+  updated_by                     String?                          @db.Uuid
+  deleted_at                     DateTime?                        @db.Timestamptz(6)
+  created_at                     DateTime?                        @default(now()) @db.Timestamptz(6)
+  id_client                      String                           @db.Uuid
+  m_asset                        m_asset[]
+  m_maintenance_group_role       m_maintenance_group_role[]
+  m_maintenance_schedule_header  m_maintenance_schedule_header[]
+  t_complaint                    t_complaint[]
+  t_depreciation                 t_depreciation[]
+  t_depreciation_detail          t_depreciation_detail[]
+  t_disposal                     t_disposal[]
+  t_movement                     t_movement[]
+  t_preventive_work_order_header t_preventive_work_order_header[]
+  t_work_order                   t_work_order[]
 }
 
 model m_maintenance_staff {
@@ -159,6 +178,7 @@ model t_maintenance_task {
   deleted_at              DateTime?                 @db.Timestamptz(6)
   actual_end_date         DateTime?                 @db.Timestamptz(6)
   attachment              String?                   @db.VarChar
+  t_history_task          t_history_task[]
   cascade_wo              t_work_order?             @relation("cascade_wo", fields: [id_cascade_wo], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_task_fkey_cascade_wo")
   t_work_order            t_work_order?             @relation(fields: [id_wo], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_task_fkey_wo")
   m_user                  m_user?                   @relation(fields: [id_staff], references: [id])
@@ -182,6 +202,7 @@ model m_material {
   m_task                      m_uom?                        @relation(fields: [id_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_material_fkey_uom")
   t_maintenance_schedule_task t_maintenance_schedule_task[]
   t_maintenance_task_line     t_maintenance_task_line[]
+  t_material_wo               t_material_wo[]
 }
 
 model t_audit_log {
@@ -213,6 +234,8 @@ model m_role {
   id_client                String                     @db.Uuid
   deleted_at               DateTime?                  @db.Timestamptz(6)
   m_maintenance_group_role m_maintenance_group_role[]
+  m_client                 m_client                   @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_role_menu              m_role_menu[]
 
   @@index([created_by], map: "fki_m_role_foreign_key_created_by")
   @@index([id_client], map: "fki_m_role_foreign_key_id_client")
@@ -244,39 +267,53 @@ model m_uom {
 }
 
 model m_user {
-  id                          String                          @id(map: "m_user_primary_key_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name                        String                          @db.VarChar
-  username                    String                          @unique @db.VarChar
-  password                    String                          @db.VarChar
-  gender                      String?                         @db.VarChar
-  addres                      String?                         @db.VarChar
-  no_telp                     String?                         @db.VarChar
-  email                       String?                         @db.VarChar
-  photo                       String?                         @db.VarChar
-  created_at                  DateTime?                       @default(now()) @db.Timestamptz(6)
-  created_by                  String?                         @db.Uuid
-  updated_at                  DateTime?                       @db.Timestamptz(6)
-  updated_by                  String?                         @db.Uuid
-  id_client                   String                          @db.Uuid
-  deleted_at                  DateTime?                       @db.Timestamptz(6)
-  id_position                 String?                         @db.Uuid
-  id_maintenance_group_user   String?                         @db.Uuid
-  m_maintenance_group_user    m_maintenance_group_user[]
-  assign_spv                  m_maintenance_schedule_header[] @relation("assign_spv")
-  created_user                m_maintenance_schedule_header[] @relation("created_user")
-  m_maintenance_schedule_line m_maintenance_schedule_line[]
-  m_maintenance_staff         m_maintenance_staff[]
-  t_approval                  t_approval[]
-  t_audit_log                 t_audit_log[]
-  t_depreciation              t_depreciation[]
-  t_disposal                  t_disposal[]
-  t_maintenance_task          t_maintenance_task[]
-  t_movement                  t_movement[]
-  user_approval               t_opname_schedule[]             @relation("user_approval")
-  id_user                     t_opname_schedule[]             @relation("id_user")
-  t_work_order                t_work_order[]
-  t_work_order_leader         t_work_order[]                  @relation("id_mainteance_leader")
-  t_work_order_spv            t_work_order[]                  @relation("id_maintenance_spv")
+  id                                                                       String                           @id(map: "m_user_primary_key_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                                                                     String                           @db.VarChar
+  username                                                                 String                           @unique @db.VarChar
+  password                                                                 String                           @db.VarChar
+  gender                                                                   String?                          @db.VarChar
+  addres                                                                   String?                          @db.VarChar
+  no_telp                                                                  String?                          @db.VarChar
+  email                                                                    String?                          @db.VarChar
+  photo                                                                    String?                          @db.VarChar
+  created_at                                                               DateTime?                        @default(now()) @db.Timestamptz(6)
+  created_by                                                               String?                          @db.Uuid
+  updated_at                                                               DateTime?                        @db.Timestamptz(6)
+  updated_by                                                               String?                          @db.Uuid
+  id_client                                                                String                           @db.Uuid
+  deleted_at                                                               DateTime?                        @db.Timestamptz(6)
+  id_position                                                              String?                          @db.Uuid
+  id_maintenance_group_user                                                String?                          @db.Uuid
+  m_form                                                                   m_form[]
+  m_maintenance_group_user                                                 m_maintenance_group_user[]
+  assign_spv                                                               m_maintenance_schedule_header[]  @relation("assign_spv")
+  created_user                                                             m_maintenance_schedule_header[]  @relation("created_user")
+  m_maintenance_schedule_line                                              m_maintenance_schedule_line[]
+  m_maintenance_staff                                                      m_maintenance_staff[]
+  t_approval                                                               t_approval[]
+  t_audit_log                                                              t_audit_log[]
+  complaint_fixed_staff                                                    t_complaint[]                    @relation("fixed_by")
+  complaint_request                                                        t_complaint[]                    @relation("requested_by")
+  t_complaint_t_complaint_checked_byTom_user                               t_complaint[]                    @relation("t_complaint_checked_byTom_user")
+  t_depreciation                                                           t_depreciation[]
+  t_disposal                                                               t_disposal[]
+  t_history_task                                                           t_history_task[]
+  t_history_task_t_history_task_hand_over_byTom_user                       t_history_task[]                 @relation("t_history_task_hand_over_byTom_user")
+  t_history_task_t_history_task_take_over_byTom_user                       t_history_task[]                 @relation("t_history_task_take_over_byTom_user")
+  t_maintenance_task                                                       t_maintenance_task[]
+  t_movement_t_movement_created_byTom_user                                 t_movement[]                     @relation("t_movement_created_byTom_user")
+  t_movement                                                               t_movement[]
+  user_approval                                                            t_opname_schedule[]              @relation("user_approval")
+  id_user                                                                  t_opname_schedule[]              @relation("id_user")
+  t_preventive_history_line_t_preventive_history_line_fixed_byTom_user     t_preventive_history_line[]      @relation("t_preventive_history_line_fixed_byTom_user")
+  t_preventive_history_line_t_preventive_history_line_hand_over_byTom_user t_preventive_history_line[]      @relation("t_preventive_history_line_hand_over_byTom_user")
+  t_preventive_history_line_t_preventive_history_line_take_over_byTom_user t_preventive_history_line[]      @relation("t_preventive_history_line_take_over_byTom_user")
+  t_preventive_work_order_header                                           t_preventive_work_order_header[]
+  t_preventive_work_order_line                                             t_preventive_work_order_line[]
+  t_work_order                                                             t_work_order[]
+  t_work_order_leader                                                      t_work_order[]                   @relation("id_mainteance_leader")
+  t_work_order_spv                                                         t_work_order[]                   @relation("id_maintenance_spv")
+  t_work_order_history                                                     t_work_order_history[]
 }
 
 model m_vendor {
@@ -306,11 +343,15 @@ model t_depreciation {
   id_client             String                  @db.Uuid
   deleted_at            DateTime?               @db.Timestamptz(6)
   created_at            DateTime?               @default(now()) @db.Timestamptz(6)
-  period                String?                 @db.VarChar
   document_number       String?                 @db.VarChar
   status                String?                 @db.VarChar
   date_depreciation     DateTime                @db.Timestamptz(6)
   id_user               String?                 @db.Uuid
+  id_maintenance_group  String?                 @db.Uuid
+  id_category           String?                 @db.Uuid
+  period                DateTime?               @db.Timestamptz(6)
+  m_category            m_category?             @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_maintenance_group   m_maintenance_group?    @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction)
   m_user                m_user?                 @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
   t_depreciation_detail t_depreciation_detail[]
 }
@@ -361,44 +402,54 @@ model t_opname_schedule {
 }
 
 model t_work_order {
-  id                      String                         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  id_asset                String?                        @db.Uuid
-  id_maintenance_group    String?                        @db.Uuid
-  id_vendor               String?                        @db.Uuid
-  id_complaint_user       String?                        @db.Uuid
-  complaint_message       String?
-  complaint_attachment    String?                        @db.VarChar
-  complaint_date_request  DateTime?                      @db.Timestamptz(6)
-  id_maintenance_schedule String?                        @db.Uuid
-  id_wo_preventive        String?                        @db.Uuid
-  id_maintenance_leader   String?                        @db.Uuid
-  id_spv                  String?                        @db.Uuid
-  wo_no                   String?                        @db.VarChar
-  name                    String?                        @db.VarChar
-  date                    DateTime?                      @db.Timestamptz(6)
-  notes                   String?
-  attachment              String?                        @db.VarChar
-  planned_date            DateTime?                      @db.Timestamptz(6)
-  due_date                DateTime?                      @db.Timestamptz(6)
-  actual_date             DateTime?                      @db.Timestamptz(6)
-  status                  String                         @db.VarChar
-  created_at              DateTime?                      @default(now()) @db.Timestamptz(6)
-  created_by              String?                        @db.Uuid
-  updated_at              DateTime?                      @db.Timestamptz(6)
-  updated_by              String?                        @db.Uuid
-  id_client               String                         @db.Uuid
-  deleted_at              DateTime?                      @db.Timestamptz(6)
-  wo_priority             String?                        @db.VarChar
-  t_approval              t_approval[]
-  cascade_wo              t_maintenance_task[]           @relation("cascade_wo")
-  t_maintenance_task      t_maintenance_task[]
-  m_asset                 m_asset?                       @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_asset")
-  m_user                  m_user?                        @relation(fields: [id_complaint_user], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_complaint_user")
-  m_maintenance_group     m_maintenance_group?           @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_group")
-  m_maintenance_leader    m_user?                        @relation("id_mainteance_leader", fields: [id_maintenance_leader], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_leader")
-  m_maintenance_spv       m_user?                        @relation("id_maintenance_spv", fields: [id_spv], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_spv")
-  t_maintenance_schedule  m_maintenance_schedule_header? @relation(fields: [id_maintenance_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_t_maintenance_schedule")
-  m_vendor                m_vendor?                      @relation(fields: [id_vendor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_vendor")
+  id                       String                         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_asset                 String?                        @db.Uuid
+  id_maintenance_group     String?                        @db.Uuid
+  id_vendor                String?                        @db.Uuid
+  id_complaint_user        String?                        @db.Uuid
+  complaint_message        String?
+  complaint_attachment     String?                        @db.VarChar
+  complaint_date_request   DateTime?                      @db.Timestamptz(6)
+  id_maintenance_schedule  String?                        @db.Uuid
+  id_wo_preventive         String?                        @db.Uuid
+  id_maintenance_leader    String?                        @db.Uuid
+  id_spv                   String?                        @db.Uuid
+  wo_no                    String?                        @db.VarChar
+  name                     String?                        @db.VarChar
+  date                     DateTime?                      @db.Timestamptz(6)
+  notes                    String?
+  attachment               String?                        @db.VarChar
+  planned_date             DateTime?                      @db.Timestamptz(6)
+  due_date                 DateTime?                      @db.Timestamptz(6)
+  actual_date              DateTime?                      @db.Timestamptz(6)
+  status                   String                         @db.VarChar
+  created_at               DateTime?                      @default(now()) @db.Timestamptz(6)
+  created_by               String?                        @db.Uuid
+  updated_at               DateTime?                      @db.Timestamptz(6)
+  updated_by               String?                        @db.Uuid
+  id_client                String                         @db.Uuid
+  deleted_at               DateTime?                      @db.Timestamptz(6)
+  wo_priority              String?                        @db.VarChar
+  id_complaint             String?                        @db.Uuid
+  kso                      Boolean?
+  budget_cost              Decimal?                       @db.Decimal
+  actual_cost              Decimal?                       @db.Decimal
+  attachment_goods_receipt String?                        @db.VarChar
+  complete_description     String?                        @db.VarChar
+  type                     String?                        @db.VarChar
+  t_approval               t_approval[]
+  cascade_wo               t_maintenance_task[]           @relation("cascade_wo")
+  t_maintenance_task       t_maintenance_task[]
+  t_material_wo            t_material_wo[]
+  m_asset                  m_asset?                       @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_asset")
+  m_user                   m_user?                        @relation(fields: [id_complaint_user], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_complaint_user")
+  m_maintenance_group      m_maintenance_group?           @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_group")
+  m_maintenance_leader     m_user?                        @relation("id_mainteance_leader", fields: [id_maintenance_leader], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_leader")
+  m_maintenance_spv        m_user?                        @relation("id_maintenance_spv", fields: [id_spv], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_spv")
+  t_maintenance_schedule   m_maintenance_schedule_header? @relation(fields: [id_maintenance_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_t_maintenance_schedule")
+  m_vendor                 m_vendor?                      @relation(fields: [id_vendor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_vendor")
+  t_complaint              t_complaint?                   @relation(fields: [id_complaint], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  t_work_order_history     t_work_order_history[]
 }
 
 model t_approval {
@@ -419,6 +470,39 @@ model t_approval {
   m_user                  m_user?                        @relation(fields: [id_user_approval], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user")
   t_wo                    t_work_order?                  @relation(fields: [id_wo], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_wo")
   t_disposal              t_disposal[]
+}
+
+model t_complaint {
+  id                   String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_maintenance_group String?              @db.Uuid
+  complaint_mesasage   String?              @db.VarChar
+  complaint_date       DateTime?            @db.Timestamptz(6)
+  id_asset             String?              @db.Uuid
+  complaint_attachment String?              @db.VarChar
+  notes                String?
+  status               String?              @db.VarChar
+  complaint_priority   String?              @db.VarChar
+  fixed_by             String?              @db.Uuid
+  created_by           String?              @db.Uuid
+  updated_at           DateTime?            @db.Timestamptz(6)
+  updated_by           String?              @db.Uuid
+  id_client            String               @db.Uuid
+  created_at           DateTime?            @default(now()) @db.Timestamptz(6)
+  deleted_at           DateTime?            @db.Timestamptz(6)
+  complaint_no         String?              @db.VarChar
+  id_location          String?              @db.Uuid
+  attachment_complete  String?              @db.VarChar
+  complete_description String?
+  checked_by           String?              @db.Uuid
+  checking_date        DateTime?            @db.Timestamptz(6)
+  fixed_at             DateTime?            @db.Timestamptz(6)
+  m_location           m_location?          @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_location")
+  m_maintenance_group  m_maintenance_group? @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_schedule")
+  staff_maintenance    m_user?              @relation("fixed_by", fields: [fixed_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user")
+  requested_by         m_user?              @relation("requested_by", fields: [created_by], references: [id])
+  staff_checking       m_user?              @relation("t_complaint_checked_byTom_user", fields: [checked_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_complaint_on_check_fkey")
+  m_asset              m_asset?             @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_wo")
+  t_work_order         t_work_order[]
 }
 
 model m_approval {
@@ -485,7 +569,7 @@ model t_disposal {
   id_user                  String?              @db.Uuid
   id_departement           String?              @db.Uuid
   id_asset                 String?              @db.Uuid
-  document_no              Decimal?             @db.Decimal
+  document_no              String?
   date_disposal            DateTime?            @db.Timestamptz(6)
   description              String?
   asset_cost               Decimal?             @db.Decimal
@@ -522,13 +606,15 @@ model t_disposal_details {
   id_client                      String      @db.Uuid
   created_at                     DateTime?   @default(now()) @db.Timestamptz(6)
   deleted_at                     DateTime?   @db.Timestamptz(6)
+  attachment                     String?     @db.VarChar
+  asset_value                    Float?
   m_asset                        m_asset?    @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction)
   t_disposal                     t_disposal? @relation(fields: [id_disposal], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model t_movement {
   id                  String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  document_no         Decimal              @db.Decimal
+  document_no         String
   movement_date       DateTime?            @db.Timestamptz(6)
   description         String?
   id_departement      String?              @db.Uuid
@@ -539,7 +625,11 @@ model t_movement {
   updated_by          String?              @db.Uuid
   deleted_at          DateTime?            @db.Timestamptz(6)
   id_client           String               @db.Uuid
+  id_locatorto        String?              @db.Uuid
+  status              String?              @db.VarChar
+  created_by_user     m_user?              @relation("t_movement_created_byTom_user", fields: [created_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
   m_maintenance_group m_maintenance_group? @relation(fields: [id_departement], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_location          m_location?          @relation(fields: [id_locatorto], references: [id], onDelete: NoAction, onUpdate: NoAction)
   m_user              m_user?              @relation(fields: [id_staff], references: [id], onDelete: NoAction, onUpdate: NoAction)
   t_movement_line     t_movement_line[]
 }
@@ -580,6 +670,7 @@ model t_opname_line {
   created_at         DateTime? @default(now()) @db.Timestamptz(6)
   status             String    @db.VarChar
   id_movement        String?   @db.Uuid
+  attachment         String?   @db.VarChar
   t_opname           t_opname? @relation(fields: [id_opname], references: [id], onDelete: NoAction, onUpdate: NoAction)
   m_asset            m_asset?  @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_opname_schedule_detail_id_asset_fkey")
 }
@@ -614,7 +705,7 @@ model m_running_number {
 
 model m_maintenance_schedule_header {
   id                          String                        @id(map: "m_maintenance_schedule_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  id_category                 String                        @db.Uuid
+  id_category                 String?                       @db.Uuid
   id_location                 String?                       @db.Uuid
   id_maintenance_group        String?                       @db.Uuid
   id_spv_created              String?                       @db.Uuid
@@ -633,8 +724,14 @@ model m_maintenance_schedule_header {
   deleted_at                  DateTime?                     @db.Timestamptz(6)
   end_date                    DateTime?                     @db.Timestamptz(6)
   start_date                  DateTime?                     @db.Timestamptz(6)
+  repeat                      String?                       @db.VarChar
+  repeat_every                Int?
+  weeks                       String?                       @db.VarChar
+  on_day                      Int?
+  on_month                    String?                       @db.VarChar
+  doc_no                      String?                       @db.VarChar
   assign_spv                  m_user?                       @relation("assign_spv", fields: [id_spv_assign], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_assign_spv")
-  m_category                  m_category                    @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_category")
+  m_category                  m_category?                   @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_category")
   m_location                  m_location?                   @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_location")
   m_maintenance_group         m_maintenance_group?          @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_group")
   created_user                m_user?                       @relation("created_user", fields: [id_spv_created], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_maintenance_spv")
@@ -645,24 +742,28 @@ model m_maintenance_schedule_header {
 }
 
 model m_maintenance_schedule_line {
-  id                            String                         @id(map: "m_maintenance_schedule_task_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  id_m_maintenance_schedule     String?                        @db.Uuid
-  id_staff                      String?                        @db.Uuid
-  notes                         String?
-  planned_date                  DateTime?                      @db.Timestamptz(6)
-  due_date                      DateTime?                      @db.Timestamptz(6)
-  created_at                    DateTime?                      @default(now()) @db.Timestamptz(6)
-  created_by                    String?                        @db.Uuid
-  updated_at                    DateTime?                      @db.Timestamptz(6)
-  updated_by                    String?                        @db.Uuid
-  id_client                     String?                        @db.Uuid
-  deleted_at                    DateTime?                      @db.Timestamptz(6)
-  id_asset                      String?                        @db.Uuid
-  task_description              String?
-  m_maintenance_schedule_header m_maintenance_schedule_header? @relation(fields: [id_m_maintenance_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_m_maintenance_schedule")
-  m_asset                       m_asset?                       @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_schedule_task_id_asset_fkey")
-  m_user                        m_user?                        @relation(fields: [id_staff], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user")
-  t_maintenance_schedule_task   t_maintenance_schedule_task[]
+  id                             String                           @id(map: "m_maintenance_schedule_task_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_m_maintenance_schedule      String?                          @db.Uuid
+  id_staff                       String?                          @db.Uuid
+  notes                          String?
+  planned_date                   DateTime?                        @db.Timestamptz(6)
+  due_date                       DateTime?                        @db.Timestamptz(6)
+  created_at                     DateTime?                        @default(now()) @db.Timestamptz(6)
+  created_by                     String?                          @db.Uuid
+  updated_at                     DateTime?                        @db.Timestamptz(6)
+  updated_by                     String?                          @db.Uuid
+  id_client                      String?                          @db.Uuid
+  deleted_at                     DateTime?                        @db.Timestamptz(6)
+  id_asset                       String?                          @db.Uuid
+  task_description               String?
+  id_category                    String?                          @db.Uuid
+  id_location                    String?                          @db.Uuid
+  m_form                         m_form[]
+  m_maintenance_schedule_header  m_maintenance_schedule_header?   @relation(fields: [id_m_maintenance_schedule], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "id_m_maintenance_schedule")
+  m_asset                        m_asset?                         @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_schedule_task_id_asset_fkey")
+  m_user                         m_user?                          @relation(fields: [id_staff], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user")
+  t_maintenance_schedule_task    t_maintenance_schedule_task[]
+  t_preventive_work_order_header t_preventive_work_order_header[]
 }
 
 model t_maintenance_schedule_task {
@@ -687,4 +788,274 @@ model t_maintenance_schedule_task {
   m_maintenance_schedule_line  m_maintenance_schedule_line? @relation(fields: [id_maintenance_schedule_task], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_schedule_cost_id_maintenance_schedule_task_fkey1")
   m_material                   m_material?                  @relation(fields: [id_staff], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_schedule_cost_id_material_fkey")
   m_uom                        m_uom?                       @relation(fields: [id_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_schedule_cost_id_uom_fkey")
+}
+
+model m_notification {
+  id           String    @id(map: "m_notification_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name         String    @db.VarChar
+  url          String    @db.VarChar
+  created_at   DateTime  @db.Timestamp(6)
+  created_by   String    @db.Uuid
+  read_at      DateTime? @db.Timestamp(6)
+  messages     String
+  id_receiver  String    @db.Uuid
+  deleted_at   DateTime? @db.Timestamp(6)
+  id_complaint String?   @db.Uuid
+  is_mobile    Boolean?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model t_depreciation_expense {
+  id               String    @id(map: "t_depreciation_expense_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_asset         String?   @db.Uuid
+  expense          Float?
+  asset_period     Int?
+  asset_cost       Float?
+  remaining_amount Float?
+  date_depre       DateTime? @db.Timestamptz(6)
+  period           DateTime? @db.Timestamptz(6)
+  created_at       DateTime? @db.Timestamptz(6)
+  created_by       String?   @db.Uuid
+  updated_at       DateTime? @db.Timestamptz(6)
+  updated_by       String?   @db.Uuid
+  deleted_at       DateTime? @db.Timestamptz(6)
+  id_client        String?   @db.Uuid
+  m_asset          m_asset?  @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model t_history_task {
+  id                 String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  desc               String?
+  attachment         String?             @db.VarChar
+  take_over          DateTime?           @db.Timestamp(6)
+  handover           DateTime?           @db.Timestamp(6)
+  fixed_by           String?             @db.Uuid
+  fixed_date         DateTime?           @db.Timestamp(6)
+  hand_over_by       String?             @db.Uuid
+  take_over_by       String?             @db.Uuid
+  id_task            String?             @db.Uuid
+  created_at         DateTime?           @default(now()) @db.Timestamp(6)
+  m_user             m_user?             @relation(fields: [fixed_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  hand_over_user     m_user?             @relation("t_history_task_hand_over_byTom_user", fields: [hand_over_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  t_maintenance_task t_maintenance_task? @relation(fields: [id_task], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  take_over_user     m_user?             @relation("t_history_task_take_over_byTom_user", fields: [take_over_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model t_preventive_work_order_header {
+  id                           String                         @id(map: "t_preventive_work_order_header_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  order_no                     String?                        @db.VarChar
+  id_asset                     String?                        @db.Uuid
+  preventive_date              DateTime?                      @db.Timestamptz(6)
+  assign_user                  String?                        @db.Uuid
+  description                  String?                        @db.VarChar
+  status                       String?                        @db.VarChar
+  actual_date                  DateTime?                      @db.Timestamptz(6)
+  id_category                  String?                        @db.Uuid
+  id_location                  String?                        @db.Uuid
+  id_client                    String?                        @db.Uuid
+  created_at                   DateTime?                      @db.Timestamptz(6)
+  created_by                   String?                        @db.Uuid
+  updated_at                   DateTime?                      @db.Timestamptz(6)
+  updated_by                   String?                        @db.Uuid
+  deleted_at                   DateTime?                      @db.Timestamptz(6)
+  id_maintenance_group         String?                        @db.Uuid
+  id_schedule_header_line      String?                        @db.Uuid
+  pwo                          String?                        @db.VarChar
+  m_user                       m_user?                        @relation(fields: [assign_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_asset                      m_asset?                       @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_category                   m_category?                    @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_location                   m_location?                    @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_maintenance_group          m_maintenance_group?           @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  m_maintenance_schedule_line  m_maintenance_schedule_line?   @relation(fields: [id_schedule_header_line], references: [id], onUpdate: NoAction)
+  t_preventive_work_order_line t_preventive_work_order_line[]
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model t_preventive_work_order_line {
+  id                              String                         @id(map: "t_preventive_work_order_line_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_preventive_work_order_header String                         @db.Uuid
+  description                     String?                        @db.VarChar
+  notes                           String?                        @db.VarChar
+  date                            DateTime?                      @db.Timestamptz(6)
+  actual_date                     DateTime?                      @db.Timestamptz(6)
+  created_at                      DateTime?                      @db.Timestamptz(6)
+  created_by                      String?                        @db.Uuid
+  updated_at                      DateTime?                      @db.Timestamptz(6)
+  updated_by                      String?                        @db.Uuid
+  deleted_at                      DateTime?                      @db.Timestamptz(6)
+  id_user                         String?                        @db.Uuid
+  status                          String?                        @default("Not Started") @db.VarChar
+  id_client                       String?                        @db.Uuid
+  attachment                      String?                        @db.VarChar
+  value                           String?                        @db.VarChar
+  type                            String?                        @db.VarChar
+  name                            String?                        @db.VarChar
+  t_preventive_history_line       t_preventive_history_line[]
+  t_preventive_work_order_header  t_preventive_work_order_header @relation(fields: [id_preventive_work_order_header], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  m_user                          m_user?                        @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model t_preventive_history_line {
+  id                           String                        @id(map: "t_preventive_history_line_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  desc                         String?                       @db.VarChar
+  take_over                    DateTime?                     @db.Timestamptz(6)
+  handover                     DateTime?                     @db.Timestamptz(6)
+  fixed_by                     String?                       @db.Uuid
+  fixed_date                   DateTime?                     @db.Timestamptz(6)
+  hand_over_by                 String?                       @db.Uuid
+  take_over_by                 String?                       @db.Uuid
+  id_preventive_line           String?                       @db.Uuid
+  created_at                   DateTime?                     @db.Timestamptz(6)
+  id_client                    String?                       @db.Uuid
+  attachment                   String?                       @db.VarChar
+  deleted_at                   DateTime?                     @db.Timestamptz(6)
+  m_user                       m_user?                       @relation("t_preventive_history_line_fixed_byTom_user", fields: [fixed_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  hand_over_user               m_user?                       @relation("t_preventive_history_line_hand_over_byTom_user", fields: [hand_over_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  t_preventive_work_order_line t_preventive_work_order_line? @relation(fields: [id_preventive_line], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  take_over_user               m_user?                       @relation("t_preventive_history_line_take_over_byTom_user", fields: [take_over_by], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model m_form {
+  id                          String                       @id(map: "m_form_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                        String?                      @db.VarChar
+  type                        String?                      @db.VarChar
+  id_user                     String?                      @db.Uuid
+  created_at                  DateTime?                    @db.Timestamptz(6)
+  created_by                  String?                      @db.Uuid
+  updated_at                  DateTime?                    @db.Timestamptz(6)
+  updated_by                  String?                      @db.Uuid
+  deleted_at                  DateTime?                    @db.Timestamptz(6)
+  id_client                   String?                      @db.Uuid
+  id_schedule_line            String?                      @db.Uuid
+  m_maintenance_schedule_line m_maintenance_schedule_line? @relation(fields: [id_schedule_line], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  m_user                      m_user?                      @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model t_work_order_history {
+  id           String        @id(map: "t_work_order_history_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name         String?       @db.VarChar
+  id_user      String?       @db.Uuid
+  id_client    String?       @db.Uuid
+  created_at   DateTime?     @db.Timestamptz(6)
+  created_by   String?       @db.Uuid
+  description  String?       @db.VarChar
+  id_wo        String?       @db.Uuid
+  m_user       m_user?       @relation(fields: [id_user], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  t_work_order t_work_order? @relation(fields: [id_wo], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model m_task {
+  id          String      @id(map: "m_task_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_category String?     @db.Uuid
+  name        String?     @db.VarChar
+  type        String?     @default("choice") @db.VarChar
+  id_client   String?     @db.Uuid
+  created_by  String?     @db.Uuid
+  created_at  DateTime?   @db.Timestamptz(6)
+  updated_at  DateTime?   @db.Timestamptz(6)
+  deleted_at  DateTime?   @db.Timestamptz(6)
+  updated_by  String?     @db.Uuid
+  m_category  m_category? @relation(fields: [id_category], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model m_client {
+  id            String          @id(map: "m_client_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name          String?         @db.VarChar
+  pic           String?         @db.VarChar
+  phone         String?         @db.VarChar
+  email         String?         @db.VarChar
+  address       String?         @db.VarChar
+  logo          String?         @db.VarChar
+  created_at    DateTime?       @db.Timestamptz(6)
+  created_by    String?         @db.Uuid
+  deleted_at    DateTime?       @db.Timestamptz(6)
+  updated_at    DateTime?       @db.Timestamptz(6)
+  updated_by    String?         @db.Uuid
+  m_menu_client m_menu_client[]
+  m_role        m_role[]
+}
+
+model m_menu {
+  id            String          @id(map: "m_menu_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name          String?         @db.VarChar
+  icon          String?         @db.VarChar
+  type          String?         @db.VarChar
+  url           String?         @db.VarChar
+  id_parent     String?         @db.Uuid
+  sequence      Int?
+  created_by    String?         @db.Uuid
+  created_at    DateTime?       @default(now()) @db.Timestamptz(6)
+  updated_by    String?         @db.Uuid
+  updated_at    DateTime?       @db.Timestamptz(6)
+  deleted_at    DateTime?       @db.Timestamptz(6)
+  m_menu        m_menu?         @relation("m_menuTom_menu", fields: [id_parent], references: [id], onUpdate: NoAction)
+  other_m_menu  m_menu[]        @relation("m_menuTom_menu")
+  m_menu_client m_menu_client[]
+  m_role_menu   m_role_menu[]
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model m_menu_client {
+  id        String    @id(map: "m_menu_client_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_menu   String?   @db.Uuid
+  id_client String?   @db.Uuid
+  m_client  m_client? @relation(fields: [id_client], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  m_menu    m_menu?   @relation(fields: [id_menu], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model m_role_menu {
+  id         String    @id(map: "m_role_menu_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_menu    String?   @db.Uuid
+  id_role    String?   @db.Uuid
+  created_at DateTime? @db.Timestamptz(6)
+  created_by String?   @db.Uuid
+  updated_at DateTime? @db.Timestamptz(6)
+  updated_by String?   @db.Uuid
+  deleted_at DateTime? @db.Timestamptz(6)
+  id_client  String?   @db.Uuid
+  m_menu     m_menu?   @relation(fields: [id_menu], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  m_role     m_role?   @relation(fields: [id_role], references: [id], onUpdate: NoAction)
+}
+
+model t_material_wo {
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id_wo        String?       @db.Uuid
+  id_material  String?       @db.Uuid
+  id_client    String?       @db.Uuid
+  m_material   m_material?   @relation(fields: [id_material], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  t_work_order t_work_order? @relation(fields: [id_wo], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+view v_transaction_waiting_approval {
+  id            String    @id @db.Uuid
+  tanggal       DateTime? @db.Timestamptz(6)
+  jumlah_status Int?
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+view v_asset_depreciation {
+  id                       String    @id @db.Uuid
+  asset_name               String?   @db.VarChar
+  asset_period             Int?
+  date_depre               DateTime? @db.Timestamptz(6)
+  remaining_amount         Float?
+  expense                  Float?
+  accumulated_depreciation Float?
+  id_asset                 String?   @db.Uuid
+  life                     Int?
+  accumulated_expense      Float?
+  total_expense            Float?
+  m_asset                  m_asset?  @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+view v_calender_maintenance {
+  id        String    @id @db.Uuid
+  id_client String?   @db.Uuid
+  date      DateTime? @db.Date
+  status    String?   @db.VarChar
+  count     Int?
 }

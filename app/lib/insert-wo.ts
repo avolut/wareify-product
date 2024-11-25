@@ -1,8 +1,8 @@
-import { m_maintenance_schedule } from "@prisma/client";
+import { m_maintenance_schedule_header } from "@prisma/client";
 import { warnOnce } from "@prisma/client/runtime/library";
 
 export const insertWo = async (
-  schedule: m_maintenance_schedule,
+  schedule: m_maintenance_schedule_header,
   idMaintenanceLeader: string
 ): Promise<any> => {
   try {

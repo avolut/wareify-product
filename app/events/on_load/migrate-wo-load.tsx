@@ -79,14 +79,9 @@ export const migrateWorkOrderLoad = async () => {
   const task = maintenance_task.find((item) => item.id_asset);
   const id_asset = task?.id_asset;
   console.log(task);
-  if (id_asset) {
-    const wo = await db._batch.upsert({
-      table: "t_work_order",
+  if (!id_asset) {
+    const wo = await db.t_work_order.create({
       // @ts-ignore
-      where: {
-        id_asset: id_asset,
-        id_maintenance_schedule: task?.id_m_maintenance_schedule,
-      },
       data: [
         {
           name: task?.notes,

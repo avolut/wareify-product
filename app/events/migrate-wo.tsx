@@ -23,7 +23,7 @@ export const migrateWorkOrder = async (fm: FMLocal, data: any) => {
       id: {
         in: data.m_maintenance_schedule_line.map((item: any) => item.id),
       },
-      deleted_at: null
+      deleted_at: null,
     },
   });
   const maintenance_cost = await db.t_maintenance_schedule_task.findMany({
@@ -51,7 +51,7 @@ export const migrateWorkOrder = async (fm: FMLocal, data: any) => {
     select: { id: true },
   });
   if (input_date === date_now && data.approval_status === "Approved") {
-    maintenance_task.map(async (item) => {
+    maintenance_task.map(async (item: { planned_date: any; due_date: any; notes: any; id_asset: any; }) => {
       const wo = await db.t_work_order.create({
         data: {
           name: data.name,
@@ -67,31 +67,19 @@ export const migrateWorkOrder = async (fm: FMLocal, data: any) => {
           id_maintenance_schedule: data.id,
         },
       });
-      if (wo && wo.id && maintenance_cost) {
-        maintenance_cost.map(async (item) => {
+      if (wo && maintenance_cost) {
+        maintenance_cost.map(async (item: { task_description: any; planned_date: any; due_date: any; }) => {
           await db.t_maintenance_task.create({
             data: {
               id_client: data.id_client,
-              task_description: item?.task_description,
+              task_description: item.task_description,
               planned_date: item?.planned_date,
               due_date: item?.due_date,
-              // id_staff: maintenance_cost?.id_staff,
               id_wo: wo.id,
             },
           });
         });
       }
     });
-
-    // await db.t_maintenance_task_line.create({
-    //   data: {
-    //     id_client: data.id_client,
-    //     type: maintenance_cost?.type,
-    //     description: maintenance_cost?.description,
-    //     quantity: maintenance_cost?.quantity,
-    //     price: maintenance_cost?.price,
-    //     notes: maintenance_cost?.notes,
-    //   },
-    // });
   }
 };

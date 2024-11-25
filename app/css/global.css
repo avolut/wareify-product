@@ -61,3 +61,126 @@
 .btn-secondary {
   border: 2px solid rgb(0, 115, 255);
 }
+.data-\[state\=closed\]\:c-slide-out-to-left[data-state="closed"] {
+  animation: slideOutToLeft 0.5s ease-in-out forwards;
+}
+
+@keyframes slideOutToLeft {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+.data-\[state\=open\]\:c-slide-in-from-right[data-state="open"] {
+  animation: slideInFromRight 0.5s ease-in-out forwards;
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.data-\[state\=open\]\:c-slide-in-from-right[data-state="open"] {
+  animation: slideInFromRight 0.5s ease-in-out forwards;
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.data-\[state\=open\]\:c-slide-in-from-left[data-state="open"] {
+  animation: slideInFromLeft 0.5s ease-in-out forwards;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.data-\[state\=closed\]\:c-slide-out-to-bottom[data-state="closed"] {
+  animation: slideOutToBottom 0.5s ease-in-out forwards;
+}
+
+@keyframes slideOutToBottom {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+.data-\[state\=open\]\:c-slide-in-from-bottom[data-state="open"] {
+  animation: slideInFromBottom 0.5s ease-in-out forwards;
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.data-\[state\=open\]\:c-slide-in-from-top[data-state="open"] {
+  animation: slideInFromTop 0.5s ease-in-out forwards;
+}
+
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.data-\[state\=closed\]\:c-slide-out-to-top[data-state="closed"] {
+  animation: slideOutToTop 0.5s ease-in-out forwards;
+}
+
+@keyframes slideOutToTop {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+/* Durasi untuk elemen dengan state closed */
+.data-\[state\=closed\]\:c-duration-300[data-state="closed"] {
+  animation-duration: 300ms;
+}
+
+/* Durasi untuk elemen dengan state open */
+.data-\[state\=open\]\:c-duration-500[data-state="open"] {
+  animation-duration: 500ms;
+}
+

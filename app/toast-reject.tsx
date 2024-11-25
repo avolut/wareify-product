@@ -6,9 +6,8 @@ export const toastReject = (text: string) => {
     <div className={cx("c-flex c-flex-col c-select-none")} onClick={() => {}}>
       <div className="c-flex c-text-red-700 c-items-center">
         <Check className="c-h-4 c-w-4 c-mr-1 " />
-        Rejected
+        {text ? text : "Rejected"}
       </div>
     </div>
   );
-  
 };
