@@ -26,6 +26,7 @@ import {
   MapPinned,
   Building2,
   FileCheck2,
+  Users,
 } from "lucide-react";
 import Cancel from "app/icon/Cancel";
 export const icons: { [key: string]: any } = {
@@ -33,6 +34,7 @@ export const icons: { [key: string]: any } = {
   Building2,
   FileCheck2,
   ChartBarStacked,
+  Users,
   Cancel,
   PieChart,
   Box,

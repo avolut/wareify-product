@@ -48,7 +48,7 @@ export {
   handleOpenFileFm,
   handleOpenWithChrome,
 } from "app/lib/bridge";
-
+export {treeMenu} from "app/lib/treeMenu"
 export {DynamicIcon} from "app/comps/DynamicIcon";
 export { empty_string } from "app/lib/empty_string";
 export { gen_codeification } from "app/lib/gen-codeification";

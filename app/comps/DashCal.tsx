@@ -4,6 +4,7 @@ import { useLocal } from "lib/utils/use-local";
 import { FC, useState } from "react";
 import DCalender from "./Cal";
 import { formatDate } from "lib/comps/custom/Datepicker/helpers";
+import { get_user } from "lib/exports";
 
 export const DashCal: FC<{ onClick?: (date: Date) => void }> = ({
   onClick,
@@ -14,7 +15,11 @@ export const DashCal: FC<{ onClick?: (date: Date) => void }> = ({
       date: new Date() as any,
     },
     async () => {
-      local.tgl = await db.v_transaction_waiting_approval.findMany({});
+      local.tgl = await db.v_transaction_waiting_approval.findMany({
+        where: {
+          id_client: get_user("id_client"),
+        },
+      });
       local.render();
     }
   );

@@ -7,6 +7,7 @@ import { generateDocumentNumber } from "./events/on_load/gen_doc_no";
 import { generateArrayNumber } from "lib/comps/custom/Datepicker/helpers";
 import dayjs from "dayjs";
 import { migrateWorkOrderLoad } from "./events/on_load/migrate-wo-load";
+import { get_user } from "lib/exports";
 
 prasi_events("form", "after_load", async (fm) => {
   const path = getPathname({ hash: false });
@@ -19,7 +20,9 @@ prasi_events("tablelist", "where", async (table, where) => {
   return where;
 });
 prasi_events("field", "relation_load", async (fm, field) => {
-  return {};
+  return {
+    deleted_at: null,
+  };
 });
 
 prasi_events("tablelist", "after_load", async (table, items, modify) => {
@@ -271,6 +274,17 @@ prasi_events("form", "relation_before_save", async (table, record) => {
 prasi_events("tablelist", "where", async (table, where) => {
   const path = getPathname();
 
+  if (
+    !path.startsWith("/master/menu-role") &&
+    !path.startsWith("/master/client") &&
+    !path.startsWith("/master/menu-client")  &&
+    !path.startsWith("/d/manage-role") &&
+    !path.startsWith("/manage-user-client") &&
+    !path.startsWith("/d/admin/manage-user/role/menu-") &&
+    !path.startsWith("/d/group-role")
+  ) {
+    where.id_client = get_user("id_client");
+  }
   if (path.startsWith("/d/maintenance/work-order/")) {
     where.status = {
       notIn: ["Draft"],

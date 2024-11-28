@@ -130,6 +130,7 @@ model m_maintenance_group {
   created_at                     DateTime?                        @default(now()) @db.Timestamptz(6)
   id_client                      String                           @db.Uuid
   m_asset                        m_asset[]
+  m_client                       m_client                         @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction)
   m_maintenance_group_role       m_maintenance_group_role[]
   m_maintenance_schedule_header  m_maintenance_schedule_header[]
   t_complaint                    t_complaint[]
@@ -233,6 +234,7 @@ model m_role {
   updated_by               String?                    @db.Uuid
   id_client                String                     @db.Uuid
   deleted_at               DateTime?                  @db.Timestamptz(6)
+  url_home                 String?                    @db.VarChar
   m_maintenance_group_role m_maintenance_group_role[]
   m_client                 m_client                   @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction)
   m_role_menu              m_role_menu[]
@@ -290,6 +292,7 @@ model m_user {
   created_user                                                             m_maintenance_schedule_header[]  @relation("created_user")
   m_maintenance_schedule_line                                              m_maintenance_schedule_line[]
   m_maintenance_staff                                                      m_maintenance_staff[]
+  m_client                                                                 m_client                         @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction)
   t_approval                                                               t_approval[]
   t_audit_log                                                              t_audit_log[]
   complaint_fixed_staff                                                    t_complaint[]                    @relation("fixed_by")
@@ -961,20 +964,22 @@ model m_task {
 }
 
 model m_client {
-  id            String          @id(map: "m_client_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name          String?         @db.VarChar
-  pic           String?         @db.VarChar
-  phone         String?         @db.VarChar
-  email         String?         @db.VarChar
-  address       String?         @db.VarChar
-  logo          String?         @db.VarChar
-  created_at    DateTime?       @db.Timestamptz(6)
-  created_by    String?         @db.Uuid
-  deleted_at    DateTime?       @db.Timestamptz(6)
-  updated_at    DateTime?       @db.Timestamptz(6)
-  updated_by    String?         @db.Uuid
-  m_menu_client m_menu_client[]
-  m_role        m_role[]
+  id                  String                @id(map: "m_client_id") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                String?               @db.VarChar
+  pic                 String?               @db.VarChar
+  phone               String?               @db.VarChar
+  email               String?               @db.VarChar
+  address             String?               @db.VarChar
+  logo                String?               @db.VarChar
+  created_at          DateTime?             @db.Timestamptz(6)
+  created_by          String?               @db.Uuid
+  deleted_at          DateTime?             @db.Timestamptz(6)
+  updated_at          DateTime?             @db.Timestamptz(6)
+  updated_by          String?               @db.Uuid
+  m_maintenance_group m_maintenance_group[]
+  m_menu_client       m_menu_client[]
+  m_role              m_role[]
+  m_user              m_user[]
 }
 
 model m_menu {

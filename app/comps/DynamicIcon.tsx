@@ -10,7 +10,7 @@ interface DynamicIconProps {
 export const DynamicIcon: React.FC<DynamicIconProps> = ({ iconName, className }) => {
   if (!icons[iconName]) {
     console.error(`Icon "${iconName}" tidak ditemukan.`);
-    return null;
+    return iconName;
   }
 
   return React.createElement(icons[iconName], { className });

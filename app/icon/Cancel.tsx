@@ -1,10 +1,10 @@
 import React from "react";
 
 // Tipe Props
-export type LucideProps = React.SVGProps<SVGSVGElement>;
+export type SVGProps = React.SVGProps<SVGSVGElement>;
 
 // Komponen SVG dengan ForwardRef
-const Cancel = React.forwardRef<SVGSVGElement, Omit<LucideProps, "ref">>(
+const Cancel = React.forwardRef<SVGSVGElement, Omit<SVGProps, "ref">>(
   (props, ref) => (
     <svg
       id="Capa_1"
@@ -152,6 +152,6 @@ const Cancel = React.forwardRef<SVGSVGElement, Omit<LucideProps, "ref">>(
 );
 
 // Tambahkan tipe React ForwardRef
-Cancel.displayName = "ChartBarStacked";
+Cancel.displayName = "Cancel";
 
 export default Cancel;

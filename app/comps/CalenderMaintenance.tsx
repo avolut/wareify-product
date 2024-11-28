@@ -4,7 +4,7 @@ import { useLocal } from "lib/utils/use-local";
 import { FC, useState } from "react";
 import DCalender from "./Cal";
 import { formatDate } from "lib/comps/custom/Datepicker/helpers";
-import { formatMoney } from "lib/exports";
+import { formatMoney, get_user } from "lib/exports";
 
 export const CalenderMaintenance: FC<{
   onClick?: (date: Date) => void;
@@ -26,6 +26,7 @@ export const CalenderMaintenance: FC<{
 
         local.tgl = await db.v_calender_maintenance.findMany({
           where: {
+            id_client: get_user("id_client"),
             OR: [
               {
                 date: {
