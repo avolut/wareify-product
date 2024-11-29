@@ -41,6 +41,5 @@ export const treeMenu = (data: any[]): any[] => {
       item.url || [],
     ]);
   });
-  console.log("MASUK");
   return rootMenu;
 };
