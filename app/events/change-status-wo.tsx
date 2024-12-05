@@ -7,7 +7,6 @@ export const changeStatusWO = async (fm: FMLocal, data: any) => {
   const statusTask = await db.t_maintenance_task.findUnique({
     where: {id: "acf10d86-290d-45c3-8651-231a569ab87a" }
   })
-  console.log(statusTask?.status)
   return
 //   if (statusTask === "Completed") {
 //     await db._batch.upsert({

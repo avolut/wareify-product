@@ -64,7 +64,6 @@ model m_asset {
   t_opname_line                  t_opname_line[]
   t_preventive_work_order_header t_preventive_work_order_header[]
   t_wo                           t_work_order[]
-  v_asset_depreciation           v_asset_depreciation[]
 }
 
 model m_category {
@@ -201,6 +200,7 @@ model m_material {
   created_at                  DateTime?                     @default(now()) @db.Timestamptz(6)
   deleted_at                  DateTime?                     @db.Timestamptz(6)
   m_task                      m_uom?                        @relation(fields: [id_uom], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_material_fkey_uom")
+  t_complaint                 t_complaint[]
   t_maintenance_schedule_task t_maintenance_schedule_task[]
   t_maintenance_task_line     t_maintenance_task_line[]
   t_material_wo               t_material_wo[]
@@ -235,6 +235,7 @@ model m_role {
   id_client                String                     @db.Uuid
   deleted_at               DateTime?                  @db.Timestamptz(6)
   url_home                 String?                    @db.VarChar
+  type                     String?                    @db.VarChar
   m_maintenance_group_role m_maintenance_group_role[]
   m_client                 m_client                   @relation(fields: [id_client], references: [id], onDelete: NoAction, onUpdate: NoAction)
   m_role_menu              m_role_menu[]
@@ -499,10 +500,12 @@ model t_complaint {
   checked_by           String?              @db.Uuid
   checking_date        DateTime?            @db.Timestamptz(6)
   fixed_at             DateTime?            @db.Timestamptz(6)
+  id_sparepart         String?              @db.Uuid
   m_location           m_location?          @relation(fields: [id_location], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_location")
   m_maintenance_group  m_maintenance_group? @relation(fields: [id_maintenance_group], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_maintenance_schedule")
   staff_maintenance    m_user?              @relation("fixed_by", fields: [fixed_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "m_user")
   requested_by         m_user?              @relation("requested_by", fields: [created_by], references: [id])
+  m_material           m_material?          @relation(fields: [id_sparepart], references: [id], onDelete: NoAction, onUpdate: NoAction)
   staff_checking       m_user?              @relation("t_complaint_checked_byTom_user", fields: [checked_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_complaint_on_check_fkey")
   m_asset              m_asset?             @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "t_wo")
   t_work_order         t_work_order[]
@@ -995,6 +998,7 @@ model m_menu {
   updated_by    String?         @db.Uuid
   updated_at    DateTime?       @db.Timestamptz(6)
   deleted_at    DateTime?       @db.Timestamptz(6)
+  mode          String?         @db.VarChar
   m_menu        m_menu?         @relation("m_menuTom_menu", fields: [id_parent], references: [id], onUpdate: NoAction)
   other_m_menu  m_menu[]        @relation("m_menuTom_menu")
   m_menu_client m_menu_client[]
@@ -1029,15 +1033,9 @@ model t_material_wo {
   id_wo        String?       @db.Uuid
   id_material  String?       @db.Uuid
   id_client    String?       @db.Uuid
+  stock        Decimal?      @db.Decimal
   m_material   m_material?   @relation(fields: [id_material], references: [id], onDelete: NoAction, onUpdate: NoAction)
   t_work_order t_work_order? @relation(fields: [id_wo], references: [id], onDelete: NoAction, onUpdate: NoAction)
-}
-
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-view v_transaction_waiting_approval {
-  id            String    @id @db.Uuid
-  tanggal       DateTime? @db.Timestamptz(6)
-  jumlah_status Int?
 }
 
 /// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
@@ -1053,7 +1051,13 @@ view v_asset_depreciation {
   life                     Int?
   accumulated_expense      Float?
   total_expense            Float?
-  m_asset                  m_asset?  @relation(fields: [id_asset], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+view v_transaction_waiting_approval {
+  id            String    @id @db.Uuid
+  tanggal       DateTime? @db.Timestamptz(6)
+  jumlah_status Int?
 }
 
 /// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.

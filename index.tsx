@@ -43,7 +43,7 @@ export * from "app/icons";
 export {
   filePreview,
   handleOpenCamera,
-  handleOpenFile,
+handleOpenFile,
   handleOpenFileComplaint,
   handleOpenFileFm,
   handleOpenWithChrome,

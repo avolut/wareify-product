@@ -52,6 +52,34 @@ export const CalenderMaintenance: FC<{
             },
           },
         });
+        console.log({
+          where: {
+            id_client: get_user("id_client"),
+            OR: [
+              {
+                date: {
+                  gte: startOfPreviousMonth,
+                  lt: startOfCurrentMonth,
+                },
+              },
+              {
+                date: {
+                  gte: startOfCurrentMonth,
+                  lt: startOfNextMonth,
+                },
+              },
+              {
+                date: {
+                  gte: startOfNextMonth,
+                  lt: endOfNextMonth,
+                },
+              },
+            ],
+            status: {
+              in: local.status,
+            },
+          },
+        })
         local.render();
       },
     },

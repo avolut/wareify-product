@@ -16,10 +16,28 @@ prasi_events("form", "after_load", async (fm) => {
   // if (path === "/d/complaint") generateDocumentNumber(fm, "t_work_order");
 });
 prasi_events("tablelist", "where", async (table, where) => {
-  // where.deleted_at = null;
+  where.deleted_at = null;
+  where.id_client = get_user("id_client");
   return where;
 });
 prasi_events("field", "relation_load", async (fm, field) => {
+  const path = getPathname();
+
+  if (
+    !path.startsWith("/master/menu-role") &&
+    !path.startsWith("/master/client") &&
+    !path.startsWith("/master/menu-client") &&
+    !path.startsWith("/d/manage-role") &&
+    !path.startsWith("/manage-user-client") &&
+    !path.startsWith("/d/admin/manage-user/role/menu-") &&
+    !path.startsWith("/d/admin/manage/user/role/menu/mobile") &&
+    !path.startsWith("/d/group-role")
+  ) {
+    return {
+      deleted_at: null,
+      id_client: get_user("id_client"),
+    };
+  }
   return {
     deleted_at: null,
   };
@@ -90,68 +108,6 @@ prasi_events("tablelist", "after_load", async (table, items, modify) => {
       })
     );
   }
-  // if (path === "/d/asset/detail") {
-  //   const movement = items.map((item: any) => item.movement_date);
-  //   console.log(movement.length > 0)
-  //   if (movement) {
-  //     modify(
-  //       items.map((item: any, index: number) => {
-  //         return {
-  //           ...item,
-  //           updated_by:
-  //             item?.t_movement_line
-  //               .map((task: any) => task?.location_from?.name)
-  //               .join(", ") || "",
-  //           t_movement_line:
-  //             item?.t_movement_line
-  //               .map((task: any) => task?.location_to?.name)
-  //               .join(", ") || "",
-  //         };
-  //       })
-  //     );
-  //   }
-  // }
-
-  // if (path === "/d/admin/reports-cloned") {
-  //   modify(
-  //     items.map((item: any, index: number) => {
-  //       return {
-  //         ...item,
-  //         t_maintenance_task:
-  //           item?.t_maintenance_task
-  //             .map((task: any) => task?.task_description)
-  //             .join(", ") || "",
-  //       };
-  //     })
-  //   );
-  //   modify(
-  //     items.map((item: any, index: number) => {
-  //       return {
-  //         ...item,
-  //         t_history_task:
-  //           [
-  //             ...new Set(
-  //               item?.t_history_task.flatMap((task: any) => {
-  //                 const assign_staff =
-  //                   task?.t_maintenance_task?.m_user?.name || "";
-  //                 const fixed_user = task?.m_user?.name || "";
-  //                 const hand_over_user = task?.hand_over_user?.name || "";
-  //                 const take_over_user = task?.take_over_user?.name || "";
-  //                 return [
-  //                   assign_staff,
-  //                   fixed_user,
-  //                   hand_over_user,
-  //                   take_over_user,
-  //                 ];
-  //               })
-  //             ),
-  //           ]
-  //             .filter(Boolean) // Removes empty strings
-  //             .join(", ") || "",
-  //       };
-  //     })
-  //   );
-  // }
 
   if (path === "/d/monitoring/workorder/it") {
     const modifiedItems = items.map((item: any) => {
@@ -277,10 +233,11 @@ prasi_events("tablelist", "where", async (table, where) => {
   if (
     !path.startsWith("/master/menu-role") &&
     !path.startsWith("/master/client") &&
-    !path.startsWith("/master/menu-client")  &&
+    !path.startsWith("/master/menu-client") &&
     !path.startsWith("/d/manage-role") &&
     !path.startsWith("/manage-user-client") &&
     !path.startsWith("/d/admin/manage-user/role/menu-") &&
+    !path.startsWith("/d/admin/manage/user/role/menu/mobile") &&
     !path.startsWith("/d/group-role")
   ) {
     where.id_client = get_user("id_client");
@@ -299,7 +256,7 @@ prasi_events("field", "on_change", async (fm, field) => {
   }
 });
 prasi_events("form", "before_delete", async (md, fm) => {
-  const table: any = fm.props.gen_table;
+  const table: any = fm?.props?.gen_table;
   await (db[table] as any).update({
     where: {
       id: fm.data.id,
@@ -313,6 +270,8 @@ prasi_events("form", "before_delete", async (md, fm) => {
 
 prasi_events("form", "after_save", async (fm, data) => {
   if (!data) return;
+  data.id_client = get_user("id_client");
+  console.log(data);
   const path = getPathname();
   if (path.startsWith("/d/maintenance/schedule")) migrateWorkOrder(fm, data);
   if (path.startsWith("/d/admin/dashboard/approval/schedule"))
